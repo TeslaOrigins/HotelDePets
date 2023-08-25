@@ -18,5 +18,8 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
 
+      - name: Install dependencies
+        run: dotnet restore ./backend/HDP.API/HDP.API.csproj
+
       - name: Build
-        run: dotnet build ./backend/HDP.API/HDP.API.csproj
+        run: dotnet build --configuration Release --no-restore ./backend/HDP.API/HDP.API.csproj
