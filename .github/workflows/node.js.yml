@@ -17,7 +17,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: cd frontend/
+    - uses: cd frontend/
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
