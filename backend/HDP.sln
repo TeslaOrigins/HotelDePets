@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HDP.Application", "HDP.Application\HDP.Application.csproj", "{B585F6C1-8657-49CD-9950-1A46B3A3F7A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HDP.Domain", "HDP.Domain\HDP.Domain.csproj", "{385B4F3F-5721-44D9-9998-60DA7F227616}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HDP.API", "HDP.API\HDP.API.csproj", "{8412FEBE-2DDA-49A7-8D00-39375FB80DF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HDP.Persistence", "HDP.Persistence\HDP.Persistence.csproj", "{19A49D35-71FC-45A6-B76F-7DFE89FD2EBD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B585F6C1-8657-49CD-9950-1A46B3A3F7A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B585F6C1-8657-49CD-9950-1A46B3A3F7A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B585F6C1-8657-49CD-9950-1A46B3A3F7A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B585F6C1-8657-49CD-9950-1A46B3A3F7A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{385B4F3F-5721-44D9-9998-60DA7F227616}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{385B4F3F-5721-44D9-9998-60DA7F227616}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{385B4F3F-5721-44D9-9998-60DA7F227616}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{385B4F3F-5721-44D9-9998-60DA7F227616}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8412FEBE-2DDA-49A7-8D00-39375FB80DF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8412FEBE-2DDA-49A7-8D00-39375FB80DF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8412FEBE-2DDA-49A7-8D00-39375FB80DF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8412FEBE-2DDA-49A7-8D00-39375FB80DF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19A49D35-71FC-45A6-B76F-7DFE89FD2EBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19A49D35-71FC-45A6-B76F-7DFE89FD2EBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19A49D35-71FC-45A6-B76F-7DFE89FD2EBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19A49D35-71FC-45A6-B76F-7DFE89FD2EBD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
