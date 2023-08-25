@@ -19,4 +19,4 @@ jobs:
           dotnet-version: ${{ matrix.dotnet-version }}
 
       - name: Build
-        run: dotnet build /backend/HDP.API/HDP.API.csproj
+        run: dotnet build ./backend/HDP.API/HDP.API.csproj
