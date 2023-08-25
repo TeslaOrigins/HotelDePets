@@ -1,5 +1,8 @@
+using HDP.Application.Exceptions;
 using HDP.Application.Services.Contracts;
-using HDP.Application.ViewModels.Endereco;
+using HDP.Application.ViewModels.Tutor;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HDP.API.Controllers;
 
