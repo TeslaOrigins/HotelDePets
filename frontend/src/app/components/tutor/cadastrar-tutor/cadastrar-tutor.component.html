@@ -1,0 +1,48 @@
+<form [formGroup]="tutorForm">
+  <mat-form-field
+    [hideRequiredMarker]="false"
+    appearance="fill"
+
+  >
+    <mat-label>Nome Completo</mat-label>
+    <input matInput formControlName="name">
+    <mat-hint
+      >Preencha o nome do tutor</mat-hint
+    >
+    <mat-error *ngIf="tutorForm.controls['name'].hasError('required')"
+      >É necessário preencher o nome completo do tutor</mat-error
+    >
+  </mat-form-field>
+  <mat-form-field  appearance="fill">
+    <mat-label>CPF do candidato</mat-label>
+    <input maxlength="11" matInput formControlName="cpf" />
+    <mat-error>CPF inválido</mat-error>
+    <mat-hint>
+      Preencha o CPF do tutor sem pontos e hífen. Ex: 00123456789
+    </mat-hint>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input maxlength="50" matInput formControlName="email" />
+    <mat-error *ngIf="tutorForm.controls['email'].hasError('email')"
+      >Email inválido</mat-error
+    >
+    <mat-error *ngIf="tutorForm.controls['email'].hasError('required')"
+      >É necessário preencher o email</mat-error
+    >
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Telefone</mat-label>
+    <input
+      maxlength="11"
+      required
+      matInput
+      formControlName="numeroTelefone"
+    />
+    <mat-hint>Apenas números , incluindo o 9 após o DDD</mat-hint>
+    <mat-error>Telefone inválido</mat-error>
+  </mat-form-field>
+  <button *ngIf="tutorForm.valid" class="apertar" mat-stroked-button (click)="cadastrar()">
+    Finalizar Inscrição
+  </button>
+</form>

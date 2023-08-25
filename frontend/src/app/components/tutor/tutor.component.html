@@ -1,0 +1,22 @@
+
+<div>
+  Listagem de Tutores
+</div>
+<div class="tabela">
+  <mat-card class="cabecalho">
+    <div class="cell">
+      CPF
+    </div>
+    <div class="cell">
+      Nome
+    </div>
+  </mat-card>
+  <mat-card class="linha" *ngFor="let tutor of tutores">
+    <div class="cell">
+      {{tutor.cpf}}
+    </div>
+    <div class="cell">
+      {{tutor.name}}
+    </div>
+  </mat-card>
+</div>
