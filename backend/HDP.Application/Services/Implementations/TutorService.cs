@@ -104,7 +104,7 @@ public class TutorService : ITutorService
     {
         try
         {
-            var tutorDomain = await GetTutorPorIdAnotherService(dados.Id);
+            var tutorDomain = await GetTutorPorIdAnotherService(dados.TutorId);
 
             tutorDomain.Cpf = dados.Cpf;
 

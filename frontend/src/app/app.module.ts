@@ -10,21 +10,28 @@ import { MaterialModule } from './material.module';
 import { TutorComponent } from './components/tutor/tutor.component';
 import { CadastrarTutorComponent } from './components/tutor/cadastrar-tutor/cadastrar-tutor.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { EditarTutorComponent } from './components/tutor/editar-tutor/editar-tutor.component';
+import { DetalhesTutorComponent } from './components/tutor/detalhes-tutor/detalhes-tutor.component';
 @NgModule({
   declarations: [
     AppComponent,
     TutorComponent,
-    CadastrarTutorComponent
+    CadastrarTutorComponent,
+    EditarTutorComponent,
+    DetalhesTutorComponent
   ],
   imports: [
     BrowserModule,
+    FontAwesomeModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

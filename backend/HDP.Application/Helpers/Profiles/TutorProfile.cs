@@ -10,15 +10,10 @@ public class TutorProfile : Profile
 {
     public TutorProfile()
     {
-        CreateMap<Tutor, TutorViewModel>()
-            .ForMember(viewModel => viewModel.Endereco, 
-                map => map.MapFrom(
-                    x => x.Enderecos));;
+        CreateMap<Tutor, TutorViewModel>();
+
         CreateMap<Tutor, CadastroTutorViewModel>();
 
-        CreateMap<CadastroTutorViewModel, Tutor>()
-            .ForMember(viewModel => viewModel.Enderecos, 
-                map => map.MapFrom(
-                    x => x.Enderecos));
+        CreateMap<CadastroTutorViewModel, Tutor>();
     }
 }

@@ -15,10 +15,10 @@ export class TutorService {
   }
 
   cadastrar(body: any): Observable<Tutor> {
-    return this.http.post<Tutor>(`${this.base_url}cadastrar`, body);
+    return this.http.post<Tutor>(`${this.base_url}`, body);
   }
 
   getAllTutores(): Observable<Tutor[]> {
-    return this.http.get<Tutor[]>(`${this.base_url}all`);
+    return this.http.get<Tutor[]>(`${this.base_url}`);
   }
 }

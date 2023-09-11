@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
+import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { CpfValidator } from 'src/app/helpers/GenericValidator';
 import { Tutor } from 'src/app/models/Tutor';
 import { TutorService } from 'src/app/services/tutor.service';
-import { faPlus,faTrash } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
-  selector: 'app-cadastrar-tutor',
-  templateUrl: './cadastrar-tutor.component.html',
-  styleUrls: ['./cadastrar-tutor.component.scss']
+  selector: 'app-editar-tutor',
+  templateUrl: './editar-tutor.component.html',
+  styleUrls: ['./editar-tutor.component.scss']
 })
-export class CadastrarTutorComponent implements OnInit {
+export class EditarTutorComponent implements OnInit {
+
   tutorForm: FormGroup;
   faPlus = faPlus;
   faTrash = faTrash;
@@ -56,13 +58,12 @@ export class CadastrarTutorComponent implements OnInit {
     this.enderecos.removeAt(enderecoIndex);
   }
   cadastrar(){
-    console.log(this.tutorForm);
     if (this.tutorForm.valid) {
       const obj = {
         nome: this.tutorForm.controls['nome'].value,
         telefone: this.tutorForm.controls['telefone'].value,
-        email: this.tutorForm.controls['email'].value,
-        cpf: this.tutorForm.controls['cpf'].value,
+        cidade: this.tutorForm.controls['cidade'].value,
+        estado: this.tutorForm.controls['estado'].value,
         enderecos: this.enderecos
       }
       const obs = {
