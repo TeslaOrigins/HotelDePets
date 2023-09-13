@@ -6,6 +6,7 @@ import { CpfValidator } from 'src/app/helpers/GenericValidator';
 import { Tutor } from 'src/app/models/Tutor';
 import { TutorService } from 'src/app/services/tutor.service';
 import { faPlus,faTrash } from '@fortawesome/free-solid-svg-icons';
+import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-cadastrar-tutor',
   templateUrl: './cadastrar-tutor.component.html',
@@ -18,7 +19,8 @@ export class CadastrarTutorComponent implements OnInit {
   constructor(private builder: FormBuilder,
     private tutorService:TutorService,
     private toastr: ToastrService,
-    private router: Router) {
+    private router: Router,
+   public dialogRef: MatDialogRef<CadastrarTutorComponent>) {
     this.tutorForm = this.builder.group({
       nome: new FormControl<string>('',Validators.required),
       telefone: new FormControl<string>('',[Validators.required,Validators.minLength(11)]),
@@ -63,12 +65,13 @@ export class CadastrarTutorComponent implements OnInit {
         telefone: this.tutorForm.controls['telefone'].value,
         email: this.tutorForm.controls['email'].value,
         cpf: this.tutorForm.controls['cpf'].value,
-        enderecos: this.enderecos
+        enderecos: this.enderecos.value
       }
       const obs = {
         next: (tutor: Tutor) => {
           this.toastr.success('Tutor cadastrado com sucesso');
           this.router.navigateByUrl('/tutor/');
+          this.dialogRef.close();
         },
         error: (err: any) => {
           if (err.status == 400) {
@@ -78,6 +81,7 @@ export class CadastrarTutorComponent implements OnInit {
           } else {
             this.toastr.error(err.error);
           }
+          this.dialogRef.close();
         },
       };
       this.tutorService.cadastrar(obj).subscribe(obs);

@@ -13,13 +13,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EditarTutorComponent } from './components/tutor/editar-tutor/editar-tutor.component';
 import { DetalhesTutorComponent } from './components/tutor/detalhes-tutor/detalhes-tutor.component';
+import { DialogConfirmacaoComponent } from './components/dialog-confirmacao/dialog-confirmacao.component';
 @NgModule({
   declarations: [
     AppComponent,
     TutorComponent,
     CadastrarTutorComponent,
     EditarTutorComponent,
-    DetalhesTutorComponent
+    DetalhesTutorComponent,
+    DialogConfirmacaoComponent
   ],
   imports: [
     BrowserModule,

@@ -28,13 +28,13 @@
       <div class="cell">
         {{tutor.nomeNormalizado}}
       </div>
-      <div style="cursor: pointer;"  class="cell">
+      <div (click)="openDialogDetalhes(tutor)" style="cursor: pointer;"  class="cell">
         <a><fa-icon [icon]="faMagnfyingGlass" ></fa-icon></a>
       </div>
-      <div style="cursor: pointer;"  class="cell">
+      <div (click)="openDialogEdit(tutor)" style="cursor: pointer;"  class="cell">
       <a> <fa-icon [icon]="faEdit" ></fa-icon></a>
       </div>
-      <div style="cursor: pointer;" class="cell">
+      <div (click)="deletarTutor(tutor)" style="cursor: pointer;" class="cell">
        <a> <fa-icon [icon]="faTrash" ></fa-icon></a>
       </div>
     </mat-card>

@@ -1,3 +1,20 @@
-<p>
-  detalhes-tutor works!
-</p>
+<div>
+  <div>
+     Nome: {{data.nomeNormalizado}}
+  </div>
+  <div>
+     CPF: {{data.cpf}}
+  </div>
+  <div>
+    Email: {{data.email}}
+  </div>
+  <div>
+    Telefone: {{data.telefone}}
+  </div>
+  <div *ngFor="let end of data.enderecos">
+    <div>
+      {{end.cidade}} - {{end.estado}}, {{end.logradouro}} - {{end.numero}}
+    </div>
+  </div>
+
+</div>

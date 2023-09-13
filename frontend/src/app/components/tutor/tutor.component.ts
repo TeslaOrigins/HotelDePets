@@ -7,6 +7,8 @@ import { faMagnifyingGlass,faTrash,faEdit,faPlus } from '@fortawesome/free-solid
 import { MatDialog } from '@angular/material/dialog';
 import { CadastrarTutorComponent } from './cadastrar-tutor/cadastrar-tutor.component';
 import { EditarTutorComponent } from './editar-tutor/editar-tutor.component';
+import { DialogConfirmacaoComponent } from '../dialog-confirmacao/dialog-confirmacao.component';
+import { DetalhesTutorComponent } from './detalhes-tutor/detalhes-tutor.component';
 @Component({
   selector: 'app-tutor',
   templateUrl: './tutor.component.html',
@@ -35,13 +37,37 @@ export class TutorComponent implements OnInit {
     };
     this.tutores$.subscribe(obs);
   }
-
+  getAllTutores(){
+    const obs = {
+      next: (tutores: Tutor[]) => {
+        this.tutores = tutores;
+      },
+      error: (err: any) => {
+        err.forEach((error: any) => {
+          this.toastr.error(error);
+        });
+      },
+    };
+    this.tutores$.subscribe(obs);
+  }
   ngOnInit() {
+  }
+  openDialogDetalhes(tutor: Tutor): void{
+    const dialogRef = this.dialog.open(DetalhesTutorComponent,{
+      width: '1250px',
+      autoFocus: false,
+      maxHeight: '90vh',
+      data:tutor
+    });
+
+    dialogRef.afterClosed().subscribe((result:any) => {
+      this.getAllTutores()
+    });
   }
   openDialog(): void {
     const dialogRef = this.dialog.open(CadastrarTutorComponent,{
       autoFocus: false,
-      maxHeight: '90vh', 
+      maxHeight: '90vh',
       width: '1250px'
     });
 
@@ -58,10 +84,29 @@ export class TutorComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result:any) => {
+      this.getAllTutores()
     });
   }
-  deletarTutor(){
+  deletarTutor(tutor:Tutor){
+    const dialogRef = this.dialog.open(DialogConfirmacaoComponent,{
+      data:"Tem certeza que quer deletar o tutor com o nome: " + tutor.nomeNormalizado + " ?"
+    });
 
+    dialogRef.afterClosed().subscribe((result:boolean) => {
+      if(result){
+        const obs = {
+          next: (msg: string) => {
+            this.toastr.success(msg)
+          },
+          error: (err: any) => {
+            err.forEach((error: any) => {
+              this.toastr.error(error);
+            });
+          },
+        };
+        this.tutorService.deletar(tutor.tutorId).subscribe(obs);
+      }
+    });
   }
 
 }

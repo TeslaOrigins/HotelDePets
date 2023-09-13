@@ -1,0 +1,8 @@
+<div class="wrap">
+<h1 md-dialog-title>Confirme</h1>
+<div md-dialog-content>{{data}}</div>
+<div md-dialog-actions>
+  <button mat-raised-button color="primary" (click)="dialogRef.close(true)">Sim</button>
+  <button mat-raised-button color="warn" (click)="dialogRef.close(false)">Cancelar</button>
+</div>
+</div>

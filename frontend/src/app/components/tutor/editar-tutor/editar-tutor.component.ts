@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
 import { CpfValidator } from 'src/app/helpers/GenericValidator';
+import { Endereco } from 'src/app/models/Endereco';
 import { Tutor } from 'src/app/models/Tutor';
 import { TutorService } from 'src/app/services/tutor.service';
 
@@ -14,27 +17,35 @@ import { TutorService } from 'src/app/services/tutor.service';
 })
 export class EditarTutorComponent implements OnInit {
 
-  tutorForm: FormGroup;
+  tutorForm!: FormGroup;
   faPlus = faPlus;
   faTrash = faTrash;
+  tutorInalterado!: Tutor;
+  tutor$: Observable<Tutor>;
   constructor(private builder: FormBuilder,
     private tutorService:TutorService,
     private toastr: ToastrService,
-    private router: Router) {
-    this.tutorForm = this.builder.group({
-      nome: new FormControl<string>('',Validators.required),
-      telefone: new FormControl<string>('',[Validators.required,Validators.minLength(11)]),
-      email: new FormControl<string>('',[Validators.email,Validators.required]),
-      cpf: new FormControl<string>('',[Validators.required,CpfValidator()]),
-      enderecos:this.builder.array([
-        this.builder.group({
-          logradouro: new FormControl<string>('',Validators.required),
-          numero :  new FormControl<string>('',Validators.required),
-          cidade :  new FormControl<string>('',Validators.required),
-          estado :  new FormControl<string>('',Validators.required)
-        })
-      ],Validators.required)
-    });
+    private router: Router,
+    @Inject(MAT_DIALOG_DATA) public data: Tutor,
+    public dialogRef: MatDialogRef<EditarTutorComponent>) {
+
+    this.tutor$ = this.tutorService.getTutorById(data.tutorId);
+    this.tutor$.subscribe((tutor:Tutor )=> {
+      this.tutorInalterado =tutor;
+      this.tutorForm = this.builder.group({
+        nome: new FormControl<string>(this.tutorInalterado.nome,Validators.required),
+        telefone: new FormControl<string>(this.tutorInalterado.telefone,[Validators.required,Validators.minLength(11)]),
+        email: new FormControl<string>(this.tutorInalterado.email,[Validators.email,Validators.required]),
+        cpf: new FormControl<string>(this.tutorInalterado.cpf,[Validators.required,CpfValidator()]),
+        enderecos:this.builder.array([
+
+        ],Validators.required)
+      });
+      this.tutorInalterado.enderecos.forEach(e => this.pushNovoEnderecoExistente(e));
+    })
+
+
+
 
   }
   ngOnInit() {
@@ -52,24 +63,35 @@ export class EditarTutorComponent implements OnInit {
     });
     this.enderecos.push(enderecoForm);
   }
+  pushNovoEnderecoExistente(endereco: Endereco){
+    const enderecoForm = this.builder.group({
+      logradouro: new FormControl<string>(endereco.logradouro,Validators.required),
+      numero :  new FormControl<string>(endereco.numero,Validators.required),
+      cidade :  new FormControl<string>(endereco.cidade,Validators.required),
+      estado :  new FormControl<string>(endereco.estado,Validators.required)
+    });
+    this.enderecos.push(enderecoForm);
+  }
 
 
   deleteEndereco(enderecoIndex: number) {
     this.enderecos.removeAt(enderecoIndex);
   }
-  cadastrar(){
+  editar(){
     if (this.tutorForm.valid) {
       const obj = {
+        tutorId: this.tutorInalterado.tutorId,
         nome: this.tutorForm.controls['nome'].value,
         telefone: this.tutorForm.controls['telefone'].value,
-        cidade: this.tutorForm.controls['cidade'].value,
-        estado: this.tutorForm.controls['estado'].value,
-        enderecos: this.enderecos
+        email: this.tutorForm.controls['email'].value,
+        cpf: this.tutorForm.controls['cpf'].value,
+        //enderecos: this.enderecos
       }
       const obs = {
         next: (tutor: Tutor) => {
-          this.toastr.success('Tutor cadastrado com sucesso');
+          this.toastr.success('Tutor editado com sucesso');
           this.router.navigateByUrl('/tutor/');
+          this.dialogRef.close();
         },
         error: (err: any) => {
           if (err.status == 400) {
@@ -79,9 +101,10 @@ export class EditarTutorComponent implements OnInit {
           } else {
             this.toastr.error(err.error);
           }
+          this.dialogRef.close();
         },
       };
-      this.tutorService.cadastrar(obj).subscribe(obs);
+      this.tutorService.editar(obj).subscribe(obs);
     }
   }
 }
