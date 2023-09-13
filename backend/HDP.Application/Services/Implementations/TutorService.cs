@@ -104,10 +104,13 @@ public class TutorService : ITutorService
     {
         try
         {
-            var tutorDomain = await GetTutorPorIdAnotherService(dados.Id);
+            var tutorDomain = await GetTutorPorIdAnotherService(dados.TutorId);
 
             tutorDomain.Cpf = dados.Cpf;
-
+            tutorDomain.Nome = dados.Nome;
+            tutorDomain.NomeNormalizado = dados.Nome.ToUpper();
+            tutorDomain.Email = dados.Email;
+            tutorDomain.Telefone = dados.Telefone;
             if (await _tutorRepository.SaveChangesAsync())
             {
                 return _mapper.Map<TutorViewModel>(await _tutorRepository.GetTutorPorId(tutorDomain.TutorId));

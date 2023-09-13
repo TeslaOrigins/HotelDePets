@@ -15,10 +15,19 @@ export class TutorService {
   }
 
   cadastrar(body: any): Observable<Tutor> {
-    return this.http.post<Tutor>(`${this.base_url}cadastrar`, body);
+    return this.http.post<Tutor>(`${this.base_url}`, body);
+  }
+  editar(body: any): Observable<Tutor> {
+    return this.http.put<Tutor>(`${this.base_url}${body.tutorId}`, body);
   }
 
+  deletar(tutorId: number): Observable<string>{
+    return this.http.delete<string>(`${this.base_url}${tutorId}`);
+  }
   getAllTutores(): Observable<Tutor[]> {
-    return this.http.get<Tutor[]>(`${this.base_url}all`);
+    return this.http.get<Tutor[]>(`${this.base_url}`);
+  }
+  getTutorById(idTutor: number): Observable<Tutor>{
+    return this.http.get<Tutor>(`${this.base_url}${idTutor}`);
   }
 }

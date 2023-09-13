@@ -7,7 +7,7 @@ namespace HDP.Persistence
     {
         public int EnderecoId { get; set; }
         public string Logradouro { get; set; } = null!;
-        public int Numero { get; set; }
+        public string Numero { get; set; }
         public string Cidade { get; set; } = null!;
         public string Estado { get; set; } = null!;
         public int TutorId { get; set; }

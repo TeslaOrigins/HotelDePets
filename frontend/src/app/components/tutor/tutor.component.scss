@@ -6,17 +6,22 @@ mat-card {
   margin: 1.5vh 0vh;
 }
 .cabecalho {
-  background-color: #004984;
+  background-color: #2ea564;
   margin: 2vh 0;
   color: white;
 }
 .cell {
   width: 20%;
+  margin:1%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
+.card{
+  background-color: white;
+  margin: 2.5%;
+  padding: 2.5%;
+}
 .no-ps {
   display: flex;
   align-items: center;
@@ -47,7 +52,7 @@ mat-card {
   height: 60px;
   bottom: 40px;
   right: 40px;
-  background-color: #004984;
+  background-color: #46e08c;
   color: #fff;
   border-radius: 50px;
   text-align: center;
@@ -65,7 +70,7 @@ mat-card {
 }
 
 ::ng-deep .current {
-  background: #004984 !important;
+  background: #2ea564 !important;
   box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
@@ -98,3 +103,21 @@ mat-card {
 h1 {
   text-align: center;
 }
+.float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 40px;
+  right: 40px;
+  background-color: #46e08c;
+  color: #fff;
+  border-radius: 50px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f !important;
+}
+

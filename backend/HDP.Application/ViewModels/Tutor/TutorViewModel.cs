@@ -4,10 +4,11 @@ namespace HDP.Application.ViewModels.Tutor;
 
 public class TutorViewModel
 {
-    public int Id { get; set; }
-    public string Name { get; set; }
+    public int TutorId { get; set; }
+    public string Nome { get; set; }
+    public string Telefone { get; set; }
+    public string Email{get;set;}
     public string NomeNormalizado { get; set; }
     public string? Cpf { get; set; }
-    public int EnderecoId { get; set; }
-    public virtual ICollection<EnderecoViewModel> Endereco { get; set; }
+    public virtual ICollection<EnderecoViewModel> Enderecos { get; set; }
 }

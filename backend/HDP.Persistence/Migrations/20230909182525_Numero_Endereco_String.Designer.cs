@@ -3,6 +3,7 @@ using System;
 using HDP.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HDP.Persistence.Migrations
 {
     [DbContext(typeof(HDPContext))]
-    partial class HDPContextModelSnapshot : ModelSnapshot
+    [Migration("20230909182525_Numero_Endereco_String")]
+    partial class Numero_Endereco_String
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
