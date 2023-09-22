@@ -9,6 +9,6 @@ public interface IEnderecoRepository : IGeneralRepository
     Task<Endereco> GetEnderecoPorLogradouro(String logradouroEndereco);
     Task<Endereco> GetEnderecoPorId(int idEndereco);
     Task<Endereco[]> GetEnderecosPorTutorId(int TutorId);
-    // Task<TipoEndereco> GetTipoEnderecoPorNome(String nomeTipoEndereco);
+    Task<Endereco[]> GetEnderecosOldPorEnderecoId(int TutorId, List<int> enderecosId);
     // Task<TipoEndereco> GetTipoEnderecoPorId(int idTipoEndereco);
 }

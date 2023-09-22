@@ -45,6 +45,15 @@ public class EnderecoRepository : GeneralRepository, IEnderecoRepository
         return await mainQuery.ToArrayAsync();   
     }
     
+    public async Task<Endereco[]> GetEnderecosOldPorEnderecoId(int TutorId, List<int> enderecosId)
+    {
+        var mainQuery = from e in _context.Endereco
+            where e.TutorId == TutorId && !enderecosId.Contains(e.EnderecoId)
+            select e;
+        
+        return await mainQuery.ToArrayAsync();   
+    }
+    
     // public async Task<TipoEndereco> GetTipoEnderecoPorNome(String nomeTipoEndereco)
     // {
     //     var mainQuery = from Endereco in _context.Enderecos
