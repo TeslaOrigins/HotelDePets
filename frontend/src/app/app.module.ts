@@ -14,7 +14,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EditarTutorComponent } from './components/tutor/editar-tutor/editar-tutor.component';
 import { DetalhesTutorComponent } from './components/tutor/detalhes-tutor/detalhes-tutor.component';
 import { DialogConfirmacaoComponent } from './components/dialog-confirmacao/dialog-confirmacao.component';
-import { ConsultarPetsComponent } from './components/pet/consultar-pets/consultar-pets.component';
+import {
+  ConsultarPetsComponent,
+  DialogPet,
+} from './components/pet/consultar-pet/consultar-pets.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +26,8 @@ import { ConsultarPetsComponent } from './components/pet/consultar-pets/consulta
     EditarTutorComponent,
     DetalhesTutorComponent,
     DialogConfirmacaoComponent,
-    ConsultarPetsComponent
+    ConsultarPetsComponent,
+    DialogPet,
   ],
   imports: [
     BrowserModule,
@@ -35,9 +39,9 @@ import { ConsultarPetsComponent } from './components/pet/consultar-pets/consulta
     BrowserAnimationsModule,
     MaterialModule,
     ToastrModule.forRoot(),
-    FontAwesomeModule
+    FontAwesomeModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
