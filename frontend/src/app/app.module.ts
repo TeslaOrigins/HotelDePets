@@ -14,6 +14,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EditarTutorComponent } from './components/tutor/editar-tutor/editar-tutor.component';
 import { DetalhesTutorComponent } from './components/tutor/detalhes-tutor/detalhes-tutor.component';
 import { DialogConfirmacaoComponent } from './components/dialog-confirmacao/dialog-confirmacao.component';
+import { ConsultarPetsComponent } from './components/pet/consultar-pets/consultar-pets.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +22,8 @@ import { DialogConfirmacaoComponent } from './components/dialog-confirmacao/dial
     CadastrarTutorComponent,
     EditarTutorComponent,
     DetalhesTutorComponent,
-    DialogConfirmacaoComponent
+    DialogConfirmacaoComponent,
+    ConsultarPetsComponent
   ],
   imports: [
     BrowserModule,
