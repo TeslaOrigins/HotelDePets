@@ -84,3 +84,5 @@ lint/outputs/
 lint/tmp/
 # lint/reports/
 /obj/
+appsettings.Development.json
+appsettings.json

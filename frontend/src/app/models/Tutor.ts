@@ -1,9 +1,11 @@
 import { Endereco } from "./Endereco";
 
 export interface Tutor {
-   id: number;
-   name : string;
+   tutorId: number;
+   nome : string;
    nomeNormalizado: string
    cpf: string;
-   endereco : Endereco[];
+   telefone:string;
+   email:string;
+   enderecos : Endereco[];
 }

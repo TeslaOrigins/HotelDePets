@@ -120,7 +120,7 @@ public class TutorService : ITutorService
                 }
             }
 
-            Endereco[] enderecos = _mapper.Map<Endereco[]>(GetEnderecosOldAnotherService(dados.Id, enderecosId));
+            Endereco[] enderecos = _mapper.Map<Endereco[]>(GetEnderecosOldAnotherService(dados.TutorId, enderecosId));
             
             foreach (var end in enderecos)
             {
@@ -128,7 +128,7 @@ public class TutorService : ITutorService
             }
 
             if (await _enderecoRepository.SaveChangesAsync()){
-                var tutorDomain = await GetTutorPorIdAnotherService(dados.Id);
+                var tutorDomain = await GetTutorPorIdAnotherService(dados.TutorId);
 
                 tutorDomain.Cpf = dados.Cpf;
 

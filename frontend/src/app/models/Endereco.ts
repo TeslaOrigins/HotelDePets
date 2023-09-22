@@ -1,7 +1,7 @@
 export interface Endereco {
   enderecoId : number;
   logradouro : string;
-  numero : number;
+  numero :string;
   cidade : string;
   estado : string;
 }
