@@ -61,15 +61,13 @@ public class TutorService : ITutorService
                 errors.Add("Tutor já existe no sistema");
             }
 
-            if (enderecoExiste != null)
-            {
-                foreach (var enderecoExistente in enderecoExiste)
-                {
-                    if (enderecoExistente.Existe)
-                        errors.Add(
-                            "O Endereço de logradouro: " + enderecoExistente.Logradouro + " já está cadastrado no sistema");
-                }
-            }
+            // foreach (var enderecoExistente in enderecoExiste)
+            // {
+            //     if (enderecoExistente.Existe != null)
+            //         enderecoExistente.Remove(enderecoExistente);
+            //     // errors.Add(
+            //     //     "O Endereço de logradouro: " + enderecoExistente.Logradouro + " já está cadastrado no sistema");
+            // }
 
             if (errors.Any())
                 throw new Exception(errors.ToArray().ToString());
@@ -104,16 +102,40 @@ public class TutorService : ITutorService
     {
         try
         {
-            var tutorDomain = await GetTutorPorIdAnotherService(dados.TutorId);
-
-            tutorDomain.Cpf = dados.Cpf;
-            tutorDomain.Nome = dados.Nome;
-            tutorDomain.NomeNormalizado = dados.Nome.ToUpper();
-            tutorDomain.Email = dados.Email;
-            tutorDomain.Telefone = dados.Telefone;
-            if (await _tutorRepository.SaveChangesAsync())
+            List<int> enderecosId = new List<int>();
+            foreach (var endereco in dados.Enderecos)
             {
-                return _mapper.Map<TutorViewModel>(await _tutorRepository.GetTutorPorId(tutorDomain.TutorId));
+                var endDomain = await GetEnderecoPorIdAnotherService(endereco.Id);
+
+                if (endDomain != null)
+                {
+                    endDomain.Logradouro = endereco.Logradouro;
+                    endDomain.Numero = (int) endereco.Numero;
+                    endDomain.Cidade = endereco.Cidade;
+                    endDomain.Estado = endereco.Estado;   
+                    
+                    _enderecoRepository.Add(endDomain);
+                } else {
+                    enderecosId.Add(endereco.Id);
+                }
+            }
+
+            Endereco[] enderecos = _mapper.Map<Endereco[]>(GetEnderecosOldAnotherService(dados.TutorId, enderecosId));
+            
+            foreach (var end in enderecos)
+            {
+                _enderecoRepository.Delete(end);
+            }
+
+            if (await _enderecoRepository.SaveChangesAsync()){
+                var tutorDomain = await GetTutorPorIdAnotherService(dados.TutorId);
+
+                tutorDomain.Cpf = dados.Cpf;
+
+                if (await _tutorRepository.SaveChangesAsync())
+                {
+                    return _mapper.Map<TutorViewModel>(await _tutorRepository.GetTutorPorId(tutorDomain.TutorId));
+                }
             }
 
             return null;
@@ -132,15 +154,19 @@ public class TutorService : ITutorService
         }
     }
     
-    public async Task<bool> RemoveTutor(int idTutor)
+    public async Task<Tutor> RemoveTutor(int idTutor)
     {
         try
         {
             var tutorDomain = await GetTutorPorIdAnotherService(idTutor);
             
             _tutorRepository.Delete(tutorDomain);
+
+            if (await _tutorRepository.SaveChangesAsync())
+                return tutorDomain;
             
-            return await _tutorRepository.SaveChangesAsync();
+            return null;
+            
         }
         catch (BusinessException<TutorViewModel> BE)
         {
@@ -170,7 +196,7 @@ public class TutorService : ITutorService
         }
     }
     
-    private async Task<List<EnderecoExistenteViewModel>> ValidaEnderecoExistente(ICollection<CadastroEnderecoViewModel> dados)
+    private async Task<ICollection<CadastroEnderecoViewModel>> ValidaEnderecoExistente(ICollection<CadastroEnderecoViewModel> dados)
     {
         try
         {
@@ -178,20 +204,15 @@ public class TutorService : ITutorService
 
             foreach (var endereco in dados)
             {
-                var truck = await _enderecoRepository.GetEnderecoPorLogradouro(endereco.Logradouro);
+                var end = await _enderecoRepository.GetEnderecoPorLogradouro(endereco.Logradouro);
 
-                if (truck != null)
+                if (end != null)
                 {
-                    EnderecoExistenteViewModel novoEnderecoExistente = new EnderecoExistenteViewModel()
-                    {
-                        Existe = true,
-                        Logradouro = truck.Logradouro
-                    };
-                    enderecoExistente.Add(novoEnderecoExistente);
+                    endereco.Existe = true;
                 }
             }
 
-            return enderecoExistente;
+            return dados;
         }
         catch (Exception e)
         {
@@ -235,6 +256,18 @@ public class TutorService : ITutorService
         return null;
     }
     
+    private async Task<Endereco> GetEnderecoPorIdAnotherService(int idEndereco)
+    {
+        var tutor = await _enderecoRepository.GetEnderecoPorId(idEndereco);
+
+        if (tutor != null)
+        {
+            return tutor;
+        }
+
+        return null;
+    }
+    
     private async Task<Endereco[]> GetEnderecosAnotherService(int idTutor)
     {
         var tutor = await _enderecoRepository.GetEnderecosPorTutorId(idTutor);
@@ -242,6 +275,18 @@ public class TutorService : ITutorService
         if (tutor != null)
         {
             return tutor;
+        }
+
+        return null;
+    }
+    
+    private async Task<Endereco[]> GetEnderecosOldAnotherService(int idTutor, List<int> enderecosId)
+    {
+        var enderecos = await _enderecoRepository.GetEnderecosOldPorEnderecoId(idTutor, enderecosId);
+
+        if (enderecos != null)
+        {
+            return enderecos;
         }
 
         return null;

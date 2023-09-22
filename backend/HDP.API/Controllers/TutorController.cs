@@ -72,14 +72,16 @@ public class TutorController : ControllerBase
     }
     
     [AllowAnonymous]
-    [HttpPut("{id}")]
+    [HttpPut]
     public async Task<IActionResult> PutTutor(AtualizaTutorViewModel Tutor)
     {
         try
         {
             var tutors = await _tutorService.AtualizaTutor(Tutor);
+            
             if(tutors == null)
                 return Problem("Não foi possível atualizar o cadastro deste Tutor");
+            
             return Ok(tutors);
         } 
         catch(BusinessException<TutorViewModel> BE){
@@ -100,10 +102,11 @@ public class TutorController : ControllerBase
         try
         {
             var tutors = await _tutorService.RemoveTutor(idTutor);
-            if(!tutors)
+            
+            if(tutors == null)
                 return Problem("Não foi possível atualizar o cadastro deste Tutor");
             
-            return Ok("Tutor removido com sucesso");
+            return Ok(tutors);
         } 
         catch(BusinessException<TutorViewModel> BE){
             return BadRequest(BE.messages);

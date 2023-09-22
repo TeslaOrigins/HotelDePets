@@ -14,6 +14,7 @@ namespace HDP.Persistence
 
         public int PetId { get; set; }
         public string Nome { get; set; } = null!;
+        public string NomeNormalizado { get; set; } = null!;
         public int? Idade { get; set; }
         public string? Raca { get; set; }
         public string Sexo { get; set; } = null!;
