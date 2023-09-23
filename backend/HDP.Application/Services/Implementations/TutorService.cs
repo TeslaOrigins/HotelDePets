@@ -111,6 +111,28 @@ public class TutorService : ITutorService
             tutorDomain.NomeNormalizado = dados.Nome.ToUpper();
             tutorDomain.Email = dados.Email;
             tutorDomain.Telefone = dados.Telefone;
+            tutorDomain.Enderecos = _mapper.Map<ICollection<Endereco>>(dados.Enderecos);
+       
+            /*foreach(AtualizarEnderecoViewModel a in dados.Enderecos){
+                // se o endereço que ta na lista não existe no banco, id == 0
+                if(a.EnderecoId == 0){
+                    tutorDomain.Enderecos.Add(_mapper.Map<Endereco>(a));
+                }
+                // se o endereço existe no banco ( id != 0)
+                else if(a.EnderecoId != 0){
+                    // endereço dentro da lista
+                    var enderecos
+                    var end = tutorDomain.Enderecos.ToList().;
+                    // se o endereço foi deletado da lista de endereços
+                    if( end == null){
+                    
+                        tutorDomain.Enderecos.Remove(end);
+                    } // se foi atualizado
+                    else{
+                        
+                    }
+                }                   
+            }*/
             if (await _tutorRepository.SaveChangesAsync())
             {
                 return _mapper.Map<TutorViewModel>(await _tutorRepository.GetTutorPorId(tutorDomain.TutorId));

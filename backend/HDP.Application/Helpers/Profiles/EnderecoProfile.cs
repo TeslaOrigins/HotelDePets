@@ -14,8 +14,9 @@ public class EnderecoProfile : Profile
     {
         CreateMap<Endereco, EnderecoViewModel>();
         CreateMap<Endereco, CadastroEnderecoViewModel>();
-        
+        CreateMap<Endereco, AtualizarEnderecoViewModel>();
         CreateMap<EnderecoViewModel, Endereco>();
+        CreateMap<AtualizarEnderecoViewModel,Endereco>();
         CreateMap<CadastroEnderecoViewModel, Endereco>();
     }
 }

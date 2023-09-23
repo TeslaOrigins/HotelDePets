@@ -11,7 +11,6 @@ namespace HDP.Persistence
         public string Cidade { get; set; } = null!;
         public string Estado { get; set; } = null!;
         public int TutorId { get; set; }
-
         public virtual Tutor Tutor { get; set; } = null!;
     }
 }

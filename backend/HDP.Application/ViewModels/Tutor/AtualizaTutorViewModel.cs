@@ -1,3 +1,5 @@
+using HDP.Application.ViewModels.Endereco;
+
 namespace HDP.Application.ViewModels.Tutor;
 
 public class AtualizaTutorViewModel
@@ -7,4 +9,5 @@ public class AtualizaTutorViewModel
     public string? Telefone { get; set; }
     public string? Cpf { get; set; }
     public string? Email { get; set; }
+    public ICollection<AtualizarEnderecoViewModel> Enderecos {get;set;}
 }

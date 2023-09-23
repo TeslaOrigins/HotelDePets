@@ -56,6 +56,7 @@ export class EditarTutorComponent implements OnInit {
 
   pushNovoEndereco(){
     const enderecoForm = this.builder.group({
+      enderecoId: new FormControl<number>(0),
       logradouro: new FormControl<string>('',Validators.required),
       numero :  new FormControl<string>('',Validators.required),
       cidade :  new FormControl<string>('',Validators.required),
@@ -65,6 +66,7 @@ export class EditarTutorComponent implements OnInit {
   }
   pushNovoEnderecoExistente(endereco: Endereco){
     const enderecoForm = this.builder.group({
+      enderecoId: new FormControl<number>(endereco.enderecoId),
       logradouro: new FormControl<string>(endereco.logradouro,Validators.required),
       numero :  new FormControl<string>(endereco.numero,Validators.required),
       cidade :  new FormControl<string>(endereco.cidade,Validators.required),
@@ -85,7 +87,7 @@ export class EditarTutorComponent implements OnInit {
         telefone: this.tutorForm.controls['telefone'].value,
         email: this.tutorForm.controls['email'].value,
         cpf: this.tutorForm.controls['cpf'].value,
-        //enderecos: this.enderecos
+        enderecos: this.enderecos.value
       }
       const obs = {
         next: (tutor: Tutor) => {
