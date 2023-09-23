@@ -13,5 +13,5 @@ public class CadastroPetViewModel
     public int Peso { get; set; }
     public int TutorId { get; set; }
     public virtual CadastroVeterinarioViewModel Veterinario { get; set; }
-    public virtual CadastroDietaViewModel Dieta { get; set; }
+    public virtual ICollection<CadastroDietaViewModel> Dieta { get; set; }
 }
