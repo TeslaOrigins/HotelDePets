@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { TutorComponent } from './components/tutor/tutor.component';
 import { CadastrarTutorComponent } from './components/tutor/cadastrar-tutor/cadastrar-tutor.component';
 import { EditarTutorComponent } from './components/tutor/editar-tutor/editar-tutor.component';
-import { ConsultarPetsComponent } from './components/pet/consultar-pet/consultar-pets.component';
+import { PetComponent } from './components/pet/pet.component';
 
 const routes: Routes = [
   {
@@ -21,8 +21,8 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'pets',
-    component: ConsultarPetsComponent,
+    path: 'pet',
+    component: PetComponent
   },
 ];
 

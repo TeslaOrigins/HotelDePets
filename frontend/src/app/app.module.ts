@@ -14,10 +14,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EditarTutorComponent } from './components/tutor/editar-tutor/editar-tutor.component';
 import { DetalhesTutorComponent } from './components/tutor/detalhes-tutor/detalhes-tutor.component';
 import { DialogConfirmacaoComponent } from './components/dialog-confirmacao/dialog-confirmacao.component';
-import {
-  ConsultarPetsComponent,
-  DialogPet,
-} from './components/pet/consultar-pet/consultar-pets.component';
+import { PetComponent} from './components/pet/pet.component';
+import { CadastrarPetComponent } from './components/pet/cadastrar-pet/cadastrar-pet.component';
+import { EditarPetComponent } from './components/pet/editar-pet/editar-pet.component';
+import { DetalhesPetComponent } from './components/pet/detalhes-pet/detalhes-pet.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,8 +26,10 @@ import {
     EditarTutorComponent,
     DetalhesTutorComponent,
     DialogConfirmacaoComponent,
-    ConsultarPetsComponent,
-    DialogPet,
+    PetComponent,
+    CadastrarPetComponent,
+    EditarPetComponent,
+    DetalhesPetComponent
   ],
   imports: [
     BrowserModule,
