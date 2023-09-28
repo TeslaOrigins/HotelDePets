@@ -51,7 +51,7 @@ public class PetController : ControllerBase
     
     [AllowAnonymous]
     [HttpPost]
-    public async Task<IActionResult> PostPet(CadastroPetViewModel pet)
+    public async Task<IActionResult> CadastrarPet(CadastroPetViewModel pet)
     {
         try
         {
@@ -73,13 +73,13 @@ public class PetController : ControllerBase
     
     [AllowAnonymous]
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutPet(AtualizaPetViewModel Pet)
+    public async Task<IActionResult> AlterarPet(AlterarPetViewModel Pet)
     {
         try
         {
-            var pets = await _petService.AtualizaPet(Pet);
+            var pets = await _petService.AlterarPet(Pet);
             if(pets == null)
-                return Problem("Não foi possível atualizar o cadastro deste Pet");
+                return Problem("Não foi possível alterar o pet especificado");
             return Ok(pets);
         } 
         catch(BusinessException<PetViewModel> BE){
@@ -95,15 +95,15 @@ public class PetController : ControllerBase
     
     [AllowAnonymous]
     [HttpDelete("{idPet}")]
-    public async Task<IActionResult> DeletePet(int idPet)
+    public async Task<IActionResult> ApagarPet(int idPet)
     {
         try
         {
-            var pets = await _petService.RemovePet(idPet);
+            var pets = await _petService.ApagarPet(idPet);
             if(!pets)
-                return Problem("Não foi possível atualizar o cadastro deste Pet");
+                return Problem("Não foi possível apagar o pet especificado");
             
-            return Ok("Pet removido com sucesso");
+            return Ok("Pet apagado com sucesso");
         } 
         catch(BusinessException<PetViewModel> BE){
             return BadRequest(BE.messages);

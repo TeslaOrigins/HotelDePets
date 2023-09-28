@@ -1,4 +1,5 @@
-﻿using HDP.Application.ViewModels.Tutor;
+﻿using HDP.Application.ViewModels.Dieta;
+using HDP.Application.ViewModels.Tutor;
 
 namespace HDP.Application.ViewModels.Pet;
 
@@ -15,4 +16,6 @@ public class PetViewModel
     public int Peso { get; set; }
     public int TutorId { get; set; }
     public virtual TutorViewModel Tutor { get; set; }
+    public virtual VeterinarioViewModel Veterinario {get;set;}
+    public virtual ICollection<DietaViewModel> Dieta {get;set;}
 }

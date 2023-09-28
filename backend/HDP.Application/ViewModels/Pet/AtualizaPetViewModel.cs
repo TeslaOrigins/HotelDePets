@@ -1,6 +1,8 @@
-﻿namespace HDP.Application.ViewModels.Pet;
+﻿using HDP.Application.ViewModels.Veterinario;
 
-public class AtualizaPetViewModel
+namespace HDP.Application.ViewModels.Pet;
+
+public class AlterarPetViewModel
 {
     public int Id { get; set; }
     public string? Nome { get; set; }
@@ -10,4 +12,5 @@ public class AtualizaPetViewModel
     public string? Especie { get; set; }
     public string? FotoUrl { get; set; }
     public int? Peso { get; set; }
+    public AlterarVeterinarioViewModel Veterinario {get;set;}
 }

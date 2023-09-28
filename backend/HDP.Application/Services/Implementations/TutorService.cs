@@ -64,7 +64,7 @@ public class TutorService : ITutorService
             // foreach (var enderecoExistente in enderecoExiste)
             // {
             //     if (enderecoExistente.Existe != null)
-            //         enderecoExistente.Remove(enderecoExistente);
+            //         enderecoExistente.Apagar(enderecoExistente);
             //     // errors.Add(
             //     //     "O Endereço de logradouro: " + enderecoExistente.Logradouro + " já está cadastrado no sistema");
             // }
@@ -98,7 +98,7 @@ public class TutorService : ITutorService
         }
     }
     
-    public async Task<TutorViewModel> AtualizaTutor(AtualizaTutorViewModel dados)
+    public async Task<TutorViewModel> AlterarTutor(AlterarTutorViewModel dados)
     {
         try
         {
@@ -154,7 +154,7 @@ public class TutorService : ITutorService
         }
     }
     
-    public async Task<Tutor> RemoveTutor(int idTutor)
+    public async Task<Tutor> ApagarTutor(int idTutor)
     {
         try
         {

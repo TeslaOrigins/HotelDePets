@@ -53,18 +53,18 @@ public class PetService : IPetService
             List<string> errors = new();
 
             var petExiste = await ValidaPetExistente(dados);
-            var veterinarioExiste = await ValidaVeterinarioExistente(dados.Veterinario);
+            //var veterinarioExiste = await ValidaVeterinarioExistente(dados.Veterinario);
             
             if (petExiste)
             {
                 errors.Add("Pet já existe no sistema");
             }
 
-            if (veterinarioExiste != null)
-            {
-                if (veterinarioExiste.Existe)
-                    errors.Add("O Endereço de logradouro: " + veterinarioExiste.Nome + " já está cadastrado no sistema");
-            }
+            //if (veterinarioExiste != null)
+           // {
+           //     if (veterinarioExiste.Existe)
+           //         errors.Add("O Endereço de logradouro: " + veterinarioExiste.Nome + " já está cadastrado no sistema");
+           // }
 
             if (errors.Any())
                 throw new Exception(errors.ToArray().ToString());
@@ -95,7 +95,7 @@ public class PetService : IPetService
         }
     }
     
-    public async Task<PetViewModel> AtualizaPet(AtualizaPetViewModel dados)
+    public async Task<PetViewModel> AlterarPet(AlterarPetViewModel dados)
     {
         try
         {
@@ -147,7 +147,7 @@ public class PetService : IPetService
         }
     }
     
-    public async Task<bool> RemovePet(int idPet)
+    public async Task<bool> ApagarPet(int idPet)
     {
         try
         {
@@ -185,28 +185,7 @@ public class PetService : IPetService
         }
     }
     
-    private async Task<VeterinarioExistenteViewModel> ValidaVeterinarioExistente(CadastroVeterinarioViewModel dados)
-    {
-        try
-        {
-            VeterinarioExistenteViewModel veterinarioExistente = null;
-            var vet = await _veterinarioRepository.GetVeterinarioPorNome(dados.Nome);
-
-            if (vet != null)
-            {
-                veterinarioExistente = new VeterinarioExistenteViewModel(){
-                    Existe = true,
-                    Nome = vet.Nome
-                };
-            }
-
-            return veterinarioExistente;
-        }
-        catch (Exception e)
-        {
-            throw new Exception(e.Message);
-        }
-    }
+  
     
     private async Task<Pet> GetPetPorNomeAnotherService(string nomePet)
     {

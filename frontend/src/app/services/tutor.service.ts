@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Tutor } from '../models/Tutor';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TutorService {
   base_url = environment.api_url + 'tutor/';
@@ -17,17 +17,17 @@ export class TutorService {
   cadastrar(body: any): Observable<Tutor> {
     return this.http.post<Tutor>(`${this.base_url}`, body);
   }
-  editar(body: any): Observable<Tutor> {
+  alterar(body: any): Observable<Tutor> {
     return this.http.put<Tutor>(`${this.base_url}${body.tutorId}`, body);
   }
 
-  deletar(tutorId: number): Observable<string>{
+  apagar(tutorId: number): Observable<string> {
     return this.http.delete<string>(`${this.base_url}${tutorId}`);
   }
   getAllTutores(): Observable<Tutor[]> {
     return this.http.get<Tutor[]>(`${this.base_url}`);
   }
-  getTutorById(idTutor: number): Observable<Tutor>{
+  getTutorById(idTutor: number): Observable<Tutor> {
     return this.http.get<Tutor>(`${this.base_url}${idTutor}`);
   }
 }

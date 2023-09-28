@@ -17,8 +17,9 @@ import { PetService } from 'src/app/services/pet.service';
 import { Tutor } from 'src/app/models/Tutor';
 import { ToastrService } from 'ngx-toastr';
 import { CadastrarPetComponent } from './cadastrar-pet/cadastrar-pet.component';
-import { EditarPetComponent } from './editar-pet/editar-pet.component';
+
 import { DialogConfirmacaoComponent } from '../dialog-confirmacao/dialog-confirmacao.component';
+import { AlterarPetComponent } from './alterar-pet/alterar-pet.component';
 
 @Component({
   selector: 'app-pet',
@@ -38,9 +39,11 @@ export class PetComponent {
     'especie',
   ];
 
-  constructor(public dialog: MatDialog,
-              private petService:PetService,
-              private toastr: ToastrService) {
+  constructor(
+    public dialog: MatDialog,
+    private petService: PetService,
+    private toastr: ToastrService
+  ) {
     this.pets$ = petService.getAllPets();
     const obs = {
       next: (pets: Pet[]) => {
@@ -54,7 +57,7 @@ export class PetComponent {
     };
     this.pets$.subscribe(obs);
   }
-  getAllPets(){
+  getAllPets() {
     const obs = {
       next: (Pets: Pet[]) => {
         this.pets = Pets;
@@ -67,53 +70,52 @@ export class PetComponent {
     };
     this.pets$.subscribe(obs);
   }
-  ngOnInit() {
-  }
-  openDialogDetalhes(pet: Pet): void{
-    const dialogRef = this.dialog.open(DetalhesPetComponent,{
+  ngOnInit() {}
+  openDialogDetalhes(pet: Pet): void {
+    const dialogRef = this.dialog.open(DetalhesPetComponent, {
       width: '1250px',
       autoFocus: false,
       maxHeight: '90vh',
-      data:pet
+      data: pet,
     });
 
-    dialogRef.afterClosed().subscribe((result:any) => {
-      this.getAllPets()
-    });
-  }
-  openDialog(): void {
-    const dialogRef = this.dialog.open(CadastrarPetComponent,{
-      autoFocus: false,
-      maxHeight: '90vh',
-      width: '1250px'
-    });
-
-    dialogRef.afterClosed().subscribe((result:any) => {
+    dialogRef.afterClosed().subscribe((result: any) => {
       this.getAllPets();
     });
   }
-  openDialogEdit(pet: Pet): void{
-    const dialogRef = this.dialog.open(EditarPetComponent,{
+  openDialog(): void {
+    const dialogRef = this.dialog.open(CadastrarPetComponent, {
+      autoFocus: false,
+      maxHeight: '90vh',
+      width: '1250px',
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      this.getAllPets();
+    });
+  }
+  openDialogEdit(pet: Pet): void {
+    const dialogRef = this.dialog.open(AlterarPetComponent, {
       width: '1250px',
       autoFocus: false,
       maxHeight: '90vh',
-      data:pet
+      data: pet,
     });
 
-    dialogRef.afterClosed().subscribe((result:any) => {
-      this.getAllPets()
+    dialogRef.afterClosed().subscribe((result: any) => {
+      this.getAllPets();
     });
   }
-  deletarTutor(pet:Pet){
-    const dialogRef = this.dialog.open(DialogConfirmacaoComponent,{
-      data:"Tem certeza que quer deletar o pet com o nome: " + pet.nome + " ?"
+  apagarTutor(pet: Pet) {
+    const dialogRef = this.dialog.open(DialogConfirmacaoComponent, {
+      data: 'Tem certeza que quer apagar o pet com o nome: ' + pet.nome + ' ?',
     });
 
-    dialogRef.afterClosed().subscribe((result:boolean) => {
-      if(result){
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if (result) {
         const obs = {
           next: (msg: string) => {
-            this.toastr.success(msg)
+            this.toastr.success(msg);
           },
           error: (err: any) => {
             err.forEach((error: any) => {
@@ -121,7 +123,7 @@ export class PetComponent {
             });
           },
         };
-        this.petService.deletar(pet.petId).subscribe(obs);
+        this.petService.apagar(pet.petId).subscribe(obs);
       }
     });
   }

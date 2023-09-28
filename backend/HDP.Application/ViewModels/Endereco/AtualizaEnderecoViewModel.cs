@@ -1,6 +1,6 @@
 ﻿namespace HDP.Application.ViewModels.Endereco;
 
-public class AtualizaEnderecoViewModel
+public class AlterarEnderecoViewModel
 {
     public int Id { get; set; }
     public string? Logradouro { get; set; }

@@ -8,6 +8,6 @@ public interface ITutorService
     Task<TutorViewModel[]> GetTutor();
     Task<TutorViewModel> GetTutorPorId(int idTutor);
     Task<TutorViewModel> CadastrarTutor(CadastroTutorViewModel dados);
-    Task<TutorViewModel> AtualizaTutor(AtualizaTutorViewModel dados);
-    Task<Tutor> RemoveTutor(int idTutor);
+    Task<TutorViewModel> AlterarTutor(AlterarTutorViewModel dados);
+    Task<Tutor> ApagarTutor(int idTutor);
 }

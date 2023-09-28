@@ -12,6 +12,8 @@ namespace HDP.Application.Helpers.Profiles
     {
         public PetProfile(){
             CreateMap<CadastroPetViewModel,Pet>();
+            CreateMap<AlterarPetViewModel,Pet>();
+            CreateMap<Pet,PetViewModel>();
         }
     }
 }

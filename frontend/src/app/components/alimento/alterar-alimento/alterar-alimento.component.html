@@ -1,0 +1,41 @@
+<form [formGroup]="alimentoForm">
+  <mat-form-field
+    [hideRequiredMarker]="false"
+    appearance="fill"
+  >
+    <mat-label>Nome Completo</mat-label>
+    <input matInput formControlName="nome">
+    <mat-hint
+      >Preencha o nome do alimento</mat-hint
+    >
+    <mat-error *ngIf="alimentoForm.controls['nome'].hasError('required')"
+      >É necessário preencher o nome do alimento</mat-error
+    >
+  </mat-form-field>
+  <mat-form-field  appearance="fill">
+    <mat-label>Quantidade no estoque</mat-label>
+    <input matInput formControlName="cpf" />
+    <mat-error>Quantidade inválida</mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Preço de reabastecimento</mat-label>
+    <input matInput formControlName="precoReabastecimento" />
+    <mat-error>
+      >Preço de reabastecimento inválido</mat-error
+    >
+
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Data de entrada</mat-label>
+    <input
+      required
+      matInput
+      formControlName="dataEntrada"
+    />
+    <mat-error>Data de entrada inválida</mat-error>
+  </mat-form-field>
+
+  <button *ngIf="alimentoForm.valid" class="apertar" mat-stroked-button (click)="cadastrar()">
+    Finalizar Alteração
+  </button>
+</form>

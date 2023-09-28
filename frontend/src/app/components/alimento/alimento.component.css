@@ -58,11 +58,6 @@ mat-card {
   margin-top: 22px;
 }
 
-.pagination {
-  display: flex;
-  justify-content: center;
-  margin-top: 2%;
-}
 h1 {
   text-align: center;
 }
