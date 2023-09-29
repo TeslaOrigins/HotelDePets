@@ -110,7 +110,7 @@ public class TutorService : ITutorService
                 if (endDomain != null)
                 {
                     endDomain.Logradouro = endereco.Logradouro;
-                    endDomain.Numero = (int) endereco.Numero;
+                    endDomain.Numero = endereco.Numero;
                     endDomain.Cidade = endereco.Cidade;
                     endDomain.Estado = endereco.Estado;   
                     

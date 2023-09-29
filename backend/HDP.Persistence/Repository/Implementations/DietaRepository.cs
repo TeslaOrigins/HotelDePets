@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HDP.Persistence.Repository.Contracts;
+using Microsoft.EntityFrameworkCore;
 
 namespace HDP.Persistence.Repository.Implementations;
 
-public class DietaRepository : GeneralRepository
+public class DietaRepository : GeneralRepository, IDietaRepository
 {
     private readonly HDPContext _context;
     public DietaRepository(HDPContext context) : base(context)

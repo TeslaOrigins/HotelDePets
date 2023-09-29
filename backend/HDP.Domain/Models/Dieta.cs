@@ -11,6 +11,7 @@ namespace HDP.Persistence
         }
 
         public int DietaId { get; set; }
+        public DateTime HorarioAlimentacao { get; set; }
         public int Quantidade { get; set; }
         public string? Observacoes { get; set; }
         public int PetId { get; set; }

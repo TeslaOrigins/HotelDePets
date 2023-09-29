@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HDP.Persistence.Repository.Contracts;
+using Microsoft.EntityFrameworkCore;
 
 namespace HDP.Persistence.Repository.Implementations;
 
-public class VeterinarioRepository : GeneralRepository
+public class VeterinarioRepository : GeneralRepository, IVeterinarioRepository
 {
     private readonly HDPContext _context;
     public VeterinarioRepository(HDPContext context) : base(context)
@@ -30,6 +31,15 @@ public class VeterinarioRepository : GeneralRepository
     {
         var mainQuery = from veterinario in _context.Veterinario
             where veterinario.VeterinarioId == idVeterinario
+            select veterinario;
+        
+        return await mainQuery.FirstOrDefaultAsync();   
+    }
+    
+    public async Task<Veterinario> GetVeterinarioPorPetId(int PetId)
+    {
+        var mainQuery = from veterinario in _context.Veterinario
+            where veterinario.PetId == PetId
             select veterinario;
         
         return await mainQuery.FirstOrDefaultAsync();   

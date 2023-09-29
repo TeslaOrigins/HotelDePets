@@ -6,5 +6,5 @@ public interface IVeterinarioRepository : IGeneralRepository
     Task<Veterinario> GetVeterinarioPorNome(String logradouroVeterinario);
     Task<Veterinario> GetVeterinarioPorId(int idVeterinario);
     Task<Veterinario> GetVeterinarioPorPetId(int idVeterinario);
-    Task<Veterinario[]> GetVeterinariosPorTutorId(int TutorId);
+    Task<Veterinario[]> GetVeterinariosPorPetId(int TutorId);
 }

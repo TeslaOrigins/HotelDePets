@@ -1,6 +1,6 @@
 ﻿namespace HDP.Persistence.Repository.Contracts;
 
-public class IDietaRepository
+public interface IDietaRepository
 {
     Task<Dieta[]> GetDietas();
     Task<Dieta> GetDietaPorId(int idDieta);

@@ -2,8 +2,8 @@
 
 public class CadastroDietaViewModel
 {
-    public string Quantidade { get; set; }
-    public int Observacoes { get; set; }
-    public DateTime Horario {get;set;}
+    public DateTime HorarioAlimentacao { get; set; }
+    public int Quantidade { get; set; }
+    public string Observacoes { get; set; }
     public int[] idsAlimento{get;set;}
 }
