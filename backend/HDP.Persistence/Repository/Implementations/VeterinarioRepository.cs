@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HDP.Persistence.Repository.Contracts;
+using Microsoft.EntityFrameworkCore;
 
 namespace HDP.Persistence.Repository.Implementations;
 
-public class VeterinarioRepository : GeneralRepository
+public class VeterinarioRepository : GeneralRepository, IVeterinarioRepository
 {
     private readonly HDPContext _context;
     public VeterinarioRepository(HDPContext context) : base(context)
@@ -43,7 +44,17 @@ public class VeterinarioRepository : GeneralRepository
         
         return await mainQuery.ToArrayAsync();   
     }
-    
+
+    public Task<Veterinario> GetVeterinarioPorPetId(int idVeterinario)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Veterinario[]> GetVeterinariosPorTutorId(int TutorId)
+    {
+        throw new NotImplementedException();
+    }
+
     // public async Task<TipoVeterinario> GetTipoVeterinarioPorNome(String nomeTipoVeterinario)
     // {
     //     var mainQuery = from Veterinario in _context.Veterinarios

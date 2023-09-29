@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HDP.API.Controllers
 {
     [ApiController]
-    [Route("Pet")]
+    [Route("Alimento")]
     public class AlimentoController: ControllerBase
     {
          private readonly IAlimentoService _AlimentoService;
@@ -83,7 +83,7 @@ namespace HDP.API.Controllers
         {
             var pets = await _AlimentoService.AlterarAlimento(alimento);
             if(pets == null)
-                return Problem("Não foi possível Alterar o cadastro deste Pet");
+                return Problem("Não foi possível alterar os dados do alimento especificado");
             return Ok(pets);
         } 
         catch(BusinessException<AlimentoViewModel> BE){
@@ -105,9 +105,9 @@ namespace HDP.API.Controllers
         {
             var pets = await _AlimentoService.ApagarAlimento(idAlimento);
             if(!pets)
-                return Problem("Não foi possível deletar o alimento");
+                return Problem("Não foi possível apagar o alimento");
             
-            return Ok("Alimento removido com sucesso");
+            return Ok("Alimento apagado com sucesso");
         } 
         catch(BusinessException<AlimentoViewModel> BE){
             return BadRequest(BE.messages);

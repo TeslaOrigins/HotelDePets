@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
+import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { Alimento } from 'src/app/models/Alimento';
 import { Pet } from 'src/app/models/Pet';
@@ -18,7 +19,8 @@ export class CadastrarPetComponent implements OnInit {
     {alimentoId: 1,dataEntrada:new Date(),nome: 'whiskas velha 600gr',precoReabastecimento: 2.00,quantidadeEstoque: 2},
     {alimentoId: 2,dataEntrada:new Date(),nome: 'whiskas nova 600gr',precoReabastecimento: 2.00,quantidadeEstoque: 2},
   ];
-
+  faPlus = faPlus;
+  faTrash = faTrash;
   constructor(private petService: PetService,
             public dialogRef: MatDialogRef<CadastrarPetComponent>,
             @Inject(MAT_DIALOG_DATA) public data: Pet,

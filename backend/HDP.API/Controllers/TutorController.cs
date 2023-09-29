@@ -80,7 +80,7 @@ public class TutorController : ControllerBase
             var tutors = await _tutorService.AlterarTutor(Tutor);
             
             if(tutors == null)
-                return Problem("Não foi possível Alterar o cadastro deste Tutor");
+                return Problem("Não foi possível alterar os dados do tutor especificado");
             
             return Ok(tutors);
         } 
@@ -104,7 +104,7 @@ public class TutorController : ControllerBase
             var tutors = await _tutorService.ApagarTutor(idTutor);
             
             if(tutors == null)
-                return Problem("Não foi possível Alterar o cadastro deste Tutor");
+                return Problem("Não foi possível apagar o tutor especificado");
             
             return Ok(tutors);
         } 

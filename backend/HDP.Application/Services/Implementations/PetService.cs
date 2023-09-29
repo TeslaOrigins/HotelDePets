@@ -52,13 +52,13 @@ public class PetService : IPetService
         {
             List<string> errors = new();
 
-            var petExiste = await ValidaPetExistente(dados);
+            //var petExiste = await ValidaPetExistente(dados);
             //var veterinarioExiste = await ValidaVeterinarioExistente(dados.Veterinario);
             
-            if (petExiste)
-            {
-                errors.Add("Pet já existe no sistema");
-            }
+            //if (petExiste)
+            //{
+           //     errors.Add("Pet já existe no sistema");
+           // }
 
             //if (veterinarioExiste != null)
            // {
@@ -71,7 +71,7 @@ public class PetService : IPetService
 
             var pet = _mapper.Map<Pet>(dados);
             
-            pet.NomeNormalizado = dados.Nome.ToUpper().Trim();
+           // pet.NomeNormalizado = dados.Nome.ToUpper().Trim();
             
             _petRepository.Add(pet);
             if (await _petRepository.SaveChangesAsync())
@@ -99,7 +99,10 @@ public class PetService : IPetService
     {
         try
         {
-            var petDomain = await GetPetPorIdAnotherService(dados.Id);
+            var petDomain = await _petRepository.GetPetPorId(dados.Id);
+
+            if(petDomain == null)
+                throw new NotFoundException("Não foi possível encontrar o pet especificado");
 
             if (dados.Nome != null)
             {
@@ -151,8 +154,10 @@ public class PetService : IPetService
     {
         try
         {
-            var petDomain = await GetPetPorIdAnotherService(idPet);
+            var petDomain = await _petRepository.GetPetPorId(idPet);
             
+            if(petDomain == null)
+                throw new NotFoundException("Não foi possivel encontrar o pet especificado");
             _petRepository.Delete(petDomain);
             
             return await _petRepository.SaveChangesAsync();
@@ -170,7 +175,7 @@ public class PetService : IPetService
             throw new Exception(e.Message);
         }
     }
-
+  /*
     private async Task<bool> ValidaPetExistente(CadastroPetViewModel dados)
     {
         try
@@ -221,5 +226,5 @@ public class PetService : IPetService
         }
 
         return null;
-    }
+    }*/
 }

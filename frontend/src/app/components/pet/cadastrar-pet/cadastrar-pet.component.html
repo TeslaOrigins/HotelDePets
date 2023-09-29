@@ -42,9 +42,12 @@
         <input matInput formControlName="veterinarioTelefone" />
       </mat-form-field>
       <div>
-        Informações da alimentação
+        Informações da alimentação <fa-icon [icon]="faPlus" (click)="pushNovodieta()" ></fa-icon>
       </div>
       <div formArrayName="dieta" *ngFor="let e of dieta.controls; let i = index" >
+        <div [formGroupName]="i">
+        <fa-icon [icon]="faTrash" *ngIf="dieta.value.length > 1" (click)="deletedieta(i)"></fa-icon>
+        <div>Alimentação {{i+1}}:</div>
         <mat-form-field>
           <mat-label>Horario da Alimentação</mat-label>
           <input matInput formControlName="horarioAlimentacao" />
@@ -59,17 +62,21 @@
           <mat-label>Observações</mat-label>
           <input matInput formControlName="observacoes" />
         </mat-form-field>
-        <mat-select (selectionChange)="adicionarAlimento(i,$event)">
-          <mat-option *ngFor="let alimento of e.controls['alimentosDisponiveis'].value" [value]="alimento" >
-            {{alimento.nome}}
-          </mat-option>
-        </mat-select>
+        <mat-form-field>
+          <mat-label>Alimentos da dieta</mat-label>
+          <mat-select (selectionChange)="adicionarAlimento(i,$event)">
+            <mat-option *ngFor="let alimento of e.controls['alimentosDisponiveis'].value" [value]="alimento" >
+              {{alimento.nome}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
         <mat-chip  *ngFor="let alimentoEscolhido of e.controls['alimentos'].value">
             {{alimentoEscolhido.nome}}
             <button (click)="removerAlimento(i,alimentoEscolhido)" matChipRemove>
               <mat-icon>cancel</mat-icon>
             </button>
         </mat-chip>
+        </div>
       </div>
     </div>
     <div

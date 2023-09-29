@@ -39,14 +39,14 @@ public class PetRepository : GeneralRepository, IPetRepository
         return await main_query.FirstOrDefaultAsync();   
     }
     
-    public async Task<Pet> GetPetPorNomeNormalizado(string NomeNormalizadoPet)
+    /*public async Task<Pet> GetPetPorNomeNormalizado(string NomeNormalizadoPet)
     {
         var main_query = from pet in _context.Pet
             where pet.NomeNormalizado == NomeNormalizadoPet
             select pet;
         
         return await main_query.FirstOrDefaultAsync();   
-    }
+    }*/
     
     // public async Task<Endereco> GetEnderecoPorPlaca(String placaEndereco)
     // {

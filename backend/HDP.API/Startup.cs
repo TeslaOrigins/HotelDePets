@@ -32,11 +32,16 @@ namespace HDP.API
         {
             services.AddScoped<ITutorService, TutorService>();
             services.AddScoped<ITutorRepository, TutorRepository>();
-
-            services.AddScoped<IEnderecoService, EnderecoService>();
+            
+            
             services.AddScoped<IEnderecoRepository, EnderecoRepository>();
 
-            // services.AddScoped<IMaterialService,MaterialService>();
+            services.AddScoped<IPetRepository,PetRepository>();
+            services.AddScoped<IPetService,PetService>();
+            services.AddScoped<IVeterinarioRepository,VeterinarioRepository>();
+            
+            services.AddScoped<IAlimentoService,AlimentoService>();   
+            services.AddScoped<IAlimentoRepository,AlimentoRepository>();            // services.AddScoped<IMaterialService,MaterialService>();
             // services.AddScoped<IMaterialRepository, MaterialRepository>();
 
 
