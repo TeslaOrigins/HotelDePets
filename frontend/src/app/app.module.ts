@@ -18,7 +18,10 @@ import {
   ConsultarPetsComponent,
   DialogPet,
 } from './components/pet/consultar-pet/consultar-pets.component';
-import { ListarMedicamentosComponent } from './components/medicamento/listar-medicamentos/listar-medicamentos.component';
+import {
+  DialogMedicamento,
+  ListarMedicamentosComponent,
+} from './components/medicamento/listar-medicamentos/listar-medicamentos.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +32,7 @@ import { ListarMedicamentosComponent } from './components/medicamento/listar-med
     DialogConfirmacaoComponent,
     ConsultarPetsComponent,
     DialogPet,
+    DialogMedicamento,
     ListarMedicamentosComponent,
   ],
   imports: [
