@@ -50,6 +50,14 @@ export class ListarMedicamentosComponent {
       }
     });
   }
+
+  deletarMedicamento(medicamento: Medicamento) {
+    if (confirm('Tem certeza que deseja excluir?')) {
+      this.mockMedicamentos = this.mockMedicamentos.filter(
+        (med) => med.medicamentoId !== medicamento.medicamentoId
+      );
+    }
+  }
 }
 
 @Component({
