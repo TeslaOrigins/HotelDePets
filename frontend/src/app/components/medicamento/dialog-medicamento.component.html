@@ -12,9 +12,14 @@
       </mat-form-field>
     </div>
     <div
-      style="display: flex; flex-direction: row; justify-content: space-between"
+      style="
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 16px;
+      "
     >
-      <button mat-button (click)="close()">Cancelar</button>
+      <button mat-button (click)="close()" type="button">Cancelar</button>
       <button mat-button type="submit">Confirmar</button>
     </div>
   </form>
