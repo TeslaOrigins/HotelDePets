@@ -31,22 +31,47 @@ export class ListarMedicamentosComponent {
       nome: 'paracetamol 15mg',
       quantidade: 8,
     },
+    {
+      medicamentoId: 2,
+      nome: 'paracetamol 30mg',
+      quantidade: 8,
+    },
+    {
+      medicamentoId: 3,
+      nome: 'paracetamol 45mg',
+      quantidade: 8,
+    },
   ];
 
   displayedColumns: string[] = ['nome', 'quantidade'];
 
   constructor(public dialog: MatDialog, private _snackBar: MatSnackBar) {}
 
-  openDialog(pet?: Medicamento): void {
-    const dialogRef = this.dialog.open(DialogMedicamento);
+  openDialog(medicamento?: Medicamento): void {
+    const dialogRef = this.dialog.open(DialogMedicamento, {
+      data: { medicamento: medicamento },
+    });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
+    dialogRef.afterClosed().subscribe((result: Medicamento) => {
       if (result) {
-        this.mockMedicamentos = [...this.mockMedicamentos, result];
-        this._snackBar.open('Medicamento cadastrado com sucesso', 'X', {
-          duration: 3000,
-        });
+        if (result.medicamentoId !== null) {
+          const index = this.mockMedicamentos.findIndex(
+            (med) => med.medicamentoId === result.medicamentoId
+          );
+          this.mockMedicamentos = [
+            ...this.mockMedicamentos.slice(0, index),
+            result,
+            ...this.mockMedicamentos.slice(index + 1),
+          ];
+          this._snackBar.open('Medicamento Atualizado com sucesso', 'X', {
+            duration: 3000,
+          });
+        } else {
+          this.mockMedicamentos = [...this.mockMedicamentos, result];
+          this._snackBar.open('Medicamento cadastrado com sucesso', 'X', {
+            duration: 3000,
+          });
+        }
       }
     });
   }
@@ -58,6 +83,9 @@ export class ListarMedicamentosComponent {
       );
     }
   }
+  editarMedicamento(medicamento: Medicamento) {
+    this.openDialog(medicamento);
+  }
 }
 
 @Component({
@@ -68,12 +96,17 @@ export class DialogMedicamento {
   medicamentoForm: FormGroup;
   constructor(
     public dialogRef: MatDialogRef<DialogMedicamento>,
-    @Inject(MAT_DIALOG_DATA) public data: Medicamento,
+    @Inject(MAT_DIALOG_DATA) public data: { medicamento: Medicamento },
     private builder: FormBuilder
   ) {
+    const medicamento = data.medicamento;
     this.medicamentoForm = this.builder.group({
-      nome: new FormControl<string>('', Validators.required),
-      quantidade: new FormControl<number>(0, Validators.required),
+      medicamentoId: new FormControl<number>(medicamento?.medicamentoId),
+      nome: new FormControl<string>(medicamento?.nome, Validators.required),
+      quantidade: new FormControl<number>(
+        medicamento?.quantidade,
+        Validators.required
+      ),
     });
   }
 
