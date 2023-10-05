@@ -18,6 +18,10 @@ import {
   ConsultarPetsComponent,
   DialogPet,
 } from './components/pet/consultar-pet/consultar-pets.component';
+import {
+  DialogMedicamento,
+  ListarMedicamentosComponent,
+} from './components/medicamento/listar-medicamentos/listar-medicamentos.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +32,8 @@ import {
     DialogConfirmacaoComponent,
     ConsultarPetsComponent,
     DialogPet,
+    DialogMedicamento,
+    ListarMedicamentosComponent,
   ],
   imports: [
     BrowserModule,
