@@ -11,8 +11,10 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { take } from 'rxjs';
 import { Reserva } from 'src/app/models/Reserva';
 import { Servico } from 'src/app/models/Servico';
+import { ReservaService } from 'src/app/services/reserva.service';
 
 @Component({
   selector: 'app-consultar-reserva',
@@ -20,61 +22,20 @@ import { Servico } from 'src/app/models/Servico';
   styleUrls: ['./consultar-reserva.component.scss'],
 })
 export class ConsultarReservaComponent {
-  mockReservas: Reserva[] = [
-    {
-      reservaId: 0,
-      dataCheckin: new Date('2023-10-04'),
-      dataCheckout: new Date('2023-10-08'),
-      servicos: [
-        { servicoId: 0, nome: 'tosa', descricao: 'tosa do pet', preco: 80 },
-        { servicoId: 1, nome: 'banho', descricao: 'banho do pet', preco: 50 },
-      ],
-    },
-    {
-      reservaId: 1,
-      dataCheckin: new Date('2023-10-05'),
-      dataCheckout: new Date('2023-10-09'),
-      servicos: [
-        {
-          servicoId: 2,
-          nome: 'cortar unha',
-          descricao: 'corta unha do pet',
-          preco: 20,
-        },
-        {
-          servicoId: 3,
-          nome: 'passear',
-          descricao: 'leva o pet para passear',
-          preco: 5,
-        },
-      ],
-    },
-    {
-      reservaId: 2,
-      dataCheckin: new Date('2023-10-06'),
-      dataCheckout: new Date('2023-11-01'),
-      servicos: [
-        { servicoId: 0, nome: 'tosa', descricao: 'tosa do pet', preco: 80 },
-        { servicoId: 1, nome: 'banho', descricao: 'banho do pet', preco: 50 },
-        {
-          servicoId: 2,
-          nome: 'cortar unha',
-          descricao: 'corta unha do pet',
-          preco: 20,
-        },
-        {
-          servicoId: 3,
-          nome: 'passear',
-          descricao: 'leva o pet para passear',
-          preco: 5,
-        },
-      ],
-    },
-  ];
+  reservas: Reserva[] = [];
 
   displayedColumns: string[] = ['dataCheckin', 'dataCheckout', 'servicos'];
 
-  constructor(public dialog: MatDialog, private _snackBar: MatSnackBar) {}
+  constructor(
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar,
+    private reservaService: ReservaService
+  ) {
+    this.reservaService
+      .getAllreservas()
+      .pipe(take(1))
+      .subscribe((reservas) => (this.reservas = reservas));
+  }
 
   getServicoNames(servicos: Servico[]) {
     return servicos.map((servico) => servico.nome).join(',');
@@ -88,22 +49,24 @@ export class ConsultarReservaComponent {
     dialogRef.afterClosed().subscribe((result: Reserva) => {
       if (result) {
         if (result.reservaId !== null) {
-          const index = this.mockReservas.findIndex(
+          const index = this.reservas.findIndex(
             (serv) => serv.reservaId === result.reservaId
           );
-          this.mockReservas = [
-            ...this.mockReservas.slice(0, index),
+          this.reservas = [
+            ...this.reservas.slice(0, index),
             result,
-            ...this.mockReservas.slice(index + 1),
+            ...this.reservas.slice(index + 1),
           ];
           this._snackBar.open('Reserva Atualizado com sucesso', 'X', {
             duration: 3000,
           });
+          this.reservaService.editar(result).pipe(take(1)).subscribe();
         } else {
-          this.mockReservas = [...this.mockReservas, result];
+          this.reservas = [...this.reservas, result];
           this._snackBar.open('Reserva cadastrado com sucesso', 'X', {
             duration: 3000,
           });
+          this.reservaService.cadastrar(result).pipe(take(1)).subscribe();
         }
       }
     });
@@ -111,9 +74,10 @@ export class ConsultarReservaComponent {
 
   deletarReserva(reserva: Reserva) {
     if (confirm('Tem certeza que deseja excluir?')) {
-      this.mockReservas = this.mockReservas.filter(
+      this.reservas = this.reservas.filter(
         (serv) => serv.reservaId !== reserva.reservaId
       );
+      this.reservaService.deletar(reserva.reservaId).pipe(take(1)).subscribe();
     }
   }
   editarReserva(reserva: Reserva) {

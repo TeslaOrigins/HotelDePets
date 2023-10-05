@@ -11,7 +11,9 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { take } from 'rxjs';
 import { Servico } from 'src/app/models/Servico';
+import { ServicoService } from 'src/app/services/servico.service';
 
 @Component({
   selector: 'app-consultar-servicos',
@@ -19,25 +21,19 @@ import { Servico } from 'src/app/models/Servico';
   styleUrls: ['./consultar-servicos.component.scss'],
 })
 export class ConsultarServicosComponent {
-  mockServicos: Servico[] = [
-    { servicoId: 0, nome: 'tosa', descricao: 'tosa do pet', preco: 80 },
-    { servicoId: 1, nome: 'banho', descricao: 'banho do pet', preco: 50 },
-    {
-      servicoId: 2,
-      nome: 'cortar unha',
-      descricao: 'corta unha do pet',
-      preco: 20,
-    },
-    {
-      servicoId: 3,
-      nome: 'passear',
-      descricao: 'leva o pet para passear',
-      preco: 5,
-    },
-  ];
+  servicos: Servico[] = [];
   displayedColumns: string[] = ['nome', 'descricao', 'preco'];
 
-  constructor(public dialog: MatDialog, private _snackBar: MatSnackBar) {}
+  constructor(
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar,
+    private servicoService: ServicoService
+  ) {
+    this.servicoService
+      .getAllServicos()
+      .pipe(take(1))
+      .subscribe((serv) => (this.servicos = serv));
+  }
 
   openDialog(servico?: Servico): void {
     const dialogRef = this.dialog.open(DialogServico, {
@@ -47,22 +43,24 @@ export class ConsultarServicosComponent {
     dialogRef.afterClosed().subscribe((result: Servico) => {
       if (result) {
         if (result.servicoId !== null) {
-          const index = this.mockServicos.findIndex(
+          const index = this.servicos.findIndex(
             (serv) => serv.servicoId === result.servicoId
           );
-          this.mockServicos = [
-            ...this.mockServicos.slice(0, index),
+          this.servicos = [
+            ...this.servicos.slice(0, index),
             result,
-            ...this.mockServicos.slice(index + 1),
+            ...this.servicos.slice(index + 1),
           ];
           this._snackBar.open('Serviço Atualizado com sucesso', 'X', {
             duration: 3000,
           });
+          this.servicoService.editar(result).pipe(take(1)).subscribe();
         } else {
-          this.mockServicos = [...this.mockServicos, result];
+          this.servicos = [...this.servicos, result];
           this._snackBar.open('Serviço cadastrado com sucesso', 'X', {
             duration: 3000,
           });
+          this.servicoService.cadastrar(servico).pipe(take(1)).subscribe();
         }
       }
     });
@@ -70,9 +68,10 @@ export class ConsultarServicosComponent {
 
   deletarServico(servico: Servico) {
     if (confirm('Tem certeza que deseja excluir?')) {
-      this.mockServicos = this.mockServicos.filter(
+      this.servicos = this.servicos.filter(
         (serv) => serv.servicoId !== servico.servicoId
       );
+      this.servicoService.deletar(servico.servicoId).pipe(take(1)).subscribe();
     }
   }
   editarServico(servico: Servico) {

@@ -11,8 +11,10 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { take } from 'rxjs';
 
 import { Medicamento } from 'src/app/models/Medicamento';
+import { MedicamentoService } from 'src/app/services/medicamento.service';
 
 @Component({
   selector: 'app-listar-medicamentos',
@@ -20,32 +22,20 @@ import { Medicamento } from 'src/app/models/Medicamento';
   styleUrls: ['./listar-medicamentos.component.scss'],
 })
 export class ListarMedicamentosComponent {
-  mockMedicamentos: Medicamento[] = [
-    {
-      medicamentoId: 0,
-      nome: 'dipirona 30mg',
-      quantidade: 3,
-    },
-    {
-      medicamentoId: 1,
-      nome: 'paracetamol 15mg',
-      quantidade: 8,
-    },
-    {
-      medicamentoId: 2,
-      nome: 'paracetamol 30mg',
-      quantidade: 8,
-    },
-    {
-      medicamentoId: 3,
-      nome: 'paracetamol 45mg',
-      quantidade: 8,
-    },
-  ];
+  medicamentos: Medicamento[] = [];
 
   displayedColumns: string[] = ['nome', 'quantidade'];
 
-  constructor(public dialog: MatDialog, private _snackBar: MatSnackBar) {}
+  constructor(
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar,
+    private medicamentoService: MedicamentoService
+  ) {
+    this.medicamentoService
+      .getAllMedicamentos()
+      .pipe(take(1))
+      .subscribe((med) => (this.medicamentos = med));
+  }
 
   openDialog(medicamento?: Medicamento): void {
     const dialogRef = this.dialog.open(DialogMedicamento, {
@@ -55,22 +45,24 @@ export class ListarMedicamentosComponent {
     dialogRef.afterClosed().subscribe((result: Medicamento) => {
       if (result) {
         if (result.medicamentoId !== null) {
-          const index = this.mockMedicamentos.findIndex(
+          const index = this.medicamentos.findIndex(
             (med) => med.medicamentoId === result.medicamentoId
           );
-          this.mockMedicamentos = [
-            ...this.mockMedicamentos.slice(0, index),
+          this.medicamentos = [
+            ...this.medicamentos.slice(0, index),
             result,
-            ...this.mockMedicamentos.slice(index + 1),
+            ...this.medicamentos.slice(index + 1),
           ];
           this._snackBar.open('Medicamento Atualizado com sucesso', 'X', {
             duration: 3000,
           });
+          this.medicamentoService.editar(result).pipe(take(1)).subscribe();
         } else {
-          this.mockMedicamentos = [...this.mockMedicamentos, result];
+          this.medicamentos = [...this.medicamentos, result];
           this._snackBar.open('Medicamento cadastrado com sucesso', 'X', {
             duration: 3000,
           });
+          this.medicamentoService.cadastrar(result).pipe(take(1)).subscribe();
         }
       }
     });
@@ -78,9 +70,13 @@ export class ListarMedicamentosComponent {
 
   deletarMedicamento(medicamento: Medicamento) {
     if (confirm('Tem certeza que deseja excluir?')) {
-      this.mockMedicamentos = this.mockMedicamentos.filter(
+      this.medicamentos = this.medicamentos.filter(
         (med) => med.medicamentoId !== medicamento.medicamentoId
       );
+      this.medicamentoService
+        .deletar(medicamento.medicamentoId)
+        .pipe(take(1))
+        .subscribe();
     }
   }
   editarMedicamento(medicamento: Medicamento) {
