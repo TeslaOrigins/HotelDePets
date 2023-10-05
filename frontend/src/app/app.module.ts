@@ -22,6 +22,11 @@ import {
   ConsultarServicosComponent,
   DialogServico,
 } from './components/servico/consultar-servicos/consultar-servicos.component';
+import {
+  DialogMedicamento,
+  ListarMedicamentosComponent,
+} from './components/medicamento/listar-medicamentos/listar-medicamentos.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,6 +39,8 @@ import {
     DialogPet,
     ConsultarServicosComponent,
     DialogServico,
+    DialogMedicamento,
+    ListarMedicamentosComponent,
   ],
   imports: [
     BrowserModule,
