@@ -7,6 +7,9 @@ import { ConsultarPetsComponent } from './components/pet/consultar-pet/consultar
 import { HospedagemComponent } from './components/hospedagem/hospedagem.component';
 import { CadastrarHospedagemComponent } from './components/hospedagem/cadastrar-hospedagem/cadastrar-hospedagem.component';
 import { EditarHospedagemComponent } from './components/hospedagem/editar-hospedagem/editar-hospedagem.component';
+import { ConsultarServicosComponent } from './components/servico/consultar-servicos/consultar-servicos.component';
+import { ListarMedicamentosComponent } from './components/medicamento/listar-medicamentos/listar-medicamentos.component';
+import { ConsultarReservaComponent } from './components/reserva/consultar-reserva/consultar-reserva.component';
 
 const routes: Routes = [
   {
@@ -40,6 +43,18 @@ const routes: Routes = [
         component: EditarHospedagemComponent,
       },
     ],
+  },
+  {
+    path: 'servico',
+    component: ConsultarServicosComponent,
+  },
+  {
+    path: 'medicamentos',
+    component: ListarMedicamentosComponent,
+  },
+  {
+    path: 'reserva',
+    component: ConsultarReservaComponent,
   },
 ];
 
