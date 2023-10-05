@@ -1,0 +1,76 @@
+
+.mat-toolbar {
+    background-color: #2ea564;
+    color: white;
+  }
+  
+  .mat-toolbar-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .mat-toolbar-logo {
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+    &:hover {
+        color: #a5fccc;
+        text-decoration: none;
+      }
+  }
+  
+  .mat-toolbar-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  .mat-toolbar-link {
+    //margin-right: 20px;
+    margin: 20px;
+    font-size: 18px;
+    text-decoration: none;
+    color: black;
+    transition: color 0.3s ease;
+  
+    &:hover {
+      color: #fff3e3;
+      text-decoration: none;
+    }
+  }
+  
+  .mat-toolbar-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  .mat-toolbar-link {
+    margin-right: 20px;
+    font-size: 18px;
+    text-decoration: none;
+    color: white;
+    border-bottom: none; /* Remove a linha sublinhada */
+    transition: color 0.3s ease;
+  
+    &:hover {
+      color: #fff3e3;
+      text-decoration: none;
+    }
+  }
+
+     a {
+    color: white;
+    text-decoration: none;
+    border-bottom: none;
+    transition: color 0.3s ease;
+  
+    &:hover {
+      color: #a5fccc;
+      text-decoration: none;
+    }
+  }
