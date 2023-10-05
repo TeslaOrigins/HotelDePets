@@ -7,6 +7,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { MaterialModule } from './material.module';
+import { HospedagemComponent } from './components/hospedagem/hospedagem.component';
+import { CadastrarHospedagemComponent } from './components/hospedagem/cadastrar-hospedagem/cadastrar-hospedagem.component';
+import { EditarHospedagemComponent } from './components/hospedagem/editar-hospedagem/editar-hospedagem.component';
+import { DetalhesHospedagemComponent } from './components/hospedagem/detalhes-hospedagem/detalhes-hospedagem.component';
 import { TutorComponent } from './components/tutor/tutor.component';
 import { CadastrarTutorComponent } from './components/tutor/cadastrar-tutor/cadastrar-tutor.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -21,6 +25,10 @@ import {
 @NgModule({
   declarations: [
     AppComponent,
+    HospedagemComponent,
+    CadastrarHospedagemComponent,
+    EditarHospedagemComponent,
+    DetalhesHospedagemComponent,
     TutorComponent,
     CadastrarTutorComponent,
     EditarTutorComponent,

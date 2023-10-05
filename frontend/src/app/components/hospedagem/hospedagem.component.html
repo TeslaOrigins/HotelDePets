@@ -1,0 +1,68 @@
+<div class="card">
+    <div>
+      Listagem de Hospedagens
+    </div>
+    <div class="tabela">
+      <mat-card class="cabecalho">
+        <div class="cell">
+          Data de Entrada
+        </div>
+        <div class="cell">
+          Data de Saída
+        </div>
+        <div class="cell">
+          Observações
+        </div>
+        <div class="cell">
+          Check-In
+        </div>
+        <div class="cell">
+          Pet ID
+        </div>
+        <div class="cell">
+          Preço da Hospedagem
+        </div>
+        <div class="cell">
+          Ver Detalhes
+        </div>
+        <div class="cell">
+          Editar
+        </div>
+        <div class="cell">
+          Excluir
+        </div>
+      </mat-card>
+      <mat-card class="linha" *ngFor="let hospedagem of hospedagens">
+        <div class="cell">
+          {{ hospedagem.dataEntrada | date: 'dd/MM/yyyy' }}
+        </div>
+        <div class="cell">
+          {{ hospedagem.dataSaida | date: 'dd/MM/yyyy' }}
+        </div>
+        <div class="cell">
+          {{ hospedagem.observacoes }}
+        </div>
+        <div class="cell">
+          {{ hospedagem.checkIn ? 'Sim' : 'Não' }}
+        </div>
+        <div class="cell">
+          {{ hospedagem.petId }}
+        </div>
+        <div class="cell">
+          {{ hospedagem.precoHospedagem | currency: 'BRL' }}
+        </div>
+        <div (click)="openDialogDetalhes(hospedagem)" style="cursor: pointer;" class="cell">
+          <a><fa-icon [icon]="faMagnfyingGlass"></fa-icon></a>
+        </div>
+        <div (click)="openDialogEdit(hospedagem)" style="cursor: pointer;" class="cell">
+          <a><fa-icon [icon]="faEdit"></fa-icon></a>
+        </div>
+        <div (click)="deletarHospedagem(hospedagem)" style="cursor: pointer;" class="cell">
+          <a><fa-icon [icon]="faTrash"></fa-icon></a>
+        </div>
+      </mat-card>
+    </div>
+    <a (click)="openDialog()" class="float">
+      <fa-icon [icon]="faPlus"></fa-icon>
+    </a>
+  </div>
