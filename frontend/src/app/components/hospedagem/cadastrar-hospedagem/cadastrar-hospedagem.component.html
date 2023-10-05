@@ -1,0 +1,37 @@
+<form [formGroup]="hospedagemForm">
+    <mat-form-field [hideRequiredMarker]="false" appearance="fill">
+      <mat-label>Data de Entrada</mat-label>
+      <input matInput formControlName="dataEntrada" [matDatepicker]="entradaDatepicker" />
+      <mat-datepicker-toggle matSuffix [for]="entradaDatepicker"></mat-datepicker-toggle>
+      <mat-datepicker #entradaDatepicker></mat-datepicker>
+      <mat-error *ngIf="hospedagemForm.controls['dataEntrada'].hasError('required')">A data de entrada é obrigatória</mat-error>
+    </mat-form-field>
+  
+    <mat-form-field [hideRequiredMarker]="false" appearance="fill">
+      <mat-label>Data de Saída</mat-label>
+      <input matInput formControlName="dataSaida" [matDatepicker]="saidaDatepicker" />
+      <mat-datepicker-toggle matSuffix [for]="saidaDatepicker"></mat-datepicker-toggle>
+      <mat-datepicker #saidaDatepicker></mat-datepicker>
+      <mat-error *ngIf="hospedagemForm.controls['dataSaida'].hasError('required')">A data de saída é obrigatória</mat-error>
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill">
+      <mat-label>Observações</mat-label>
+      <input matInput formControlName="observacoes" />
+    </mat-form-field>
+  
+    <mat-checkbox formControlName="checkIn">Check-In</mat-checkbox>
+  
+    <mat-form-field appearance="fill">
+      <mat-label>Pet ID</mat-label>
+      <input matInput formControlName="petId" />
+      <mat-error *ngIf="hospedagemForm.controls['petId'].hasError('required')">O ID do pet é obrigatório</mat-error>
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill">
+      <mat-label>Preço da Hospedagem</mat-label>
+      <input matInput formControlName="precoHospedagem" />
+    </mat-form-field>
+  
+    <button *ngIf="hospedagemForm.valid" class="apertar" mat-stroked-button (click)="cadastrar()">Cadastrar Hospedagem</button>
+  </form>

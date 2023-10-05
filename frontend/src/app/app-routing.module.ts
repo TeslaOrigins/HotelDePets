@@ -4,6 +4,9 @@ import { TutorComponent } from './components/tutor/tutor.component';
 import { CadastrarTutorComponent } from './components/tutor/cadastrar-tutor/cadastrar-tutor.component';
 import { EditarTutorComponent } from './components/tutor/editar-tutor/editar-tutor.component';
 import { ConsultarPetsComponent } from './components/pet/consultar-pet/consultar-pets.component';
+import { HospedagemComponent } from './components/hospedagem/hospedagem.component';
+import { CadastrarHospedagemComponent } from './components/hospedagem/cadastrar-hospedagem/cadastrar-hospedagem.component';
+import { EditarHospedagemComponent } from './components/hospedagem/editar-hospedagem/editar-hospedagem.component';
 import { ConsultarServicosComponent } from './components/servico/consultar-servicos/consultar-servicos.component';
 import { ListarMedicamentosComponent } from './components/medicamento/listar-medicamentos/listar-medicamentos.component';
 import { ConsultarReservaComponent } from './components/reserva/consultar-reserva/consultar-reserva.component';
@@ -26,6 +29,20 @@ const routes: Routes = [
   {
     path: 'pets',
     component: ConsultarPetsComponent,
+  },
+  {
+    path: 'hospedagem',
+    component: HospedagemComponent,
+    children: [
+      {
+        path: 'cadastrar',
+        component: CadastrarHospedagemComponent,
+      },
+      {
+        path: 'editar',
+        component: EditarHospedagemComponent,
+      },
+    ],
   },
   {
     path: 'servico',
