@@ -4,7 +4,9 @@ import { TutorComponent } from './components/tutor/tutor.component';
 import { CadastrarTutorComponent } from './components/tutor/cadastrar-tutor/cadastrar-tutor.component';
 import { EditarTutorComponent } from './components/tutor/editar-tutor/editar-tutor.component';
 import { ConsultarPetsComponent } from './components/pet/consultar-pet/consultar-pets.component';
+import { ConsultarServicosComponent } from './components/servico/consultar-servicos/consultar-servicos.component';
 import { ListarMedicamentosComponent } from './components/medicamento/listar-medicamentos/listar-medicamentos.component';
+
 
 const routes: Routes = [
   {
@@ -26,8 +28,14 @@ const routes: Routes = [
     component: ConsultarPetsComponent,
   },
   {
+
+    path: 'servico',
+    component: ConsultarServicosComponent,
+  },
+  {
     path: 'medicamentos',
     component: ListarMedicamentosComponent,
+
   },
 ];
 
