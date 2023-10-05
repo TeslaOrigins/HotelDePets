@@ -26,6 +26,10 @@ import {
   DialogMedicamento,
   ListarMedicamentosComponent,
 } from './components/medicamento/listar-medicamentos/listar-medicamentos.component';
+import {
+  ConsultarReservaComponent,
+  DialogReserva,
+} from './components/reserva/consultar-reserva/consultar-reserva.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +45,8 @@ import {
     DialogServico,
     DialogMedicamento,
     ListarMedicamentosComponent,
+    ConsultarReservaComponent,
+    DialogReserva,
   ],
   imports: [
     BrowserModule,
