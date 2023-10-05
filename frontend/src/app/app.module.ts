@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HomeComponent } from './components/home/home.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -42,6 +43,7 @@ import {
     AppComponent,
     HospedagemComponent,
     NavbarComponent,
+    HomeComponent,
     CadastrarHospedagemComponent,
     EditarHospedagemComponent,
     DetalhesHospedagemComponent,
