@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './components/home/home.component';
 import { TutorComponent } from './components/tutor/tutor.component';
 import { CadastrarTutorComponent } from './components/tutor/cadastrar-tutor/cadastrar-tutor.component';
 import { EditarTutorComponent } from './components/tutor/editar-tutor/editar-tutor.component';
@@ -12,6 +13,10 @@ import { ListarMedicamentosComponent } from './components/medicamento/listar-med
 import { ConsultarReservaComponent } from './components/reserva/consultar-reserva/consultar-reserva.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    component: HomeComponent,
+  },
   {
     path: 'tutor',
     component: TutorComponent,
