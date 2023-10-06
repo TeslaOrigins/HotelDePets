@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HDP.Persistence.Migrations
 {
     [DbContext(typeof(HDPContext))]
-    [Migration("20230909182525_Numero_Endereco_String")]
-    partial class Numero_Endereco_String
+    [Migration("20230924041947_HorarioAlimentacao")]
+    partial class HorarioAlimentacao
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -127,6 +127,10 @@ namespace HDP.Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("DietaId"));
 
+                    b.Property<DateTime>("HorarioAlimentacao")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("horarioAlimentacao");
+
                     b.Property<string>("Observacoes")
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)")
@@ -200,9 +204,8 @@ namespace HDP.Persistence.Migrations
                         .HasColumnType("character varying(255)")
                         .HasColumnName("logradouro");
 
-                    b.Property<string>("Numero")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("Numero")
+                        .HasColumnType("integer")
                         .HasColumnName("numero");
 
                     b.Property<int>("TutorId")
@@ -312,6 +315,10 @@ namespace HDP.Persistence.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)")
                         .HasColumnName("nome");
+
+                    b.Property<string>("NomeNormalizado")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<float>("Peso")
                         .HasColumnType("real")

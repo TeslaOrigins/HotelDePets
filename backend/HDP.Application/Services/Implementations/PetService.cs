@@ -12,6 +12,7 @@ public class PetService : IPetService
 {
     private readonly IPetRepository _petRepository;
     private readonly IVeterinarioRepository _veterinarioRepository;
+    private readonly IDietaRepository _dietaRepository;
     private readonly IMapper _mapper;
     
     public PetService(IMapper mapper, IPetRepository petRepository, IVeterinarioRepository veterinarioRepository){

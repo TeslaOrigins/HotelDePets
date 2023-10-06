@@ -154,6 +154,10 @@ namespace HDP.Persistence
                     .HasColumnName("dietaid")
                     .UseIdentityAlwaysColumn();
 
+                entity.Property(e => e.HorarioAlimentacao)
+                    .HasColumnName("horarioAlimentacao")
+                    .HasColumnType("timestamp with time zone");
+                
                 entity.Property(e => e.Observacoes)
                     .HasMaxLength(255)
                     .HasColumnName("observacoes");

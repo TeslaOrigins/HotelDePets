@@ -9,6 +9,7 @@ import { Tutor } from '../models/Tutor';
 })
 export class TutorService {
   base_url = environment.api_url + 'tutor/';
+  //base_url = 'http://localhost:3000/tutores'
 
   constructor(private http: HttpClient, handler: HttpBackend) {
     this.http = new HttpClient(handler);

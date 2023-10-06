@@ -36,6 +36,15 @@ public class VeterinarioRepository : GeneralRepository, IVeterinarioRepository
         return await mainQuery.FirstOrDefaultAsync();   
     }
     
+    public async Task<Veterinario> GetVeterinarioPorPetId(int PetId)
+    {
+        var mainQuery = from veterinario in _context.Veterinario
+            where veterinario.PetId == PetId
+            select veterinario;
+        
+        return await mainQuery.FirstOrDefaultAsync();   
+    }
+    
     public async Task<Veterinario[]> GetVeterinariosPorPetId(int PetId)
     {
         var mainQuery = from veterinario in _context.Veterinario

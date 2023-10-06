@@ -25,8 +25,6 @@ public class PetRepository : GeneralRepository, IPetRepository
             where pet.PetId == idPet
             select pet;
         
-        main_query = main_query.Include(x => x.Nome);
-        
         return await main_query.FirstOrDefaultAsync();   
     }
     

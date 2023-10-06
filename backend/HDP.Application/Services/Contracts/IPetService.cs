@@ -1,4 +1,5 @@
 ﻿using HDP.Application.ViewModels.Pet;
+using HDP.Persistence.Repository.Contracts;
 
 namespace HDP.Application.Services.Contracts;
 

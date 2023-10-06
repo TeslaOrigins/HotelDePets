@@ -35,6 +35,13 @@ namespace HDP.API
             
             
             services.AddScoped<IEnderecoRepository, EnderecoRepository>();
+            
+            services.AddScoped<IPetService, PetService>();
+            services.AddScoped<IPetRepository, PetRepository>();
+            
+            services.AddScoped<IVeterinarioRepository, VeterinarioRepository>();
+            
+            services.AddScoped<IDietaRepository, DietaRepository>();
 
             services.AddScoped<IPetRepository,PetRepository>();
             services.AddScoped<IPetService,PetService>();

@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HDP.Persistence.Migrations
 {
-    public partial class Numero_Endereco_String : Migration
+    public partial class HorarioAlimentacao : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -80,7 +80,7 @@ namespace HDP.Persistence.Migrations
                     enderecoid = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityAlwaysColumn),
                     logradouro = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    numero = table.Column<string>(type: "text", nullable: false),
+                    numero = table.Column<int>(type: "integer", nullable: false),
                     cidade = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     estado = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     tutorid = table.Column<int>(type: "integer", nullable: false)
@@ -103,6 +103,7 @@ namespace HDP.Persistence.Migrations
                     petid = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityAlwaysColumn),
                     nome = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    NomeNormalizado = table.Column<string>(type: "text", nullable: false),
                     idade = table.Column<int>(type: "integer", nullable: true),
                     raca = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
                     sexo = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
@@ -128,6 +129,7 @@ namespace HDP.Persistence.Migrations
                 {
                     dietaid = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityAlwaysColumn),
+                    horarioAlimentacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     quantidade = table.Column<int>(type: "integer", nullable: false),
                     observacoes = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
                     petid = table.Column<int>(type: "integer", nullable: false)
