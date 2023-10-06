@@ -77,7 +77,13 @@ export class TutorComponent implements OnInit {
       width: '1250px',
     });
 
-    dialogRef.afterClosed().subscribe((result: any) => {});
+    dialogRef.afterClosed().subscribe((result: Tutor) => {
+      this.tutores = [
+        ...this.tutores,
+        { ...result, nomeNormalizado: result.nome },
+      ];
+      console.log(this.tutores);
+    });
   }
   openDialogEdit(tutor: Tutor): void {
     const dialogRef = this.dialog.open(AlterarTutorComponent, {
@@ -111,6 +117,9 @@ export class TutorComponent implements OnInit {
             });
           },
         };
+        this.tutores = this.tutores.filter(
+          (tut) => tut.tutorId !== tutor.tutorId
+        );
         this.tutorService.apagar(tutor.tutorId).subscribe(obs);
       }
     });
