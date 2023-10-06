@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { faMagnifyingGlass, faTrash, faEdit, faPlus } from '@fortawesome/free-solid-svg-icons';
+import {
+  faMagnifyingGlass,
+  faTrash,
+  faEdit,
+  faPlus,
+} from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { Alimento } from 'src/app/models/Alimento';
@@ -13,10 +18,9 @@ import { AlimentoService } from 'src/app/services/alimento.service';
 @Component({
   selector: 'app-alimento',
   templateUrl: './alimento.component.html',
-  styleUrls: ['./alimento.component.css']
+  styleUrls: ['./alimento.component.css'],
 })
 export class AlimentoComponent implements OnInit {
-
   alimentos: Alimento[] = [];
   faMagnfyingGlass = faMagnifyingGlass;
   faTrash = faTrash;
@@ -74,7 +78,9 @@ export class AlimentoComponent implements OnInit {
       width: '1250px',
     });
 
-    dialogRef.afterClosed().subscribe((result: any) => {});
+    dialogRef.afterClosed().subscribe((result: Alimento) => {
+      if (result) this.alimentos = [...this.alimentos, result];
+    });
   }
   openDialogEdit(Alimento: Alimento): void {
     const dialogRef = this.dialog.open(AlterarAlimentoComponent, {
@@ -88,11 +94,11 @@ export class AlimentoComponent implements OnInit {
       this.getAllAlimentos();
     });
   }
-  apagarAlimento(Alimento: Alimento) {
+  apagarAlimento(alimento: Alimento) {
     const dialogRef = this.dialog.open(DialogConfirmacaoComponent, {
       data:
         'Tem certeza que quer apagar o Alimento com o nome: ' +
-        Alimento.nome +
+        alimento.nome +
         ' ?',
     });
 
@@ -108,7 +114,10 @@ export class AlimentoComponent implements OnInit {
             });
           },
         };
-        this.alimentoService.apagar(Alimento.alimentoId).subscribe(obs);
+        this.alimentos = this.alimentos.filter(
+          (ali) => ali.alimentoId !== alimento.alimentoId
+        );
+        this.alimentoService.apagar(alimento.alimentoId).subscribe(obs);
       }
     });
   }

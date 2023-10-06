@@ -78,11 +78,11 @@ export class TutorComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: Tutor) => {
-      this.tutores = [
-        ...this.tutores,
-        { ...result, nomeNormalizado: result.nome },
-      ];
-      console.log(this.tutores);
+      if (result)
+        this.tutores = [
+          ...this.tutores,
+          { ...result, nomeNormalizado: result.nome },
+        ];
     });
   }
   openDialogEdit(tutor: Tutor): void {

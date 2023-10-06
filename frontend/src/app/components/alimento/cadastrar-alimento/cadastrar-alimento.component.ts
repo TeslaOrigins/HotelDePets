@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -12,44 +18,47 @@ import { AlimentoService } from 'src/app/services/alimento.service';
 @Component({
   selector: 'app-cadastrar-alimento',
   templateUrl: './cadastrar-alimento.component.html',
-  styleUrls: ['./cadastrar-alimento.component.css']
+  styleUrls: ['./cadastrar-alimento.component.css'],
 })
 export class CadastrarAlimentoComponent implements OnInit {
   alimentoForm: FormGroup;
   faPlus = faPlus;
   faTrash = faTrash;
-  constructor(private builder: FormBuilder,
-    private alimentoService:AlimentoService,
+  constructor(
+    private builder: FormBuilder,
+    private alimentoService: AlimentoService,
     private toastr: ToastrService,
     private router: Router,
-   public dialogRef: MatDialogRef<CadastrarAlimentoComponent>) {
+    public dialogRef: MatDialogRef<CadastrarAlimentoComponent>
+  ) {
     this.alimentoForm = this.builder.group({
-      nome: new FormControl<string>('',Validators.required),
-      quantidadeEstoque: new FormControl<number>(0,[Validators.required,Validators.minLength(11)]),
-      precoReabastecimento: new FormControl<number>(0,Validators.required),
-      dataEntrada: new FormControl<Date>(new Date(),Validators.required),
-
+      nome: new FormControl<string>('', Validators.required),
+      quantidadeEstoque: new FormControl<number>(0, [
+        Validators.required,
+        Validators.minLength(11),
+      ]),
+      precoReabastecimento: new FormControl<number>(0, Validators.required),
+      dataEntrada: new FormControl<Date>(new Date(), Validators.required),
     });
-
   }
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  cadastrar(){
+  cadastrar() {
     console.log(this.alimentoForm);
     if (this.alimentoForm.valid) {
       const obj = {
         nome: this.alimentoForm.controls['nome'].value,
-        quantidadeEstoque: this.alimentoForm.controls['quantidadeEstoque'].value,
-        precoReabastecimento: this.alimentoForm.controls['precoReabastecimento'].value,
+        quantidadeEstoque:
+          this.alimentoForm.controls['quantidadeEstoque'].value,
+        precoReabastecimento:
+          this.alimentoForm.controls['precoReabastecimento'].value,
         dataEntrada: this.alimentoForm.controls['dataEntrada'].value,
-
-      }
+      };
       const obs = {
         next: (alimento: Alimento) => {
           this.toastr.success('Alimento cadastrado com sucesso');
           this.router.navigateByUrl('/alimento/');
-          this.dialogRef.close();
+          //this.dialogRef.close();
         },
         error: (err: any) => {
           if (err.status == 400) {
@@ -59,10 +68,13 @@ export class CadastrarAlimentoComponent implements OnInit {
           } else {
             this.toastr.error(err.error);
           }
-          this.dialogRef.close();
+          //this.dialogRef.close();
         },
       };
-      this.alimentoService.cadastrar(obj).subscribe(obs);
+
+      this.toastr.success('Alimento cadastrado com sucesso');
+      this.dialogRef.close(Object.assign(this.alimentoForm.value));
+      //this.alimentoService.cadastrar(obj).subscribe(obs);
     }
   }
 }

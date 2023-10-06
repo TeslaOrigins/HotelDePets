@@ -1,49 +1,41 @@
 <form [formGroup]="alimentoForm">
-  <mat-form-field
-    [hideRequiredMarker]="false"
-    appearance="fill"
-  >
-    <mat-label>Nome Completo</mat-label>
-    <input matInput formControlName="nome">
-    <mat-hint
-      >Preencha o nome do alimento</mat-hint
-    >
+  <mat-form-field [hideRequiredMarker]="false" appearance="fill">
+    <mat-label>Nome do alimento</mat-label>
+    <input matInput formControlName="nome" />
+    <mat-hint>Preencha o nome do alimento</mat-hint>
     <mat-error *ngIf="alimentoForm.controls['nome'].hasError('required')"
       >É necessário preencher o nome completo do alimento</mat-error
     >
   </mat-form-field>
-  <mat-form-field  appearance="fill">
-    <mat-label>CPF do candidato</mat-label>
-    <input maxlength="11" matInput formControlName="cpf" />
-    <mat-error>CPF inválido</mat-error>
-    <mat-hint>
-      Preencha o CPF do alimento sem pontos e hífen. Ex: 00123456789
-    </mat-hint>
-    <mat-error>Cpf inválido</mat-error>
-  </mat-form-field>
   <mat-form-field appearance="fill">
-    <mat-label>Email</mat-label>
-    <input maxlength="50" matInput formControlName="email" />
-    <mat-error *ngIf="alimentoForm.controls['email'].hasError('email')"
-      >Email inválido</mat-error
-    >
-    <mat-error *ngIf="alimentoForm.controls['email'].hasError('required')"
-      >É necessário preencher o email</mat-error
-    >
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Telefone</mat-label>
+    <mat-label>Quantidade de alimento</mat-label>
     <input
-
-      required
+      maxlength="11"
       matInput
-      formControlName="telefone"
+      formControlName="quantidadeEstoque"
+      type="number"
     />
-    <mat-hint>Apenas números , incluindo o 9 após o DDD</mat-hint>
-    <mat-error>Telefone inválido</mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Preço de reabastecimento</mat-label>
+    <input
+      maxlength="50"
+      matInput
+      formControlName="precoReabastecimento"
+      type="number"
+    />
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Data entrada</mat-label>
+    <input required matInput formControlName="dataEntrada" type="date" />
   </mat-form-field>
 
-  <button *ngIf="alimentoForm.valid" class="apertar" mat-stroked-button (click)="cadastrar()">
+  <button
+    *ngIf="alimentoForm.valid"
+    class="apertar"
+    mat-stroked-button
+    (click)="cadastrar()"
+  >
     Finalizar Inscrição
   </button>
 </form>
