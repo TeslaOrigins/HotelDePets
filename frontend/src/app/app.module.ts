@@ -21,11 +21,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AlterarTutorComponent } from './components/tutor/alterar-tutor/alterar-tutor.component';
 import { DetalhesTutorComponent } from './components/tutor/detalhes-tutor/detalhes-tutor.component';
 import { DialogConfirmacaoComponent } from './components/dialog-confirmacao/dialog-confirmacao.component';
-import { PetComponent } from './components/pet/pet.component';
-import { CadastrarPetComponent } from './components/pet/cadastrar-pet/cadastrar-pet.component';
-
-import { DetalhesPetComponent } from './components/pet/detalhes-pet/detalhes-pet.component';
-import { AlterarPetComponent } from './components/pet/alterar-pet/alterar-pet.component';
 import { AlimentoComponent } from './components/alimento/alimento.component';
 import { CadastrarAlimentoComponent } from './components/alimento/cadastrar-alimento/cadastrar-alimento.component';
 import { AlterarAlimentoComponent } from './components/alimento/alterar-alimento/alterar-alimento.component';
@@ -42,6 +37,10 @@ import {
   ConsultarReservaComponent,
   DialogReserva,
 } from './components/reserva/consultar-reserva/consultar-reserva.component';
+import {
+  ConsultarPetsComponent,
+  DialogPet,
+} from './components/pet/consultar-pet/consultar-pets.component';
 
 @NgModule({
   declarations: [
@@ -57,10 +56,8 @@ import {
     AlterarTutorComponent,
     DetalhesTutorComponent,
     DialogConfirmacaoComponent,
-    PetComponent,
-    CadastrarPetComponent,
-    AlterarPetComponent,
-    DetalhesPetComponent,
+    ConsultarPetsComponent,
+    DialogPet,
     AlimentoComponent,
     CadastrarAlimentoComponent,
     AlterarAlimentoComponent,

@@ -1,6 +1,6 @@
 <div class="container">
   <div class="table">
-    <table mat-table class="mat-elevation-z8">
+    <table mat-table [dataSource]="pets" class="mat-elevation-z8">
       <ng-container matColumnDef="fotoUrl">
         <th mat-header-cell *matHeaderCellDef>Foto</th>
         <td mat-cell *matCellDef="let element">
@@ -40,7 +40,7 @@
 
             <button
               mat-icon-button
-              aria-label="Adicionar pet"
+              aria-label="Adicionar serviço"
               color="accent"
               style="margin-left: auto"
               (click)="openDialog()"
@@ -49,7 +49,29 @@
             </button>
           </div>
         </th>
-        <td mat-cell *matCellDef="let element">{{ element.especie }}</td>
+        <td mat-cell *matCellDef="let element">
+          <div style="display: flex; flex-direction: row; align-items: center">
+            <span>R${{ element.especie }}</span>
+            <div style="margin-left: auto">
+              <button
+                mat-icon-button
+                aria-label="editar serviço"
+                color="accent"
+                (click)="editarPet(element)"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                aria-label="Adicionar servico"
+                color="accent"
+                (click)="deletarPet(element)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
