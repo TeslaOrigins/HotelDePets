@@ -4,7 +4,6 @@ import { HomeComponent } from './components/home/home.component';
 import { TutorComponent } from './components/tutor/tutor.component';
 import { CadastrarTutorComponent } from './components/tutor/cadastrar-tutor/cadastrar-tutor.component';
 import { AlterarTutorComponent } from './components/tutor/alterar-tutor/alterar-tutor.component';
-import { PetComponent } from './components/pet/pet.component';
 import { AlimentoComponent } from './components/alimento/alimento.component';
 import { HospedagemComponent } from './components/hospedagem/hospedagem.component';
 import { CadastrarHospedagemComponent } from './components/hospedagem/cadastrar-hospedagem/cadastrar-hospedagem.component';
@@ -12,6 +11,7 @@ import { EditarHospedagemComponent } from './components/hospedagem/editar-hosped
 import { ConsultarServicosComponent } from './components/servico/consultar-servicos/consultar-servicos.component';
 import { ListarMedicamentosComponent } from './components/medicamento/listar-medicamentos/listar-medicamentos.component';
 import { ConsultarReservaComponent } from './components/reserva/consultar-reserva/consultar-reserva.component';
+import { ConsultarPetsComponent } from './components/pet/consultar-pet/consultar-pets.component';
 
 const routes: Routes = [
   {
@@ -34,7 +34,7 @@ const routes: Routes = [
   },
   {
     path: 'pet',
-    component: PetComponent,
+    component: ConsultarPetsComponent,
   },
   {
     path: 'alimento',

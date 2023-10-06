@@ -1,0 +1,40 @@
+<div style="width: 50vw">
+  <h1 mat-dialog-title style="text-align: center">Cadastrar Pet</h1>
+  <form [formGroup]="petForm" (ngSubmit)="onSubmit()">
+    <div style="display: flex; flex-direction: column; padding: 12px">
+      <mat-form-field>
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="nome" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Idade (meses)</mat-label>
+        <input matInput formControlName="idadeMes" type="number" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Raça</mat-label>
+        <input matInput formControlName="raca" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Espécie</mat-label>
+        <input matInput formControlName="especie" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Peso (Kg)</mat-label>
+        <input matInput formControlName="peso" type="number" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Sexo</mat-label>
+        <mat-select formControlName="sexo">
+          <mat-option value="Macho"> Macho </mat-option>
+          <mat-option value="Fêmea"> Fêmea </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div
+      style="display: flex; flex-direction: row; justify-content: space-between"
+    >
+      <button mat-button (click)="close()">Cancelar</button>
+      <button mat-button type="submit">Confirmar</button>
+    </div>
+  </form>
+</div>
