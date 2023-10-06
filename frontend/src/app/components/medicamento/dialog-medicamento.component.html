@@ -1,0 +1,26 @@
+<div style="width: 50vw">
+  <h1 mat-dialog-title style="text-align: center">Cadastrar Medicamento</h1>
+  <form [formGroup]="medicamentoForm" (ngSubmit)="onSubmit()">
+    <div style="display: flex; flex-direction: column; padding: 12px">
+      <mat-form-field>
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="nome" type="text" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Quantidade</mat-label>
+        <input matInput formControlName="quantidade" type="number" />
+      </mat-form-field>
+    </div>
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 16px;
+      "
+    >
+      <button mat-button (click)="close()" type="button">Cancelar</button>
+      <button mat-button type="submit">Confirmar</button>
+    </div>
+  </form>
+</div>

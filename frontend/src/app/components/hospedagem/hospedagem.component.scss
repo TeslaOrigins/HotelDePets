@@ -1,0 +1,124 @@
+mat-card {
+    width: 100%;
+    background-color: rgb(250, 250, 250);
+    display: flex;
+    flex-direction: row;
+    margin: 1.5vh 0vh;
+  }
+  .cabecalho {
+    background-color: #2ea564;
+    margin: 2vh 0;
+    color: white;
+  }
+  .cell {
+    width: 20%;
+    margin:1%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card{
+    background-color: white;
+    margin: 2.5%;
+    padding: 2.5%;
+  }
+  .no-ps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    font-family: 'Roboto';
+    font-size: x-large;
+  }
+  @font-face {
+    font-family: 'Poppins';
+    src: url('/assets/fonts/poppins/poppins-v5-latin-500.ttf');
+  }
+  .title {
+    font-family: 'Poppins' !important;
+  }
+  .main {
+    width: 88vw;
+    padding: 1%;
+  }
+  
+  .delete {
+    color: rgb(226, 74, 74);
+    align-self: flex-end;
+  }
+  .float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 40px;
+    right: 40px;
+    background-color: #46e08c;
+    color: #fff;
+    border-radius: 50px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+      0px 1px 3px 0px rgba(0, 0, 0, 0.12) !important;
+  }
+  
+  .my-float {
+    margin-top: 22px;
+  }
+  ::ng-deep .ngx-pagination {
+    padding-left: 0px !important;
+    clip: auto !important;
+  }
+  
+  ::ng-deep .current {
+    background: #2ea564 !important;
+    box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  ::ng-deep .ngx-pagination li {
+    border-radius: 50% !important;
+    padding: 0.25rem 0.625rem !important;
+  }
+  ::ng-deep .ngx-pagination .pagination-previous a::before,
+  ::ng-deep .ngx-pagination .pagination-previous.disabled::before,
+  ::ng-deep .ngx-pagination .pagination-next a::after,
+  ::ng-deep .ngx-pagination .pagination-next.disabled::after {
+    content: '' !important;
+  }
+  ::ng-deep .ngx-pagination {
+    a:hover {
+      border-radius: 50% !important;
+      text-decoration: none !important;
+      box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    a ::after {
+      content: '';
+    }
+  }
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 2%;
+  }
+  h1 {
+    text-align: center;
+  }
+  .float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 40px;
+    right: 40px;
+    background-color: #46e08c;
+    color: #fff;
+    border-radius: 50px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f !important;
+  }
+  
+  

@@ -22,14 +22,7 @@ mat-card {
   margin: 2.5%;
   padding: 2.5%;
 }
-.no-ps {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 60vh;
-  font-family: 'Roboto';
-  font-size: x-large;
-}
+
 @font-face {
   font-family: 'Poppins';
   src: url('/assets/fonts/poppins/poppins-v5-latin-500.ttf');
@@ -64,37 +57,7 @@ mat-card {
 .my-float {
   margin-top: 22px;
 }
-::ng-deep .ngx-pagination {
-  padding-left: 0px !important;
-  clip: auto !important;
-}
 
-::ng-deep .current {
-  background: #2ea564 !important;
-  box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-::ng-deep .ngx-pagination li {
-  border-radius: 50% !important;
-  padding: 0.25rem 0.625rem !important;
-}
-::ng-deep .ngx-pagination .pagination-previous a::before,
-::ng-deep .ngx-pagination .pagination-previous.disabled::before,
-::ng-deep .ngx-pagination .pagination-next a::after,
-::ng-deep .ngx-pagination .pagination-next.disabled::after {
-  content: '' !important;
-}
-::ng-deep .ngx-pagination {
-  a:hover {
-    border-radius: 50% !important;
-    text-decoration: none !important;
-    box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  }
-  a ::after {
-    content: '';
-  }
-}
 .pagination {
   display: flex;
   justify-content: center;

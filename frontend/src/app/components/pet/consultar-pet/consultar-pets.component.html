@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="table">
+    <table mat-table [dataSource]="pets" class="mat-elevation-z8">
+      <ng-container matColumnDef="fotoUrl">
+        <th mat-header-cell *matHeaderCellDef>Foto</th>
+        <td mat-cell *matCellDef="let element">
+          <img [src]="element.fotoUrl" />
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nome">
+        <th mat-header-cell *matHeaderCellDef>Nome</th>
+        <td mat-cell *matCellDef="let element">{{ element.nome }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="idadeMes">
+        <th mat-header-cell *matHeaderCellDef>Idade</th>
+        <td mat-cell *matCellDef="let element">{{ element.idadeMes }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="peso">
+        <th mat-header-cell *matHeaderCellDef>Peso</th>
+        <td mat-cell *matCellDef="let element">{{ element.peso }}Kg</td>
+      </ng-container>
+
+      <ng-container matColumnDef="sexo">
+        <th mat-header-cell *matHeaderCellDef>Sexo</th>
+        <td mat-cell *matCellDef="let element">{{ element.sexo }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="raca">
+        <th mat-header-cell *matHeaderCellDef>Raça</th>
+        <td mat-cell *matCellDef="let element">{{ element.raca }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="especie">
+        <th mat-header-cell *matHeaderCellDef>
+          <div style="display: flex; flex-direction: row; align-items: center">
+            <span>Especie</span>
+
+            <button
+              mat-icon-button
+              aria-label="Adicionar serviço"
+              color="accent"
+              style="margin-left: auto"
+              (click)="openDialog()"
+            >
+              <mat-icon>add_circle</mat-icon>
+            </button>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <div style="display: flex; flex-direction: row; align-items: center">
+            <span>R${{ element.especie }}</span>
+            <div style="margin-left: auto">
+              <button
+                mat-icon-button
+                aria-label="editar serviço"
+                color="accent"
+                (click)="editarPet(element)"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                aria-label="Adicionar servico"
+                color="accent"
+                (click)="deletarPet(element)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</div>

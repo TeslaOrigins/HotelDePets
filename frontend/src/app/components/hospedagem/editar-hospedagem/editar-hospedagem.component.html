@@ -1,0 +1,41 @@
+<form [formGroup]="hospedagemForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Data de Entrada</mat-label>
+      <input matInput formControlName="dataEntrada" [matDatepicker]="entradaPicker" />
+      <mat-datepicker-toggle matSuffix [for]="entradaPicker"></mat-datepicker-toggle>
+      <mat-datepicker #entradaPicker></mat-datepicker>
+      <mat-error *ngIf="hospedagemForm.get('dataEntrada')?.hasError('required')">Campo obrigatório</mat-error>
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill">
+      <mat-label>Data de Saída</mat-label>
+      <input matInput formControlName="dataSaida" [matDatepicker]="saidaPicker" />
+      <mat-datepicker-toggle matSuffix [for]="saidaPicker"></mat-datepicker-toggle>
+      <mat-datepicker #saidaPicker></mat-datepicker>
+      <mat-error *ngIf="hospedagemForm.get('dataSaida')?.hasError('required')">Campo obrigatório</mat-error>
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill">
+      <mat-label>Observações</mat-label>
+      <textarea matInput formControlName="observacoes"></textarea>
+    </mat-form-field>
+  
+    <mat-checkbox formControlName="checkIn">Check-In</mat-checkbox>
+  
+    <mat-form-field appearance="fill">
+      <mat-label>Pet ID</mat-label>
+      <input matInput formControlName="petId" />
+      <mat-error *ngIf="hospedagemForm.get('petId')?.hasError('required')">Campo obrigatório</mat-error>
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill">
+      <mat-label>Preço da Hospedagem</mat-label>
+      <input matInput formControlName="precoHospedagem" />
+    </mat-form-field>
+  
+    <!-- Adicione o código para a lista de endereços aqui, semelhante ao seu formulário anterior -->
+  
+    <button *ngIf="hospedagemForm.valid" class="apertar" mat-stroked-button (click)="editar()">
+      Finalizar Edição
+    </button>
+  </form>
