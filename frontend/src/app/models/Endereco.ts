@@ -1,7 +1,8 @@
 export interface Endereco {
-  enderecoId : number;
+  id : number;
   logradouro : string;
   numero :string;
   cidade : string;
   estado : string;
+  tutorId: number;
 }

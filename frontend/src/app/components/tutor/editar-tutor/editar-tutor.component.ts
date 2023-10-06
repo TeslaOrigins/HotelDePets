@@ -1,14 +1,12 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
 import { CpfValidator } from 'src/app/helpers/GenericValidator';
-import { Endereco } from 'src/app/models/Endereco';
 import { Tutor } from 'src/app/models/Tutor';
 import { TutorService } from 'src/app/services/tutor.service';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-editar-tutor',
@@ -16,95 +14,81 @@ import { TutorService } from 'src/app/services/tutor.service';
   styleUrls: ['./editar-tutor.component.scss']
 })
 export class EditarTutorComponent implements OnInit {
-
-  tutorForm!: FormGroup;
+  tutorForm: FormGroup;
   faPlus = faPlus;
-  faTrash = faTrash;
-  tutorInalterado!: Tutor;
-  tutor$: Observable<Tutor>;
-  constructor(private builder: FormBuilder,
-    private tutorService:TutorService,
+  tutorId: number;
+
+  constructor(
+    private builder: FormBuilder,
+    private tutorService: TutorService,
     private toastr: ToastrService,
     private router: Router,
-    @Inject(MAT_DIALOG_DATA) public data: Tutor,
-    public dialogRef: MatDialogRef<EditarTutorComponent>) {
-
-    this.tutor$ = this.tutorService.getTutorById(data.tutorId);
-    this.tutor$.subscribe((tutor:Tutor )=> {
-      this.tutorInalterado =tutor;
-      this.tutorForm = this.builder.group({
-        nome: new FormControl<string>(this.tutorInalterado.nome,Validators.required),
-        telefone: new FormControl<string>(this.tutorInalterado.telefone,[Validators.required,Validators.minLength(11)]),
-        email: new FormControl<string>(this.tutorInalterado.email,[Validators.email,Validators.required]),
-        cpf: new FormControl<string>(this.tutorInalterado.cpf,[Validators.required,CpfValidator()]),
-        enderecos:this.builder.array([
-
-        ],Validators.required)
-      });
-      this.tutorInalterado.enderecos.forEach(e => this.pushNovoEnderecoExistente(e));
-    })
-
-
-
-
+    private route: ActivatedRoute,
+    public dialogRef: MatDialogRef<EditarTutorComponent>
+  ) {
+    this.tutorId = 0;
+    this.tutorForm = this.builder.group({
+      tutorId: [0], // Inclua o tutorId aqui com um valor inicial de 0
+      nome: new FormControl<string>('', Validators.required),
+      nome_normalizado: new FormControl<string>('', Validators.required),
+      telefone: new FormControl<string>('', [Validators.required, Validators.minLength(11)]),
+      email: new FormControl<string>('', [Validators.email, Validators.required]),
+      cpf: new FormControl<string>('', [Validators.required, CpfValidator()])
+    });
   }
+
   ngOnInit() {
-  }
-  get enderecos() {
-    return this.tutorForm.controls['enderecos'] as FormArray;
-  }
-
-  pushNovoEndereco(){
-    const enderecoForm = this.builder.group({
-      logradouro: new FormControl<string>('',Validators.required),
-      numero :  new FormControl<string>('',Validators.required),
-      cidade :  new FormControl<string>('',Validators.required),
-      estado :  new FormControl<string>('',Validators.required)
+    // Obtenha o ID do tutor da rota
+    this.route.params.subscribe(params => {
+      const id = +params['id']; // Certifique-se de converter para número
+      if (!isNaN(id)) {
+        this.tutorId = id;
+        // Agora você pode fazer a chamada para o serviço com this.tutorId
+        this.tutorService.getTutorById(this.tutorId).subscribe((tutor: Tutor) => {
+          // ...
+        });
+      } else {
+        // Lide com o cenário em que o ID não é um número válido
+        console.error('ID inválido:', params['id']);
+      }
     });
-    this.enderecos.push(enderecoForm);
-  }
-  pushNovoEnderecoExistente(endereco: Endereco){
-    const enderecoForm = this.builder.group({
-      logradouro: new FormControl<string>(endereco.logradouro,Validators.required),
-      numero :  new FormControl<string>(endereco.numero,Validators.required),
-      cidade :  new FormControl<string>(endereco.cidade,Validators.required),
-      estado :  new FormControl<string>(endereco.estado,Validators.required)
-    });
-    this.enderecos.push(enderecoForm);
   }
 
-
-  deleteEndereco(enderecoIndex: number) {
-    this.enderecos.removeAt(enderecoIndex);
-  }
-  editar(){
+  editar() {
     if (this.tutorForm.valid) {
       const obj = {
-        tutorId: this.tutorInalterado.tutorId,
+        tutorId: this.tutorForm.controls['tutorId'].value,
         nome: this.tutorForm.controls['nome'].value,
+        nome_normalizado: this.tutorForm.controls['nome_normalizado'].value,
         telefone: this.tutorForm.controls['telefone'].value,
         email: this.tutorForm.controls['email'].value,
         cpf: this.tutorForm.controls['cpf'].value,
-        //enderecos: this.enderecos
-      }
-      const obs = {
-        next: (tutor: Tutor) => {
+      };
+
+      // Chama o método de edição do TutorService
+      this.tutorService.editar(obj.tutorId, obj).subscribe(
+        (tutorEditado: Tutor) => {
+          // Tutor editado com sucesso
+          console.log('Tutor editado:', tutorEditado);
+          
+          // Continue o tratamento de sucesso do tutor
           this.toastr.success('Tutor editado com sucesso');
-          this.router.navigateByUrl('/tutor/');
+          this.router.navigateByUrl(`/tutores/detalhes/${tutorEditado.id}`);
           this.dialogRef.close();
         },
-        error: (err: any) => {
-          if (err.status == 400) {
-            err.error.forEach((element: string) => {
+        (error: any) => {
+          console.error('Erro ao editar tutor:', error);
+          // Trate os erros relacionados à edição do tutor aqui
+          if (error.status == 400) {
+            error.error.forEach((element: string) => {
               this.toastr.error(element);
             });
           } else {
-            this.toastr.error(err.error);
+            this.toastr.error(error.error);
           }
           this.dialogRef.close();
-        },
-      };
-      this.tutorService.editar(obj).subscribe(obs);
+        }
+      );
     }
   }
 }

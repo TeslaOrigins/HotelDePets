@@ -1,0 +1,65 @@
+{
+  "tutores": [
+    {
+      "tutorId": 1,
+      "nome": "João da Silva",
+      "nomeNormalizado": "joaodasilva",
+      "cpf": "12345678900",
+      "telefone": "11987654321",
+      "email": "joao@example.com",
+      "enderecos": [
+        {
+          "enderecoId": 1,
+          "logradouro": "Rua Principal",
+          "numero": "123",
+          "cidade": "São Paulo",
+          "estado": "SP"
+        },
+        {
+          "enderecoId": 2,
+          "logradouro": "Avenida Secundária",
+          "numero": "456",
+          "cidade": "São Paulo",
+          "estado": "SP"
+        }
+      ]
+    },
+    {
+      "tutorId": 2,
+      "nome": "Maria Santos",
+      "nomeNormalizado": "mariasantos",
+      "cpf": "98765432100",
+      "telefone": "11912345678",
+      "email": "maria@example.com",
+      "enderecos": [
+        {
+          "enderecoId": 3,
+          "logradouro": "Rua da Praça",
+          "numero": "789",
+          "cidade": "Rio de Janeiro",
+          "estado": "RJ"
+        }
+      ]
+    }
+  ],
+  "hospedagens": [
+    {
+      "hospedagemId": 1,
+      "dataEntrada": "2023-10-10",
+      "dataSaida": "2023-10-15",
+      "observacoes": "Nenhuma observação",
+      "checkIn": true,
+      "petId": 1,
+      "precoHospedagem": 350
+    },
+    {
+      "hospedagemId": 2,
+      "dataEntrada": "2023-11-01",
+      "dataSaida": "2023-11-05",
+      "observacoes": "Observações adicionais",
+      "checkIn": false,
+      "petId": 2,
+      "precoHospedagem": 420
+    }
+  ]
+}

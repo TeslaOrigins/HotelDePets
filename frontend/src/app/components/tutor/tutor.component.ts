@@ -3,54 +3,39 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { Tutor } from 'src/app/models/Tutor';
 import { TutorService } from 'src/app/services/tutor.service';
-import { faMagnifyingGlass,faTrash,faEdit,faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faTrash, faEdit, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { MatDialog } from '@angular/material/dialog';
 import { CadastrarTutorComponent } from './cadastrar-tutor/cadastrar-tutor.component';
 import { EditarTutorComponent } from './editar-tutor/editar-tutor.component';
 import { DialogConfirmacaoComponent } from '../dialog-confirmacao/dialog-confirmacao.component';
 import { DetalhesTutorComponent } from './detalhes-tutor/detalhes-tutor.component';
+
 @Component({
   selector: 'app-tutor',
   templateUrl: './tutor.component.html',
   styleUrls: ['./tutor.component.scss']
 })
 export class TutorComponent implements OnInit {
-  tutores: Tutor[] =[];
+  tutores: Tutor[] = [];
   faMagnfyingGlass = faMagnifyingGlass;
   faTrash = faTrash;
   faEdit = faEdit;
   faPlus = faPlus;
-  tutores$ : Observable<Tutor[]>;
-  constructor(private tutorService: TutorService,
-              private toastr: ToastrService,
-              public dialog: MatDialog) {
-    this.tutores$ = tutorService.getAllTutores();
-    const obs = {
-      next: (tutores: Tutor[]) => {
-        this.tutores = tutores;
-      },
-      error: (err: any) => {
-        err.forEach((error: any) => {
-          toastr.error(error);
-        });
-      },
-    };
-    this.tutores$.subscribe(obs);
-  }
-  getAllTutores(){
-    const obs = {
-      next: (tutores: Tutor[]) => {
-        this.tutores = tutores;
-      },
-      error: (err: any) => {
-        err.forEach((error: any) => {
-          this.toastr.error(error);
-        });
-      },
-    };
-    this.tutores$.subscribe(obs);
-  }
+
+  constructor(
+    private tutorService: TutorService,
+    private toastr: ToastrService,
+    public dialog: MatDialog
+  ) {}
+
   ngOnInit() {
+    this.tutorService.getAllTutores().subscribe((response: any) => {
+      if (response && response.data) {
+        this.tutores = response.data;
+      } else {
+        this.tutores = [];
+      }
+    });
   }
   openDialogDetalhes(tutor: Tutor): void{
     const dialogRef = this.dialog.open(DetalhesTutorComponent,{
@@ -58,10 +43,6 @@ export class TutorComponent implements OnInit {
       autoFocus: false,
       maxHeight: '90vh',
       data:tutor
-    });
-
-    dialogRef.afterClosed().subscribe((result:any) => {
-      this.getAllTutores()
     });
   }
   openDialog(): void {
@@ -82,14 +63,10 @@ export class TutorComponent implements OnInit {
       maxHeight: '90vh',
       data:tutor
     });
-
-    dialogRef.afterClosed().subscribe((result:any) => {
-      this.getAllTutores()
-    });
   }
   deletarTutor(tutor:Tutor){
     const dialogRef = this.dialog.open(DialogConfirmacaoComponent,{
-      data:"Tem certeza que quer deletar o tutor com o nome: " + tutor.nomeNormalizado + " ?"
+      data:"Tem certeza que quer deletar o tutor com o nome: " + tutor.nome_normalizado + " ?"
     });
 
     dialogRef.afterClosed().subscribe((result:boolean) => {
@@ -104,9 +81,8 @@ export class TutorComponent implements OnInit {
             });
           },
         };
-        this.tutorService.deletar(tutor.tutorId).subscribe(obs);
+        this.tutorService.deletar(tutor.id).subscribe(obs);
       }
     });
   }
-
 }

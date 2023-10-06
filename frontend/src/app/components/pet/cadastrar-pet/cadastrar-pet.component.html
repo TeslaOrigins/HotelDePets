@@ -1,0 +1,54 @@
+<form [formGroup]="petForm">
+  <mat-form-field [hideRequiredMarker]="false" appearance="fill">
+    <mat-label>Nome</mat-label>
+    <input matInput formControlName="nome">
+    <mat-hint>Preencha o nome do pet</mat-hint>
+    <mat-error *ngIf="petForm.controls['nome'].hasError('required')">É necessário preencher o nome do pet</mat-error>
+  </mat-form-field>
+
+  <mat-form-field [hideRequiredMarker]="false" appearance="fill">
+    <mat-label>Idade (meses)</mat-label>
+    <input matInput formControlName="idade_mes">
+    <mat-hint>Preencha a idade do pet em meses</mat-hint>
+    <mat-error *ngIf="petForm.controls['idade_mes'].hasError('required')">É necessário preencher a idade do pet</mat-error>
+  </mat-form-field>
+
+  <mat-form-field [hideRequiredMarker]="false" appearance="fill">
+    <mat-label>Raça</mat-label>
+    <input matInput formControlName="raca">
+    <mat-hint>Preencha a raça do pet</mat-hint>
+    <mat-error *ngIf="petForm.controls['raca'].hasError('required')">É necessário preencher a raça do pet</mat-error>
+  </mat-form-field>
+
+  <mat-form-field [hideRequiredMarker]="false" appearance="fill">
+    <mat-label>Sexo</mat-label>
+    <input matInput formControlName="sexo">
+    <mat-hint>Preencha o sexo do pet</mat-hint>
+    <mat-error *ngIf="petForm.controls['sexo'].hasError('required')">É necessário preencher o sexo do pet</mat-error>
+  </mat-form-field>
+
+  <mat-form-field [hideRequiredMarker]="false" appearance="fill">
+    <mat-label>Peso (kg)</mat-label>
+    <input matInput formControlName="peso">
+    <mat-hint>Preencha o peso do pet em kg</mat-hint>
+    <mat-error *ngIf="petForm.controls['peso'].hasError('required')">É necessário preencher o peso do pet</mat-error>
+  </mat-form-field>
+
+  <mat-form-field [hideRequiredMarker]="false" appearance="fill">
+    <mat-label>Espécie</mat-label>
+    <input matInput formControlName="especie">
+    <mat-hint>Preencha a espécie do pet</mat-hint>
+    <mat-error *ngIf="petForm.controls['especie'].hasError('required')">É necessário preencher a espécie do pet</mat-error>
+  </mat-form-field>
+
+  <mat-form-field [hideRequiredMarker]="false" appearance="fill">
+    <mat-label>Tutor ID</mat-label>
+    <input matInput formControlName="tutorId">
+    <mat-hint>Preencha o ID do tutor associado a este pet</mat-hint>
+    <mat-error *ngIf="petForm.controls['tutorId'].hasError('required')">É necessário preencher o ID do tutor</mat-error>
+  </mat-form-field>
+
+  <button *ngIf="petForm.valid" class="apertar" mat-stroked-button (click)="cadastrar()">
+    Cadastrar Pet
+  </button>
+</form>

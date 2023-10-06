@@ -1,10 +1,12 @@
+import { Tutor } from "./Tutor";
+
 export interface Pet {
-  petId: number;
+  id: number;
   nome: string;
-  idadeMes: number;
+  idade_mes: number;
   raca: string;
   sexo: string;
-  fotoUrl: string;
   peso: number;
   especie: string;
+  tutorId: Tutor;
 }

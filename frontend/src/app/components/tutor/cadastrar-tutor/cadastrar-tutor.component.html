@@ -6,12 +6,26 @@
     <mat-label>Nome Completo</mat-label>
     <input matInput formControlName="nome">
     <mat-hint
-      >Preencha o nome do tutor</mat-hint
+      >Preencha o nome completo do tutor</mat-hint
     >
     <mat-error *ngIf="tutorForm.controls['nome'].hasError('required')"
       >É necessário preencher o nome completo do tutor</mat-error
     >
   </mat-form-field>
+  <mat-form-field
+    [hideRequiredMarker]="false"
+    appearance="fill"
+  >
+    <mat-label>Apelido</mat-label>
+    <input matInput formControlName="nome_normalizado">
+    <mat-hint
+      >Preencha o apelido do tutor</mat-hint
+    >
+    <mat-error *ngIf="tutorForm.controls['nome_normalizado'].hasError('required')"
+      >É necessário preencher o apelido do tutor</mat-error
+    >
+  </mat-form-field>
+  
   <mat-form-field  appearance="fill">
     <mat-label>CPF do candidato</mat-label>
     <input maxlength="11" matInput formControlName="cpf" />
@@ -93,7 +107,7 @@
 
 
   </div>
-  <button *ngIf="tutorForm.valid" class="apertar" mat-stroked-button (click)="cadastrar()">
+  <button class="apertar" mat-stroked-button (click)="cadastrar()">
     Finalizar Inscrição
   </button>
 </form>

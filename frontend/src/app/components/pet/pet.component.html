@@ -1,0 +1,56 @@
+<div class="card">
+    <div>
+      Listagem de Pets
+    </div>
+    <div class="tabela">
+      <mat-card class="cabecalho">
+        <div class="cell">
+          Nome
+        </div>
+        <div class="cell">
+          Idade (meses)
+        </div>
+        <div class="cell">
+          Raça
+        </div>
+        <div class="cell">
+          Sexo
+        </div>
+        <div class="cell">
+          Ver Detalhes
+        </div>
+        <div class="cell">
+          Editar
+        </div>
+        <div class="cell">
+          Excluir
+        </div>
+      </mat-card>
+      <mat-card class="linha" *ngFor="let pet of pets">
+        <div class="cell">
+          {{ pet.nome }}
+        </div>
+        <div class="cell">
+          {{ pet.idade_mes }}
+        </div>
+        <div class="cell">
+          {{ pet.raca }}
+        </div>
+        <div class="cell">
+          {{ pet.sexo }}
+        </div>
+        <div (click)="openDialogDetalhes(pet)" style="cursor: pointer;" class="cell">
+          <fa-icon [icon]="faMagnfyingGlass"></fa-icon>
+        </div>
+        <div (click)="openDialogEdit(pet)" style="cursor: pointer;" class="cell">
+          <fa-icon [icon]="faEdit"></fa-icon>
+        </div>
+        <div (click)="deletarPet(pet)" style="cursor: pointer;" class="cell">
+          <fa-icon [icon]="faTrash"></fa-icon>
+        </div>
+      </mat-card>
+    </div>
+    <div (click)="openDialog()" class="float" style="cursor: pointer;">
+      <fa-icon [icon]="faPlus"></fa-icon>
+    </div>
+  </div>

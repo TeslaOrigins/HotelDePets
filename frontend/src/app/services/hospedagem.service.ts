@@ -8,8 +8,8 @@ import { Hospedagem } from '../models/Hospedagem'; // Certifique-se de importar 
   providedIn: 'root'
 })
 export class HospedagemService {
-  base_url = environment.api_url + 'hospedagem/'; // Certifique-se de ajustar a URL da API
-  //base_url = 'http://localhost:3000/hospedagens'
+  //base_url = environment.api_url + 'hospedagem/'; // Certifique-se de ajustar a URL da API
+  base_url = 'http://localhost:3000/hospedagens'
 
   constructor(private http: HttpClient, handler: HttpBackend) {
     this.http = new HttpClient(handler);
@@ -24,7 +24,7 @@ export class HospedagemService {
   }
 
   deletar(hospedagemId: number): Observable<string> {
-    return this.http.delete<string>(`${this.base_url}${hospedagemId}`);
+    return this.http.delete<string>(`${this.base_url}?hospedagemId=${hospedagemId}`);
   }
 
   getAllHospedagens(): Observable<Hospedagem[]> {

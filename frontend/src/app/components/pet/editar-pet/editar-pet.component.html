@@ -1,0 +1,36 @@
+<form [formGroup]="petForm">
+    <mat-form-field [hideRequiredMarker]="false" appearance="fill">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="nome">
+      <mat-hint>Preencha o nome do pet</mat-hint>
+      <mat-error *ngIf="petForm.controls['nome'].hasError('required')">É necessário preencher o nome do pet</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Idade em meses</mat-label>
+      <input matInput formControlName="idadeMes" />
+      <mat-error>Idade inválida</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Raça</mat-label>
+      <input matInput formControlName="raca" />
+      <mat-error>Raça inválida</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Sexo</mat-label>
+      <input matInput formControlName="sexo" />
+      <mat-error>Sexo inválido</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Peso</mat-label>
+      <input matInput formControlName="peso" />
+      <mat-error>Peso inválido</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Espécie</mat-label>
+      <input matInput formControlName="especie" />
+      <mat-error>Espécie inválida</mat-error>
+    </mat-form-field>
+    <button class="apertar" mat-stroked-button (click)="editar()">
+      Finalizar Edição
+    </button>
+  </form>
