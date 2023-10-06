@@ -3,8 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { TutorComponent } from './components/tutor/tutor.component';
 import { CadastrarTutorComponent } from './components/tutor/cadastrar-tutor/cadastrar-tutor.component';
-import { EditarTutorComponent } from './components/tutor/editar-tutor/editar-tutor.component';
-import { ConsultarPetsComponent } from './components/pet/consultar-pet/consultar-pets.component';
+import { AlterarTutorComponent } from './components/tutor/alterar-tutor/alterar-tutor.component';
+import { PetComponent } from './components/pet/pet.component';
+import { AlimentoComponent } from './components/alimento/alimento.component';
 import { HospedagemComponent } from './components/hospedagem/hospedagem.component';
 import { CadastrarHospedagemComponent } from './components/hospedagem/cadastrar-hospedagem/cadastrar-hospedagem.component';
 import { EditarHospedagemComponent } from './components/hospedagem/editar-hospedagem/editar-hospedagem.component';
@@ -26,14 +27,18 @@ const routes: Routes = [
         component: CadastrarTutorComponent,
       },
       {
-        path: 'editar',
-        component: EditarTutorComponent,
+        path: 'alterar',
+        component: AlterarTutorComponent,
       },
     ],
   },
   {
-    path: 'pets',
-    component: ConsultarPetsComponent,
+    path: 'pet',
+    component: PetComponent,
+  },
+  {
+    path: 'alimento',
+    component: AlimentoComponent,
   },
   {
     path: 'hospedagem',

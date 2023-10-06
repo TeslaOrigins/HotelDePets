@@ -7,5 +7,5 @@ public interface IPetRepository : IGeneralRepository
     Task<Pet[]> GetPet();
     Task<Pet> GetPetPorId(int idPet);
     Task<Pet> GetPetPorNome(string nomePet);
-    Task<Pet> GetPetPorNomeNormalizado(string NomeNormalizadoPet);
+    //Task<Pet> GetPetPorNomeNormalizado(string NomeNormalizadoPet);
 }

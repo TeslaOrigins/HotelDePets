@@ -53,26 +53,26 @@ public class PetService : IPetService
         {
             List<string> errors = new();
 
-            var petExiste = await ValidaPetExistente(dados);
-            var veterinarioExiste = await ValidaVeterinarioExistente(dados.Veterinario);
+            //var petExiste = await ValidaPetExistente(dados);
+            //var veterinarioExiste = await ValidaVeterinarioExistente(dados.Veterinario);
             
-            if (petExiste)
-            {
-                errors.Add("Pet já existe no sistema");
-            }
+            //if (petExiste)
+            //{
+           //     errors.Add("Pet já existe no sistema");
+           // }
 
-            if (veterinarioExiste != null)
-            {
-                if (veterinarioExiste.Existe)
-                    errors.Add("O Endereço de logradouro: " + veterinarioExiste.Nome + " já está cadastrado no sistema");
-            }
+            //if (veterinarioExiste != null)
+           // {
+           //     if (veterinarioExiste.Existe)
+           //         errors.Add("O Endereço de logradouro: " + veterinarioExiste.Nome + " já está cadastrado no sistema");
+           // }
 
             if (errors.Any())
                 throw new Exception(errors.ToArray().ToString());
 
             var pet = _mapper.Map<Pet>(dados);
             
-            pet.NomeNormalizado = dados.Nome.ToUpper().Trim();
+           // pet.NomeNormalizado = dados.Nome.ToUpper().Trim();
             
             _petRepository.Add(pet);
             if (await _petRepository.SaveChangesAsync())
@@ -96,11 +96,14 @@ public class PetService : IPetService
         }
     }
     
-    public async Task<PetViewModel> AtualizaPet(AtualizaPetViewModel dados)
+    public async Task<PetViewModel> AlterarPet(AlterarPetViewModel dados)
     {
         try
         {
-            var petDomain = await GetPetPorIdAnotherService(dados.Id);
+            var petDomain = await _petRepository.GetPetPorId(dados.Id);
+
+            if(petDomain == null)
+                throw new NotFoundException("Não foi possível encontrar o pet especificado");
 
             if (dados.Nome != null)
             {
@@ -148,12 +151,14 @@ public class PetService : IPetService
         }
     }
     
-    public async Task<bool> RemovePet(int idPet)
+    public async Task<bool> ApagarPet(int idPet)
     {
         try
         {
-            var petDomain = await GetPetPorIdAnotherService(idPet);
+            var petDomain = await _petRepository.GetPetPorId(idPet);
             
+            if(petDomain == null)
+                throw new NotFoundException("Não foi possivel encontrar o pet especificado");
             _petRepository.Delete(petDomain);
             
             return await _petRepository.SaveChangesAsync();
@@ -171,7 +176,7 @@ public class PetService : IPetService
             throw new Exception(e.Message);
         }
     }
-
+  /*
     private async Task<bool> ValidaPetExistente(CadastroPetViewModel dados)
     {
         try
@@ -186,28 +191,7 @@ public class PetService : IPetService
         }
     }
     
-    private async Task<VeterinarioExistenteViewModel> ValidaVeterinarioExistente(CadastroVeterinarioViewModel dados)
-    {
-        try
-        {
-            VeterinarioExistenteViewModel veterinarioExistente = null;
-            var vet = await _veterinarioRepository.GetVeterinarioPorNome(dados.Nome);
-
-            if (vet != null)
-            {
-                veterinarioExistente = new VeterinarioExistenteViewModel(){
-                    Existe = true,
-                    Nome = vet.Nome
-                };
-            }
-
-            return veterinarioExistente;
-        }
-        catch (Exception e)
-        {
-            throw new Exception(e.Message);
-        }
-    }
+  
     
     private async Task<Pet> GetPetPorNomeAnotherService(string nomePet)
     {
@@ -243,5 +227,5 @@ public class PetService : IPetService
         }
 
         return null;
-    }
+    }*/
 }

@@ -1,0 +1,89 @@
+<div style="width: 50vw">
+  <h1 mat-dialog-title style="text-align: center">Cadastrar Pet</h1>
+  <form [formGroup]="petForm" (ngSubmit)="onSubmit()">
+    <div style="display: flex; flex-direction: column; padding: 12px">
+      <mat-form-field>
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="nome" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Idade (meses)</mat-label>
+        <input matInput formControlName="idadeMes" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Raça</mat-label>
+        <input matInput formControlName="raca" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Espécie</mat-label>
+        <input matInput formControlName="especie" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Peso (Kg)</mat-label>
+        <input matInput formControlName="peso" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Sexo</mat-label>
+        <mat-select formControlName="sexo">
+          <mat-option value="Macho"> Macho </mat-option>
+          <mat-option value="Fêmea"> Fêmea </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div>
+        Dados do veterinario
+      </div>
+      <hr>
+      <mat-form-field>
+        <mat-label>Nome do veterinário</mat-label>
+        <input matInput formControlName="veterinarioNome" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Telefone do veterinário</mat-label>
+        <input matInput formControlName="veterinarioTelefone" />
+      </mat-form-field>
+      <div>
+        Informações da alimentação <fa-icon [icon]="faPlus" (click)="pushNovodieta()" ></fa-icon>
+      </div>
+      <div formArrayName="dieta" *ngFor="let e of dieta.controls; let i = index" >
+        <div [formGroupName]="i">
+        <fa-icon [icon]="faTrash" *ngIf="dieta.value.length > 1" (click)="deletedieta(i)"></fa-icon>
+        <div>Alimentação {{i+1}}:</div>
+        <mat-form-field>
+          <mat-label>Horario da Alimentação</mat-label>
+          <input matInput formControlName="horarioAlimentacao" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Quantidade (em gramas)</mat-label>
+          <input matInput formControlName="quantidade" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Observações</mat-label>
+          <input matInput formControlName="observacoes" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Alimentos da dieta</mat-label>
+          <mat-select (selectionChange)="adicionarAlimento(i,$event)">
+            <mat-option *ngFor="let alimento of e.controls['alimentosDisponiveis'].value" [value]="alimento" >
+              {{alimento.nome}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-chip  *ngFor="let alimentoEscolhido of e.controls['alimentos'].value">
+            {{alimentoEscolhido.nome}}
+            <button (click)="removerAlimento(i,alimentoEscolhido)" matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+        </mat-chip>
+        </div>
+      </div>
+    </div>
+    <div
+      style="display: flex; flex-direction: row; justify-content: space-between"
+    >
+      <button mat-button (click)="close()">Cancelar</button>
+      <button mat-button type="submit">Confirmar</button>
+    </div>
+  </form>
+</div>

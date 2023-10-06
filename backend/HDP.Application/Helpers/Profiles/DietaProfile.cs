@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using HDP.Application.ViewModels;
+using HDP.Application.ViewModels.Dieta;
 using HDP.Persistence;
 
 namespace HDP.Application.Helpers.Profiles
@@ -18,7 +19,10 @@ namespace HDP.Application.Helpers.Profiles
                                                         .ToList()
                                                             .Select(idAlimento => 
                                                                     new DietaAlimento(){AlimentoId = idAlimento})));
-            
+            CreateMap<Dieta,DietaViewModel>()
+                .ForMember(DietaViewModel => DietaViewModel.Alimentos,
+                                map => map.MapFrom(dietaEntidade => 
+                                                    dietaEntidade.DietaAlimentos.Select(da => da.Alimento)));
         }
     }
 }

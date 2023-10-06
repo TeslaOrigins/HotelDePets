@@ -1,5 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  FormControl,
+  Validators,
+  FormArray,
+} from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -11,73 +17,82 @@ import { Tutor } from 'src/app/models/Tutor';
 import { TutorService } from 'src/app/services/tutor.service';
 
 @Component({
-  selector: 'app-editar-tutor',
-  templateUrl: './editar-tutor.component.html',
-  styleUrls: ['./editar-tutor.component.scss']
+  selector: 'app-alterar-tutor',
+  templateUrl: './alterar-tutor.component.html',
+  styleUrls: ['./alterar-tutor.component.scss'],
 })
-export class EditarTutorComponent implements OnInit {
-
+export class AlterarTutorComponent implements OnInit {
   tutorForm!: FormGroup;
   faPlus = faPlus;
   faTrash = faTrash;
   tutorInalterado!: Tutor;
   tutor$: Observable<Tutor>;
-  constructor(private builder: FormBuilder,
-    private tutorService:TutorService,
+  constructor(
+    private builder: FormBuilder,
+    private tutorService: TutorService,
     private toastr: ToastrService,
     private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: Tutor,
-    public dialogRef: MatDialogRef<EditarTutorComponent>) {
-
+    public dialogRef: MatDialogRef<AlterarTutorComponent>
+  ) {
     this.tutor$ = this.tutorService.getTutorById(data.tutorId);
-    this.tutor$.subscribe((tutor:Tutor )=> {
-      this.tutorInalterado =tutor;
+    this.tutor$.subscribe((tutor: Tutor) => {
+      this.tutorInalterado = tutor;
       this.tutorForm = this.builder.group({
-        nome: new FormControl<string>(this.tutorInalterado.nome,Validators.required),
-        telefone: new FormControl<string>(this.tutorInalterado.telefone,[Validators.required,Validators.minLength(11)]),
-        email: new FormControl<string>(this.tutorInalterado.email,[Validators.email,Validators.required]),
-        cpf: new FormControl<string>(this.tutorInalterado.cpf,[Validators.required,CpfValidator()]),
-        enderecos:this.builder.array([
-
-        ],Validators.required)
+        nome: new FormControl<string>(
+          this.tutorInalterado.nome,
+          Validators.required
+        ),
+        telefone: new FormControl<string>(this.tutorInalterado.telefone, [
+          Validators.required,
+          Validators.minLength(11),
+        ]),
+        email: new FormControl<string>(this.tutorInalterado.email, [
+          Validators.email,
+          Validators.required,
+        ]),
+        cpf: new FormControl<string>(this.tutorInalterado.cpf, [
+          Validators.required,
+          CpfValidator(),
+        ]),
+        enderecos: this.builder.array([], Validators.required),
       });
-      this.tutorInalterado.enderecos.forEach(e => this.pushNovoEnderecoExistente(e));
-    })
-
-
-
-
+      this.tutorInalterado.enderecos.forEach((e) =>
+        this.pushNovoEnderecoExistente(e)
+      );
+    });
   }
-  ngOnInit() {
-  }
+  ngOnInit() {}
   get enderecos() {
     return this.tutorForm.controls['enderecos'] as FormArray;
   }
 
-  pushNovoEndereco(){
+  pushNovoEndereco() {
     const enderecoForm = this.builder.group({
-      logradouro: new FormControl<string>('',Validators.required),
-      numero :  new FormControl<string>('',Validators.required),
-      cidade :  new FormControl<string>('',Validators.required),
-      estado :  new FormControl<string>('',Validators.required)
+      logradouro: new FormControl<string>('', Validators.required),
+      numero: new FormControl<string>('', Validators.required),
+      cidade: new FormControl<string>('', Validators.required),
+      estado: new FormControl<string>('', Validators.required),
     });
     this.enderecos.push(enderecoForm);
   }
-  pushNovoEnderecoExistente(endereco: Endereco){
+  pushNovoEnderecoExistente(endereco: Endereco) {
     const enderecoForm = this.builder.group({
-      logradouro: new FormControl<string>(endereco.logradouro,Validators.required),
-      numero :  new FormControl<string>(endereco.numero,Validators.required),
-      cidade :  new FormControl<string>(endereco.cidade,Validators.required),
-      estado :  new FormControl<string>(endereco.estado,Validators.required)
+      logradouro: new FormControl<string>(
+        endereco.logradouro,
+        Validators.required
+      ),
+      numero: new FormControl<string>(endereco.numero, Validators.required),
+      cidade: new FormControl<string>(endereco.cidade, Validators.required),
+      estado: new FormControl<string>(endereco.estado, Validators.required),
     });
     this.enderecos.push(enderecoForm);
   }
-
 
   deleteEndereco(enderecoIndex: number) {
     this.enderecos.removeAt(enderecoIndex);
   }
-  editar(){
+  alterar() {
     if (this.tutorForm.valid) {
       const obj = {
         tutorId: this.tutorInalterado.tutorId,
@@ -86,7 +101,7 @@ export class EditarTutorComponent implements OnInit {
         email: this.tutorForm.controls['email'].value,
         cpf: this.tutorForm.controls['cpf'].value,
         //enderecos: this.enderecos
-      }
+      };
       const obs = {
         next: (tutor: Tutor) => {
           this.toastr.success('Tutor editado com sucesso');
@@ -104,7 +119,7 @@ export class EditarTutorComponent implements OnInit {
           this.dialogRef.close();
         },
       };
-      this.tutorService.editar(obj).subscribe(obs);
+      this.tutorService.alterar(obj).subscribe(obs);
     }
   }
 }

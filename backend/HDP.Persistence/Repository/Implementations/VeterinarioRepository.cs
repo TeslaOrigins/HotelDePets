@@ -53,7 +53,17 @@ public class VeterinarioRepository : GeneralRepository, IVeterinarioRepository
         
         return await mainQuery.ToArrayAsync();   
     }
-    
+
+    public Task<Veterinario> GetVeterinarioPorPetId(int idVeterinario)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Veterinario[]> GetVeterinariosPorTutorId(int TutorId)
+    {
+        throw new NotImplementedException();
+    }
+
     // public async Task<TipoVeterinario> GetTipoVeterinarioPorNome(String nomeTipoVeterinario)
     // {
     //     var mainQuery = from Veterinario in _context.Veterinarios

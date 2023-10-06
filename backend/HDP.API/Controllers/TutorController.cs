@@ -51,7 +51,7 @@ public class TutorController : ControllerBase
     
     [AllowAnonymous]
     [HttpPost]
-    public async Task<IActionResult> PostTutor(CadastroTutorViewModel tutor)
+    public async Task<IActionResult> CadastrarTutor(CadastroTutorViewModel tutor)
     {
         try
         {
@@ -73,14 +73,14 @@ public class TutorController : ControllerBase
     
     [AllowAnonymous]
     [HttpPut]
-    public async Task<IActionResult> PutTutor(AtualizaTutorViewModel Tutor)
+    public async Task<IActionResult> AlterarTutor(AlterarTutorViewModel Tutor)
     {
         try
         {
-            var tutors = await _tutorService.AtualizaTutor(Tutor);
+            var tutors = await _tutorService.AlterarTutor(Tutor);
             
             if(tutors == null)
-                return Problem("Não foi possível atualizar o cadastro deste Tutor");
+                return Problem("Não foi possível alterar os dados do tutor especificado");
             
             return Ok(tutors);
         } 
@@ -97,14 +97,14 @@ public class TutorController : ControllerBase
     
     [AllowAnonymous]
     [HttpDelete("{idTutor}")]
-    public async Task<IActionResult> DeleteTutor(int idTutor)
+    public async Task<IActionResult> ApagarTutor(int idTutor)
     {
         try
         {
-            var tutors = await _tutorService.RemoveTutor(idTutor);
+            var tutors = await _tutorService.ApagarTutor(idTutor);
             
             if(tutors == null)
-                return Problem("Não foi possível atualizar o cadastro deste Tutor");
+                return Problem("Não foi possível apagar o tutor especificado");
             
             return Ok(tutors);
         } 
