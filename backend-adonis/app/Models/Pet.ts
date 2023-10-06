@@ -24,13 +24,11 @@ export default class Pet extends BaseModel {
   @column()
   public especie: string;
 
-  // Atualize a coluna estrangeira para corresponder ao relacionamento em Tutor
   @column()
   public tutorId: number;
 
-  // Atualize a relação para refletir a relação com Tutor
   @belongsTo(() => Tutor, {
-    foreignKey: 'tutorId', // Certifique-se de que o nome da coluna corresponda ao definido em Tutor
+    foreignKey: 'tutorId', 
   })
   public tutor: BelongsTo<typeof Tutor>;
 

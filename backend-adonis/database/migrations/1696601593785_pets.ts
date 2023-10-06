@@ -12,7 +12,9 @@ export default class Pets extends BaseSchema {
       table.string('sexo')
       table.decimal('peso', 10, 2)
       table.string('especie')
+
       table.integer('tutor_id').unsigned().references('id').inTable('tutors').onDelete('CASCADE')
+      
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

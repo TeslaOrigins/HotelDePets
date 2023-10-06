@@ -7,7 +7,6 @@ export default class Enderecos extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
 
-      //testando
       table.string('logradouro')
       table.string('numero')
       table.string('cidade')

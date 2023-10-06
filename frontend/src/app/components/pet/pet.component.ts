@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
-import { Pet } from 'src/app/models/Pet'; // Certifique-se de importar seu modelo Pet
-import { PetService } from 'src/app/services/pet.service'; // Certifique-se de importar seu serviço PetService
+import { Pet } from 'src/app/models/Pet'; 
+import { PetService } from 'src/app/services/pet.service'; 
 import { faMagnifyingGlass, faTrash, faEdit, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { MatDialog } from '@angular/material/dialog';
-import { CadastrarPetComponent } from './cadastrar-pet/cadastrar-pet.component'; // Certifique-se de importar seu componente de cadastro de pet
-import { EditarPetComponent } from './editar-pet/editar-pet.component'; // Certifique-se de importar seu componente de edição de pet
+import { CadastrarPetComponent } from './cadastrar-pet/cadastrar-pet.component'; 
+import { EditarPetComponent } from './editar-pet/editar-pet.component'; 
 import { DialogConfirmacaoComponent } from '../dialog-confirmacao/dialog-confirmacao.component';
-import { DetalhesPetComponent } from './detalhes-pet/detalhes-pet.component'; // Certifique-se de importar seu componente de detalhes de pet
+import { DetalhesPetComponent } from './detalhes-pet/detalhes-pet.component';
 
 @Component({
   selector: 'app-pet',
@@ -23,7 +23,7 @@ export class PetComponent implements OnInit {
   faPlus = faPlus;
 
   constructor(
-    private petService: PetService, // Certifique-se de importar seu serviço PetService
+    private petService: PetService, 
     private toastr: ToastrService,
     public dialog: MatDialog
   ) {}

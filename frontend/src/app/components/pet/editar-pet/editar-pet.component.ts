@@ -27,25 +27,22 @@ export class EditarPetComponent implements OnInit {
   ) {
     this.petId = 0;
     this.petForm = this.builder.group({
-      petId: [0], // Inclua o petId aqui com um valor inicial de 0
+      petId: [0],
       nome: new FormControl<string>('', Validators.required),
-      idade_mes: new FormControl<number>(0, Validators.min(0)), // Defina o valor inicial conforme necessário
+      idade_mes: new FormControl<number>(0, Validators.min(0)),
       raca: new FormControl<string>(''),
       sexo: new FormControl<string>(''),
-      peso: new FormControl<number>(0, Validators.min(0)), // Defina o valor inicial conforme necessário
+      peso: new FormControl<number>(0, Validators.min(0)),
       especie: new FormControl<string>('')
     });
   }
 
   ngOnInit() {
-    // Obtenha o ID do pet da rota
     this.route.params.subscribe(params => {
-      const id = +params['id']; // Certifique-se de converter para número
+      const id = +params['id']; 
       if (!isNaN(id)) {
         this.petId = id;
-        // Agora você pode fazer a chamada para o serviço com this.petId
         this.petService.getPetById(this.petId).subscribe((pet: Pet) => {
-          // Preencha os campos do formulário com os dados do pet
           this.petForm.patchValue({
             id: pet.id,
             nome: pet.nome,
@@ -57,7 +54,6 @@ export class EditarPetComponent implements OnInit {
           });
         });
       } else {
-        // Lide com o cenário em que o ID não é um número válido
         console.error('ID inválido:', params['id']);
       }
     });
@@ -75,20 +71,16 @@ export class EditarPetComponent implements OnInit {
         especie: this.petForm.controls['especie'].value,
       };
 
-      // Chama o método de edição do PetService
       this.petService.editar(obj.petId, obj).subscribe(
         (petEditado: Pet) => {
-          // Pet editado com sucesso
           console.log('Pet editado:', petEditado);
           
-          // Continue o tratamento de sucesso do pet
           this.toastr.success('Pet editado com sucesso');
           this.router.navigateByUrl(`/pets/detalhes/${petEditado.id}`);
           this.dialogRef.close();
         },
         (error: any) => {
           console.error('Erro ao editar pet:', error);
-          // Trate os erros relacionados à edição do pet aqui
           if (error.status == 400) {
             error.error.forEach((element: string) => {
               this.toastr.error(element);

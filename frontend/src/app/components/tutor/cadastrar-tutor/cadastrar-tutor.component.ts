@@ -76,33 +76,27 @@ export class CadastrarTutorComponent implements OnInit {
         cpf: this.tutorForm.controls['cpf'].value,
       };
 
-      // Chama o método de cadastro do TutorService
       this.tutorService.cadastrar(obj).subscribe(
         (response: any) => {
           if (response && response.data) {
-            const tutorId = response.data.id; // Obtém o ID do tutor cadastrado
+            const tutorId = response.data.id; 
 
-            // Cria um array com os objetos de endereço do formulário
             const enderecos = this.enderecos.value.map((endereco: any) => ({
               ...endereco,
-              tutor_id: tutorId, // Associa o ID do tutor aos endereços
+              tutor_id: tutorId, 
             }));
 
-            // Chama o método de cadastro do EnderecoService para cada endereço
             enderecos.forEach((endereco: any) => {
               this.enderecoService.cadastrarEndereco(endereco).subscribe(
                 (enderecoCadastrado: Endereco) => {
-                  // Endereço cadastrado com sucesso
                   console.log('Endereço cadastrado:', enderecoCadastrado);
                 },
                 (error: any) => {
                   console.error('Erro ao cadastrar endereço:', error);
-                  // Trate os erros relacionados ao cadastro de endereço aqui
                 }
               );
             });
 
-            // Continua o tratamento de sucesso do tutor
             this.toastr.success('Tutor cadastrado com sucesso');
             this.router.navigateByUrl('/tutores/');
             this.dialogRef.close();
@@ -110,7 +104,6 @@ export class CadastrarTutorComponent implements OnInit {
         },
         (error: any) => {
           console.error('Erro ao cadastrar tutor:', error);
-          // Trate os erros relacionados ao cadastro do tutor aqui
           if (error.status == 400) {
             error.error.forEach((element: string) => {
               this.toastr.error(element);

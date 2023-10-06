@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon';
 import { BaseModel, column, hasMany, HasMany, BelongsTo, belongsTo } from '@ioc:Adonis/Lucid/Orm';
 import Endereco from 'App/Models/Endereco';
-import Pet from 'App/Models/Pet'; // Importe o modelo Pet
+import Pet from 'App/Models/Pet';
 
 export default class Tutor extends BaseModel {
   @column({ isPrimary: true })
@@ -25,7 +25,6 @@ export default class Tutor extends BaseModel {
   @hasMany(() => Endereco)
   public enderecos: HasMany<typeof Endereco>;
 
-  // Adicione a relação de pertencimento a Pet
   @belongsTo(() => Pet, {
     foreignKey: 'tutorId',
   })

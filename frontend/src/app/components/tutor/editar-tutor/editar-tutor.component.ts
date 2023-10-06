@@ -38,17 +38,14 @@ export class EditarTutorComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Obtenha o ID do tutor da rota
     this.route.params.subscribe(params => {
-      const id = +params['id']; // Certifique-se de converter para número
+      const id = +params['id']; 
       if (!isNaN(id)) {
         this.tutorId = id;
-        // Agora você pode fazer a chamada para o serviço com this.tutorId
         this.tutorService.getTutorById(this.tutorId).subscribe((tutor: Tutor) => {
           // ...
         });
       } else {
-        // Lide com o cenário em que o ID não é um número válido
         console.error('ID inválido:', params['id']);
       }
     });
@@ -65,20 +62,16 @@ export class EditarTutorComponent implements OnInit {
         cpf: this.tutorForm.controls['cpf'].value,
       };
 
-      // Chama o método de edição do TutorService
       this.tutorService.editar(obj.tutorId, obj).subscribe(
         (tutorEditado: Tutor) => {
-          // Tutor editado com sucesso
           console.log('Tutor editado:', tutorEditado);
           
-          // Continue o tratamento de sucesso do tutor
           this.toastr.success('Tutor editado com sucesso');
           this.router.navigateByUrl(`/tutores/detalhes/${tutorEditado.id}`);
           this.dialogRef.close();
         },
         (error: any) => {
           console.error('Erro ao editar tutor:', error);
-          // Trate os erros relacionados à edição do tutor aqui
           if (error.status == 400) {
             error.error.forEach((element: string) => {
               this.toastr.error(element);

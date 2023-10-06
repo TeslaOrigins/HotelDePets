@@ -7,7 +7,6 @@ export default class Tutors extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
 
-      //testando
       table.string('nome')
       table.string('nome_normalizado')
       table.string('cpf')

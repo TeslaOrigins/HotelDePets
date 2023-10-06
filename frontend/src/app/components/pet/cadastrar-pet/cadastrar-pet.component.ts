@@ -39,7 +39,6 @@ export class CadastrarPetComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Carregar a lista de tutores para preencher o dropdown ou outro componente de seleção
     this.tutorService.getAllTutores().subscribe((tutors: Tutor[]) => {
       this.tutors = tutors;
     });
@@ -57,11 +56,9 @@ export class CadastrarPetComponent implements OnInit {
         tutor_id: this.petForm.controls['tutorId'].value,
       };
 
-      // Chama o método de cadastro do PetService
       this.petService.cadastrar(obj).subscribe(
         (response: any) => {
           if (response && response.data) {
-            // Continua o tratamento de sucesso do pet
             this.toastr.success('Pet cadastrado com sucesso');
             this.router.navigateByUrl('/pets/');
             this.dialogRef.close();
@@ -69,7 +66,6 @@ export class CadastrarPetComponent implements OnInit {
         },
         (error: any) => {
           console.error('Erro ao cadastrar pet:', error);
-          // Trate os erros relacionados ao cadastro do pet aqui
           if (error.status == 400) {
             error.error.forEach((element: string) => {
               this.toastr.error(element);
