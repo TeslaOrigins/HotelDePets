@@ -3,6 +3,7 @@ using System;
 using HDP.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HDP.Persistence.Migrations
 {
     [DbContext(typeof(HDPContext))]
-    partial class HDPContextModelSnapshot : ModelSnapshot
+    [Migration("20241002142912_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -222,10 +224,6 @@ namespace HDP.Persistence.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)")
                         .HasColumnName("nome");
-
-                    b.Property<string>("NomeNormalizado")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<float>("Peso")
                         .HasColumnType("real")

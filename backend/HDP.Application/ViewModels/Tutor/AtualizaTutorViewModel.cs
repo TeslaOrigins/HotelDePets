@@ -4,7 +4,7 @@ namespace HDP.Application.ViewModels.Tutor;
 
 public class AlterarTutorViewModel
 {
-    public int TutorId { get; set; }
+    public Guid TutorId { get; set; }
     public string? Nome { get; set; }
     public string? Telefone { get; set; }
     public string? Cpf { get; set; }

@@ -1,10 +1,10 @@
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using DAFA.Domain.Usuario;
 using HDP.Application.Services.Contracts;
 using HDP.Application.Services.Implementations;
 using HDP.Persistence;
+using HDP.Persistence.Contexts;
 using HDP.Persistence.Repository.Contracts;
 using HDP.Persistence.Repository.Implementations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -32,16 +32,6 @@ namespace HDP.API
         {
             services.AddScoped<ITutorService, TutorService>();
             services.AddScoped<ITutorRepository, TutorRepository>();
-            
-            
-            services.AddScoped<IEnderecoRepository, EnderecoRepository>();
-            
-            services.AddScoped<IPetService, PetService>();
-            services.AddScoped<IPetRepository, PetRepository>();
-            
-            services.AddScoped<IVeterinarioRepository, VeterinarioRepository>();
-            
-            services.AddScoped<IDietaRepository, DietaRepository>();
 
             services.AddScoped<IPetRepository,PetRepository>();
             services.AddScoped<IPetService,PetService>();
@@ -52,9 +42,9 @@ namespace HDP.API
             // services.AddScoped<IMaterialRepository, MaterialRepository>();
 
 
-            services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<HDPContext>()
-                .AddDefaultTokenProviders();
+            //services.AddIdentity<User, IdentityRole>()
+            //    .AddEntityFrameworkStores<HDPContext>()
+            //    .AddDefaultTokenProviders();
 
 
             var key = Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value);

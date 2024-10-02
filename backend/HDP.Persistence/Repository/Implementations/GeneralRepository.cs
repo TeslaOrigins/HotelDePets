@@ -1,4 +1,5 @@
-﻿using HDP.Persistence.Repository.Contracts;
+﻿using HDP.Persistence.Contexts;
+using HDP.Persistence.Repository.Contracts;
 
 namespace HDP.Persistence.Repository.Implementations
 {

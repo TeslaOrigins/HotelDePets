@@ -32,7 +32,7 @@ public class TutorController : ControllerBase
     
     [AllowAnonymous]
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetTutorPorId(int id)
+    public async Task<IActionResult> GetTutorPorId(Guid id)
     {
         try
         {
@@ -71,7 +71,7 @@ public class TutorController : ControllerBase
         }
     }
     
-    [AllowAnonymous]
+   /* [AllowAnonymous]
     [HttpPut]
     public async Task<IActionResult> AlterarTutor(AlterarTutorViewModel Tutor)
     {
@@ -93,15 +93,15 @@ public class TutorController : ControllerBase
         catch(Exception e ){
             return Problem(e.Message);
         }
-    }
+    }*/
     
     [AllowAnonymous]
     [HttpDelete("{idTutor}")]
-    public async Task<IActionResult> ApagarTutor(int idTutor)
+    public async Task<IActionResult> DeleteTutor(Guid idTutor)
     {
         try
         {
-            var tutors = await _tutorService.ApagarTutor(idTutor);
+            var tutors = await _tutorService.RemoveTutor(idTutor);
             
             if(tutors == null)
                 return Problem("Não foi possível apagar o tutor especificado");
