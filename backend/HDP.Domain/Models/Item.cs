@@ -16,7 +16,7 @@ namespace HDP.Domain.Models
         public int Quantidade { get; set; }
         public decimal Preco { get; set; }
         public string Tipo { get; set; } = null!;
-
+        public bool Ativo { get; set; }
         public virtual ICollection<CuidadosEspeciais> Cuidadosespeciais { get; set; }
         public virtual ICollection<Dieta> Dieta { get; set; }
     }

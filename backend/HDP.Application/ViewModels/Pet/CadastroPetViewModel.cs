@@ -4,14 +4,13 @@ namespace HDP.Application.ViewModels.Pet;
 
 public class CadastroPetViewModel
 {
-    public string Nome { get; set; }
-    public int Idade { get; set; }
-    public string Raca { get; set; }
-    public string? Sexo { get; set; }
-    public string Especie { get; set; }
-    public string? FotoUrl { get; set; }
-    public int Peso { get; set; }
-    public int TutorId { get; set; }
-    public virtual CadastroVeterinarioViewModel Veterinario { get; set; }
-    public virtual ICollection<CadastroDietaViewModel> Dieta { get; set; }
+
+    public string Nome { get; set; } = null!;
+    public DateOnly Datanascimento { get; set; }
+    public string Sexo { get; set; } = null!;
+    public string Tipo { get; set; } = null!;
+    public float Peso { get; set; }
+    public Guid Tutorid { get; set; }
+    public Guid TutorId { get; set; }
+
 }

@@ -9,7 +9,7 @@ namespace HDP.Domain.Models
         public string? Nome { get; set; }
         public decimal? Preco { get; set; }
         public Guid Hospedagemid { get; set; }
-
+        public bool Ativo {get;set;}
         public virtual Hospedagem Hospedagem { get; set; } = null!;
     }
 }

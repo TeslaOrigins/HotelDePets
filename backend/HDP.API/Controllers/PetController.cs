@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HDP.API.Controllers;
 
 [ApiController]
-[Route("Pet")]
+[Route("pet")]
 public class PetController : ControllerBase
 {
     private readonly IPetService _petService;
@@ -32,7 +32,7 @@ public class PetController : ControllerBase
     
     [AllowAnonymous]
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetPetPorId(int id)
+    public async Task<IActionResult> GetPetPorId(Guid id)
     {
         try
         {
@@ -50,6 +50,7 @@ public class PetController : ControllerBase
     }
     
     [AllowAnonymous]
+    [Route("cadastrar")]
     [HttpPost]
     public async Task<IActionResult> CadastrarPet(CadastroPetViewModel pet)
     {
@@ -72,12 +73,13 @@ public class PetController : ControllerBase
     }
     
     [AllowAnonymous]
-    [HttpPut("{id}")]
-    public async Task<IActionResult> AlterarPet(AlterarPetViewModel Pet)
+    [Route("alterar/{id}")]
+    [HttpPut]
+    public async Task<IActionResult> AlterarPet(Guid id,AlterarPetViewModel Pet)
     {
         try
         {
-            var pets = await _petService.AlterarPet(Pet);
+            var pets = await _petService.AlterarPet(Pet,id);
             if(pets == null)
                 return Problem("Não foi possível alterar o pet especificado");
             return Ok(pets);
@@ -93,26 +95,5 @@ public class PetController : ControllerBase
         }
     }
     
-    [AllowAnonymous]
-    [HttpDelete("{idPet}")]
-    public async Task<IActionResult> ApagarPet(int idPet)
-    {
-        try
-        {
-            var pets = await _petService.ApagarPet(idPet);
-            if(!pets)
-                return Problem("Não foi possível apagar o pet especificado");
-            
-            return Ok("Pet apagado com sucesso");
-        } 
-        catch(BusinessException<PetViewModel> BE){
-            return BadRequest(BE.messages);
-        } 
-        catch(NotFoundException NFE){
-            return NotFound(NFE.Message);
-        } 
-        catch(Exception e ){
-            return Problem(e.Message);
-        }
-    }
+  
 }

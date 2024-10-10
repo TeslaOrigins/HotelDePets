@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using HDP.Application.ViewModels.Pet;
+using HDP.Domain.Models;
 using HDP.Persistence;
 
 namespace HDP.Application.Helpers.Profiles

@@ -16,6 +16,7 @@ namespace HDP.Domain.Models
         public string Sexo { get; set; } = null!;
         public string Tipo { get; set; } = null!;
         public string? Motivobloqueio { get; set; }
+        public bool Bloqueado { get; set; }
         public float Peso { get; set; }
         public Guid Tutorid { get; set; }
 

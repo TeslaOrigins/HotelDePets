@@ -1,4 +1,6 @@
-﻿using HDP.Persistence.Repository.Contracts;
+﻿using HDP.Domain.Models;
+using HDP.Persistence.Contexts;
+using HDP.Persistence.Repository.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace HDP.Persistence.Repository.Implementations;
@@ -18,10 +20,10 @@ public class DietaRepository : GeneralRepository, IDietaRepository
         return await mainQuery.ToArrayAsync();    
     }
     
-    public async Task<Dieta> GetDietaPorId(int idDieta)
+    public async Task<Dieta> GetDietaPorId(Guid idDieta)
     {
         var mainQuery = from dieta in _context.Dieta
-            where dieta.DietaId == idDieta
+            where dieta.Dietaid == idDieta
             select dieta;
         
         return await mainQuery.FirstOrDefaultAsync();   

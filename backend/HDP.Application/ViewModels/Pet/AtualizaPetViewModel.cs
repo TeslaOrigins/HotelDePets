@@ -1,5 +1,4 @@
-﻿using HDP.Application.ViewModels.Veterinario;
-
+﻿
 namespace HDP.Application.ViewModels.Pet;
 
 public class AlterarPetViewModel
@@ -12,5 +11,5 @@ public class AlterarPetViewModel
     public string? Especie { get; set; }
     public string? FotoUrl { get; set; }
     public int? Peso { get; set; }
-    public AlterarVeterinarioViewModel Veterinario {get;set;}
+
 }

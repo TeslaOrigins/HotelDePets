@@ -3,6 +3,7 @@ using HDP.Application.Exceptions;
 using HDP.Application.Services.Contracts;
 using HDP.Application.ViewModels;
 using HDP.Application.ViewModels.Pet;
+using HDP.Domain.Models;
 using HDP.Persistence;
 using HDP.Persistence.Repository.Contracts;
 
@@ -11,14 +12,14 @@ namespace HDP.Application.Services.Implementations;
 public class PetService : IPetService
 {
     private readonly IPetRepository _petRepository;
-    private readonly IVeterinarioRepository _veterinarioRepository;
+    
     private readonly IDietaRepository _dietaRepository;
     private readonly IMapper _mapper;
     
-    public PetService(IMapper mapper, IPetRepository petRepository, IVeterinarioRepository veterinarioRepository){
+    public PetService(IMapper mapper, IPetRepository petRepository){
         _petRepository = petRepository;
         _mapper = mapper;
-        _veterinarioRepository = veterinarioRepository;
+
     }
     
     public async Task<PetViewModel[]> GetPet()
@@ -30,7 +31,7 @@ public class PetService : IPetService
         }
     }
     
-    public async Task<PetViewModel> GetPetPorId(int idPet)
+    public async Task<PetViewModel> GetPetPorId(Guid idPet)
     {
         try{
             var pet = await _petRepository.GetPetPorId(idPet);
@@ -77,7 +78,7 @@ public class PetService : IPetService
             _petRepository.Add(pet);
             if (await _petRepository.SaveChangesAsync())
             {
-                return _mapper.Map<PetViewModel>(await _petRepository.GetPetPorId(pet.PetId));
+                return _mapper.Map<PetViewModel>(await _petRepository.GetPetPorId(pet.Petid));
             }
 
             return null;
@@ -96,43 +97,20 @@ public class PetService : IPetService
         }
     }
     
-    public async Task<PetViewModel> AlterarPet(AlterarPetViewModel dados)
+    public async Task<PetViewModel> AlterarPet(AlterarPetViewModel dados,Guid IdPet)
     {
         try
         {
-            var petDomain = await _petRepository.GetPetPorId(dados.Id);
+            var petDomain = await _petRepository.GetPetPorId(IdPet);
 
             if(petDomain == null)
                 throw new NotFoundException("Não foi possível encontrar o pet especificado");
 
-            if (dados.Nome != null)
-            {
-                petDomain.Nome = dados.Nome;
-            }
-            if (dados.Idade != null)
-            {
-                petDomain.Idade = dados.Idade;
-            }
-            if (dados.Raca != null)
-            {
-                petDomain.Raca = dados.Raca;
-            }
-            if (dados.Sexo != null)
-            {
-                petDomain.Sexo = dados.Sexo;
-            }
-            if (dados.Especie != null)
-            {
-                petDomain.Especie = dados.Especie;
-            }
-            if (dados.FotoUrl != null)
-            {
-                petDomain.FotoUrl = dados.FotoUrl;
-            }
+          
 
             if (await _petRepository.SaveChangesAsync())
             {
-                return _mapper.Map<PetViewModel>(await _petRepository.GetPetPorId(petDomain.PetId));
+                return _mapper.Map<PetViewModel>(await _petRepository.GetPetPorId(petDomain.Petid));
             }
 
             return null;
@@ -150,32 +128,7 @@ public class PetService : IPetService
             throw new Exception(e.Message);
         }
     }
-    
-    public async Task<bool> ApagarPet(int idPet)
-    {
-        try
-        {
-            var petDomain = await _petRepository.GetPetPorId(idPet);
-            
-            if(petDomain == null)
-                throw new NotFoundException("Não foi possivel encontrar o pet especificado");
-            _petRepository.Delete(petDomain);
-            
-            return await _petRepository.SaveChangesAsync();
-        }
-        catch (BusinessException<PetViewModel> BE)
-        {
-            throw new BusinessException<PetViewModel>(BE.messages, BE.obj);
-        }
-        catch (NotFoundException NFE)
-        {
-            throw new NotFoundException(NFE.Message);
-        }
-        catch (Exception e)
-        {
-            throw new Exception(e.Message);
-        }
-    }
+   
   /*
     private async Task<bool> ValidaPetExistente(CadastroPetViewModel dados)
     {

@@ -1,4 +1,6 @@
-﻿using HDP.Persistence.Repository.Contracts;
+﻿using HDP.Domain.Models;
+using HDP.Persistence.Contexts;
+using HDP.Persistence.Repository.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace HDP.Persistence.Repository.Implementations;
@@ -13,16 +15,16 @@ public class PetRepository : GeneralRepository, IPetRepository
     
     public async Task<Pet[]> GetPet()
     {
-        var main_query = from pet in _context.Pet
+        var main_query = from pet in _context.Pets
             select pet;
         
         return await main_query.ToArrayAsync();    
     }
     
-    public async Task<Pet> GetPetPorId(int idPet)
+    public async Task<Pet> GetPetPorId(Guid idPet)
     {
-        var main_query = from pet in _context.Pet
-            where pet.PetId == idPet
+        var main_query = from pet in _context.Pets
+            where pet.Petid == idPet
             select pet;
         
         return await main_query.FirstOrDefaultAsync();   
@@ -30,7 +32,7 @@ public class PetRepository : GeneralRepository, IPetRepository
     
     public async Task<Pet> GetPetPorNome(string nomePet)
     {
-        var main_query = from pet in _context.Pet
+        var main_query = from pet in _context.Pets
             where pet.Nome == nomePet
             select pet;
         

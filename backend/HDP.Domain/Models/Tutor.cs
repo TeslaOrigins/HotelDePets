@@ -20,7 +20,7 @@ namespace HDP.Domain.Models
         public string? Cep { get; set; }
         public string? Bairro { get; set; }
         public short? Numero { get; set; }
-
+        public bool Ativo {get;set;}
         public virtual ICollection<Pet> Pets { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace HDP.Domain.Models
         public int Quantidade { get; set; }
         public decimal Preco { get; set; }
         public Guid Hospedagemid { get; set; }
-
+        public bool Ativo {get;set;}
         public virtual Hospedagem Hospedagem { get; set; } = null!;
 
         public virtual ICollection<Item> Itens { get; set; }
