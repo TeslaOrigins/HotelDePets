@@ -5,8 +5,10 @@ namespace HDP.Application.Services.Contracts;
 
 public interface IPetService
 {
-    Task<PetViewModel[]> GetPet();
+    Task<PetViewModel[]> GetPets();
     Task<PetViewModel> GetPetPorId(Guid idPet);
     Task<PetViewModel> CadastrarPet(CadastroPetViewModel dados);
     Task<PetViewModel> AlterarPet(AlterarPetViewModel dados,Guid idPet);
+    Task<PetViewModel> RemoverPet(Guid idPet);
+    Task<PetViewModel> BloquearPet(Guid idPet,string MensagemBloqueio);
 }

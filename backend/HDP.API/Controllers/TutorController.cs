@@ -17,12 +17,13 @@ public class TutorController : ControllerBase
     }
     
     [AllowAnonymous]
+    [Route("all")]
     [HttpGet]
-    public async Task<IActionResult> GetTutor()
+    public async Task<IActionResult> GetTutores()
     {
         try
         {
-            return Ok(await _tutorService.GetTutor());
+            return Ok(await _tutorService.GetTutores());
         }
         catch (Exception e)
         {
@@ -51,6 +52,7 @@ public class TutorController : ControllerBase
     
     [AllowAnonymous]
     [HttpPost]
+    [Route("cadastrar")]
     public async Task<IActionResult> CadastrarTutor(CadastroTutorViewModel tutor)
     {
         try
@@ -71,13 +73,14 @@ public class TutorController : ControllerBase
         }
     }
     
-   /* [AllowAnonymous]
+    [AllowAnonymous]
     [HttpPut]
-    public async Task<IActionResult> AlterarTutor(AlterarTutorViewModel Tutor)
+    [Route("alterar/{id}")]
+    public async Task<IActionResult> AlterarTutor(AlterarTutorViewModel Tutor,Guid id)
     {
         try
         {
-            var tutors = await _tutorService.AlterarTutor(Tutor);
+            var tutors = await _tutorService.AlterarTutor(Tutor,id);
             
             if(tutors == null)
                 return Problem("Não foi possível alterar os dados do tutor especificado");
@@ -93,18 +96,41 @@ public class TutorController : ControllerBase
         catch(Exception e ){
             return Problem(e.Message);
         }
-    }*/
-    
+    }
+     [AllowAnonymous]
+    [HttpPatch]
+    [Route("inativar/{id}")]
+    public async Task<IActionResult> InativarTutor(Guid id)
+    {
+        try
+        {
+            var tutors = await _tutorService.InativarReativarTutor(id);
+            
+            if(tutors == null)
+                return Problem("Não foi possível alterar os dados do tutor especificado");
+            
+            return Ok(tutors);
+        } 
+        catch(BusinessException<TutorViewModel> BE){
+            return BadRequest(BE.messages);
+        } 
+        catch(NotFoundException NFE){
+            return NotFound(NFE.Message);
+        } 
+        catch(Exception e ){
+            return Problem(e.Message);
+        }
+    }
     [AllowAnonymous]
     [HttpDelete("{idTutor}")]
     public async Task<IActionResult> DeleteTutor(Guid idTutor)
     {
         try
         {
-            var tutors = await _tutorService.RemoveTutor(idTutor);
+            var tutors = await _tutorService.RemoverTutor(idTutor);
             
             if(tutors == null)
-                return Problem("Não foi possível apagar o tutor especificado");
+                return Problem("Não foi possível remover o tutor especificado");
             
             return Ok(tutors);
         } 

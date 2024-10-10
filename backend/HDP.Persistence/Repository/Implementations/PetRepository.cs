@@ -13,7 +13,7 @@ public class PetRepository : GeneralRepository, IPetRepository
         _context = context;
     }
     
-    public async Task<Pet[]> GetPet()
+    public async Task<Pet[]> GetPets()
     {
         var main_query = from pet in _context.Pets
             select pet;

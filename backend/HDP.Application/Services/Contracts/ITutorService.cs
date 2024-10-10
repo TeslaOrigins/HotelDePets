@@ -5,9 +5,10 @@ namespace HDP.Application.Services.Contracts;
 
 public interface ITutorService
 {
-    Task<TutorViewModel[]> GetTutor();
+    Task<TutorViewModel[]> GetTutores();
     Task<TutorViewModel> GetTutorPorId(Guid idTutor);
     Task<TutorViewModel> CadastrarTutor(CadastroTutorViewModel dados);
-    //Task<TutorViewModel> AtualizaTutor(AtualizaTutorViewModel dados);
-    Task<bool> RemoveTutor(Guid idTutor);
+    Task<TutorViewModel> AlterarTutor(AlterarTutorViewModel dados,Guid Tutorid);
+    Task<TutorViewModel> InativarReativarTutor(Guid Tutorid);
+    Task<bool> RemoverTutor(Guid idTutor);
 }

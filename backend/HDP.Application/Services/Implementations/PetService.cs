@@ -12,20 +12,20 @@ namespace HDP.Application.Services.Implementations;
 public class PetService : IPetService
 {
     private readonly IPetRepository _petRepository;
-    
-    private readonly IDietaRepository _dietaRepository;
+    private readonly ITutorRepository _tutorRepository;
     private readonly IMapper _mapper;
     
-    public PetService(IMapper mapper, IPetRepository petRepository){
+    public PetService(IMapper mapper, IPetRepository petRepository, ITutorRepository tutorRepository){
+        _tutorRepository = tutorRepository;
         _petRepository = petRepository;
         _mapper = mapper;
 
     }
     
-    public async Task<PetViewModel[]> GetPet()
+    public async Task<PetViewModel[]> GetPets()
     {
         try{
-            return _mapper.Map<PetViewModel[]>(await _petRepository.GetPet());
+            return _mapper.Map<PetViewModel[]>(await _petRepository.GetPets());
         }catch(Exception e){
             throw new Exception(e.Message);
         }
@@ -53,7 +53,9 @@ public class PetService : IPetService
         try
         {
             List<string> errors = new();
-
+            var tutorExiste = await _tutorRepository.GetTutorPorId(dados.Tutorid);
+            if(tutorExiste == null)
+                errors.Add("Tutor não existe no banco de dados");
             //var petExiste = await ValidaPetExistente(dados);
             //var veterinarioExiste = await ValidaVeterinarioExistente(dados.Veterinario);
             
@@ -73,7 +75,7 @@ public class PetService : IPetService
 
             var pet = _mapper.Map<Pet>(dados);
             
-           // pet.NomeNormalizado = dados.Nome.ToUpper().Trim();
+            pet.Nome= dados.Nome.ToUpper().Trim();
             
             _petRepository.Add(pet);
             if (await _petRepository.SaveChangesAsync())
@@ -106,6 +108,12 @@ public class PetService : IPetService
             if(petDomain == null)
                 throw new NotFoundException("Não foi possível encontrar o pet especificado");
 
+            petDomain.Datanascimento = DateOnly.FromDateTime(dados.Datanascimento);
+            petDomain.Tipo = dados.Tipo;
+            petDomain.Nome = dados.Nome.Trim().ToUpper();
+            petDomain.Peso = dados.Peso;
+            petDomain.Sexo = dados.Sexo;
+
           
 
             if (await _petRepository.SaveChangesAsync())
@@ -128,57 +136,81 @@ public class PetService : IPetService
             throw new Exception(e.Message);
         }
     }
-   
-  /*
-    private async Task<bool> ValidaPetExistente(CadastroPetViewModel dados)
-    {
-        try
-        {
-            var pet = await GetPetPorNomeAnotherService(dados.Nome.ToUpper().Trim());
 
-            return pet != null;
+    public async Task<PetViewModel> RemoverPet(Guid idPet)
+    {
+          try
+        {
+            var petDomain = await _petRepository.GetPetPorId(idPet);
+
+            if (petDomain == null)
+            {
+                throw new NotFoundException("O pet especificado não existe no sistema");
+            }
+
+            // se todos os pets não tem hospedagem registrada ele inativa.
+            if(!petDomain.Hospedagens.Any())
+            {
+                _petRepository.Delete(petDomain);
+            }   
+            else{
+                throw new BusinessException<PetViewModel>(new string[] {"O pet possui uma hospedagem registrada, não é possivel inativa-lo no sistema."}, _mapper.Map<PetViewModel>(petDomain));
+            }
+            await _petRepository.SaveChangesAsync();
+
+            return _mapper.Map<PetViewModel>(petDomain);
+            
+        }
+        catch (BusinessException<PetViewModel> BE)
+        {
+            throw new BusinessException<PetViewModel>(BE.messages, BE.obj);
+        }
+        catch (NotFoundException NFE)
+        {
+            throw new NotFoundException(NFE.Message);
         }
         catch (Exception e)
         {
             throw new Exception(e.Message);
         }
     }
-    
-  
-    
-    private async Task<Pet> GetPetPorNomeAnotherService(string nomePet)
+
+    public async Task<PetViewModel> BloquearPet(Guid idPet,string mensagemBloqueio)
     {
-        var pet = await _petRepository.GetPetPorNomeNormalizado(nomePet);
-    
-        if (pet != null)
+         try
         {
-            return pet;
+            var petDomain = await _petRepository.GetPetPorId(idPet);
+
+            if (petDomain == null)
+            {
+                throw new NotFoundException("O pet especificado não existe no sistema");
+            }
+
+            // se todos os pets não tem hospedagem registrada ele inativa.
+            if(!petDomain.Hospedagens.Any())
+            {
+                petDomain.Bloqueado = !petDomain.Bloqueado;
+                petDomain.Motivobloqueio = mensagemBloqueio;
+            }   
+            else{
+                throw new BusinessException<PetViewModel>(new string[] {"O pet possui uma hospedagem registrada, não é possivel inativa-lo no sistema."}, _mapper.Map<PetViewModel>(petDomain));
+            }
+            await _petRepository.SaveChangesAsync();
+
+            return _mapper.Map<PetViewModel>(petDomain);
+            
         }
-    
-        return null;
+        catch (BusinessException<PetViewModel> BE)
+        {
+            throw new BusinessException<PetViewModel>(BE.messages, BE.obj);
+        }
+        catch (NotFoundException NFE)
+        {
+            throw new NotFoundException(NFE.Message);
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
     }
-    
-    private async Task<Pet> GetPetPorIdAnotherService(int idPet)
-    {
-        var pet = await _petRepository.GetPetPorId(idPet);
-
-        if (pet != null)
-        {
-            return pet;
-        }
-
-        return null;
-    }
-    
-    private async Task<Veterinario> GetVeterinarioAnotherService(int idPet)
-    {
-        var pet = await _veterinarioRepository.GetVeterinarioPorPetId(idPet);
-
-        if (pet != null)
-        {
-            return pet;
-        }
-
-        return null;
-    }*/
 }

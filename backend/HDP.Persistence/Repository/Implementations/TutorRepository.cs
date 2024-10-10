@@ -13,7 +13,7 @@ public class TutorRepository : GeneralRepository, ITutorRepository
         _context = context;
     }
     
-    public async Task<Tutor[]> GetTutor()
+    public async Task<Tutor[]> GetTutores()
     {
         var main_query = from tutor in _context.Tutores
             select tutor;
@@ -21,13 +21,15 @@ public class TutorRepository : GeneralRepository, ITutorRepository
         return await main_query.ToArrayAsync();    
     }
     
-    public async Task<Tutor> GetTutorPorId(Guid idTutor)
+    public async Task<Tutor> GetTutorPorId(Guid idTutor,bool pets = false,bool hospedagens =false)
     {
         var main_query = from tutor in _context.Tutores
             where tutor.Tutorid == idTutor
             select tutor;
-        
-        
+        if(pets)
+            main_query.Include(t => t.Pets);
+        if(hospedagens)
+            main_query.Include(t => t.Pets).ThenInclude(p => p.Hospedagens);
         return await main_query.FirstOrDefaultAsync();   
     }
     

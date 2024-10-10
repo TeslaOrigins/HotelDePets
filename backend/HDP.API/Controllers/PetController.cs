@@ -18,11 +18,12 @@ public class PetController : ControllerBase
     
     [AllowAnonymous]
     [HttpGet]
-    public async Task<IActionResult> GetPet()
+    [Route("all")]
+    public async Task<IActionResult> GetPets()
     {
         try
         {
-            return Ok(await _petService.GetPet());
+            return Ok(await _petService.GetPets());
         }
         catch (Exception e)
         {
@@ -94,6 +95,27 @@ public class PetController : ControllerBase
             return Problem(e.Message);
         }
     }
-    
+    [AllowAnonymous]
+    [Route("bloquear/{id}")]
+    [HttpPatch]
+    public async Task<IActionResult> BloquearPet(Guid id,BloquearPetViewModel mensagem)
+    {
+        try
+        {
+            var pets = await _petService.BloquearPet(id,mensagem.Motivobloqueio);
+            if(pets == null)
+                return Problem("Não foi possível bloquear o pet especificado");
+            return Ok(pets);
+        } 
+        catch(BusinessException<PetViewModel> BE){
+            return BadRequest(BE.messages);
+        } 
+        catch(NotFoundException NFE){
+            return NotFound(NFE.Message);
+        } 
+        catch(Exception e ){
+            return Problem(e.Message);
+        }
+    }
   
 }
