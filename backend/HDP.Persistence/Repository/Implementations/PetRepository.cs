@@ -21,7 +21,7 @@ public class PetRepository : GeneralRepository, IPetRepository
         return await main_query.ToArrayAsync();    
     }
     
-    public async Task<Pet> GetPetPorId(Guid idPet)
+    public async Task<Pet> GetPetPorId(Guid? idPet)
     {
         var main_query = from pet in _context.Pets
             where pet.Petid == idPet

@@ -21,7 +21,7 @@ public class TutorRepository : GeneralRepository, ITutorRepository
         return await main_query.ToArrayAsync();    
     }
     
-    public async Task<Tutor> GetTutorPorId(Guid idTutor,bool pets = false,bool hospedagens =false)
+    public async Task<Tutor> GetTutorPorId(Guid? idTutor,bool pets = false,bool hospedagens =false)
     {
         var main_query = from tutor in _context.Tutores
             where tutor.Tutorid == idTutor

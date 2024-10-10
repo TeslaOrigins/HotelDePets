@@ -10,7 +10,7 @@ public class TutorProfile : Profile
     public TutorProfile()
     {
         CreateMap<Tutor, TutorViewModel>()
-            .ForMember(o => o.Datanascimento,
+            .ForMember(o => o.DataNascimento,
                         map => map.MapFrom(o => o.Datanascimento.Value.ToDateTime(TimeOnly.Parse("00:00 AM"))));
 
         CreateMap<Tutor, CadastroTutorViewModel>();
