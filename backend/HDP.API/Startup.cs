@@ -39,6 +39,11 @@ namespace HDP.API
             services.AddScoped<IUsuarioRepository,UsuarioRepository>();
             services.AddScoped<IUsuarioService,UsuarioService>();
 
+            services.AddScoped<IHospedagemRepository,HospedagemRepository>();
+            services.AddScoped<IHospedagemService,HospedagemService>();
+
+            services.AddScoped<IDietaRepository,DietaRepository>();
+
              // services.AddScoped<IMaterialService,MaterialService>();
             // services.AddScoped<IMaterialRepository, MaterialRepository>();
 

@@ -1,11 +1,12 @@
 ﻿using HDP.Application.Services.Contracts;
 using HDP.Application.ViewModels.Hospedagem;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HDP.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("hospedagem")]
 public class HospedagemController : ControllerBase
 {
     private readonly IHospedagemService _hospedagemService;
@@ -16,6 +17,7 @@ public class HospedagemController : ControllerBase
     }
 
     // Cadastrar uma nova hospedagem
+    [AllowAnonymous]
     [HttpPost("cadastrar")]
     public async Task<IActionResult> CadastrarHospedagem([FromBody] CadastroHospedagemViewModel dados)
     {
@@ -37,6 +39,7 @@ public class HospedagemController : ControllerBase
     }
 
     // Obter hospedagem por ID
+    [AllowAnonymous]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetHospedagemPorId(Guid id)
     {
@@ -55,8 +58,9 @@ public class HospedagemController : ControllerBase
     }
 
     // Listar todas as hospedagens
-    [HttpGet("listar")]
-    public async Task<IActionResult> ListarHospedagens()
+    [AllowAnonymous]
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAllHospedagens()
     {
         try
         {
@@ -70,6 +74,7 @@ public class HospedagemController : ControllerBase
     }
 
     // Listar hospedagens por status
+    [AllowAnonymous]
     [HttpGet("status/{status}")]
     public async Task<IActionResult> ListarHospedagensPorStatus(string status)
     {
@@ -85,6 +90,7 @@ public class HospedagemController : ControllerBase
     }
 
     // Listar hospedagens por período
+    [AllowAnonymous]
     [HttpGet("periodo")]
     public async Task<IActionResult> ListarHospedagensPorPeriodo([FromQuery] DateTime dataInicio, [FromQuery] DateTime dataFim)
     {
@@ -100,8 +106,9 @@ public class HospedagemController : ControllerBase
     }
 
     // Atualizar uma hospedagem existente
-    [HttpPut("atualizar/{id}")]
-    public async Task<IActionResult> AtualizarHospedagem(Guid id, [FromBody] AlterarHospedagemViewModel dados)
+    [AllowAnonymous]
+    [HttpPut("alterar/{id}")]
+    public async Task<IActionResult> AlterarHospedagem(Guid id, [FromBody] AlterarHospedagemViewModel dados)
     {
         try
         {
@@ -121,6 +128,7 @@ public class HospedagemController : ControllerBase
     }
 
     // Deletar uma hospedagem
+    [AllowAnonymous]
     [HttpDelete("deletar/{id}")]
     public async Task<IActionResult> DeletarHospedagem(Guid id)
     {
@@ -129,6 +137,25 @@ public class HospedagemController : ControllerBase
             var sucesso = await _hospedagemService.DeletarHospedagem(id);
             if (sucesso)
                 return Ok("Hospedagem deletada com sucesso.");
+
+            return NotFound("Hospedagem não encontrada.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Erro interno: {ex.Message}");
+        }
+    }
+    
+
+    [AllowAnonymous]
+    [HttpPatch("cancelar/{id}")]
+    public async Task<IActionResult> CancelarHospedagem(Guid id)
+    {
+        try
+        {
+            var sucesso = await _hospedagemService.CancelarHospedagem(id);
+            if (sucesso != null)
+                return Ok(sucesso);
 
             return NotFound("Hospedagem não encontrada.");
         }

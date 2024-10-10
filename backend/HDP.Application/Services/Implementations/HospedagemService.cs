@@ -42,10 +42,7 @@ public class HospedagemService : IHospedagemService
         var pet = await _petRepository.GetPetPorId(dados.PetId);
         if (pet == null) errors.Add("Pet não encontrado.");
 
-        // Valida se o tutor do pet existe
-        var tutor = await _tutorRepository.GetTutorPorId(dados.TutorId);
-        if (tutor == null) errors.Add("Tutor não encontrado.");
-
+      
         // Valida se as datas são consistentes
         if (dados.DataCheckin >= dados.DataCheckout)
             errors.Add("A data de check-in deve ser anterior à data de check-out.");
@@ -111,9 +108,6 @@ public class HospedagemService : IHospedagemService
         var pet = await _petRepository.GetPetPorId(dados.PetId);
         if (pet == null) errors.Add("Pet não encontrado.");
 
-        var tutor = await _tutorRepository.GetTutorPorId(dados.TutorId);
-        if (tutor == null) errors.Add("Tutor não encontrado.");
-
         // Valida datas de check-in e check-out
         if (dados.DataCheckin >= dados.DataCheckout)
             errors.Add("A data de check-in deve ser anterior à data de check-out.");
@@ -140,5 +134,15 @@ public class HospedagemService : IHospedagemService
 
         _hospedagemRepository.Delete(hospedagem);
         return await _hospedagemRepository.SaveChangesAsync();
+    }
+
+    public async Task<HospedagemViewModel> CancelarHospedagem(Guid idHospedagem)
+    {
+        var hospedagem = await _hospedagemRepository.GetHospedagemPorId(idHospedagem, true, true, true, true);
+        if (hospedagem == null)
+            throw new NotFoundException("Hospedagem não encontrada.");
+        hospedagem.Status = "cancelada";
+        await _hospedagemRepository.SaveChangesAsync();
+        return _mapper.Map<HospedagemViewModel>(await _hospedagemRepository.GetHospedagemPorId(hospedagem.Hospedagemid, true, true, true, true));;
     }
 }

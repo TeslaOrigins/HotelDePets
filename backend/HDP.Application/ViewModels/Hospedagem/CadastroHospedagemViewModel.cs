@@ -15,12 +15,8 @@ public class CadastroHospedagemViewModel
     
     // Pet relacionado à hospedagem
     public Guid PetId { get; set; }
-    public string? NomePet { get; set; }
-    
-    // Tutor relacionado ao pet/hospedagem
-    public Guid TutorId { get; set; }
-    public string? NomeTutor { get; set; }
-    
+    public Guid UsuarioId { get; set; }
+
     // Serviços adicionados à hospedagem
     public List<ServicoViewModel>? Servicos { get; set; }
     
