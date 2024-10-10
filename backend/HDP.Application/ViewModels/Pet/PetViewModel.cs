@@ -1,4 +1,5 @@
 ﻿
+using HDP.Application.ViewModels.Hospedagem;
 using HDP.Application.ViewModels.Tutor;
 
 namespace HDP.Application.ViewModels.Pet;
@@ -15,4 +16,6 @@ public class PetViewModel
     public float Peso { get; set; }
     public Guid Tutorid { get; set; }
 
+    // Lista de hospedagens do Pet
+    public List<HospedagemViewModel>? Hospedagens { get; set; }
 }
