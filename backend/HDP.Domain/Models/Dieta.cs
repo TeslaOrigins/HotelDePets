@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace HDP.Persistence
+namespace HDP.Domain.Models
 {
     public partial class Dieta
     {
         public Dieta()
         {
-            DietaAlimentos = new HashSet<DietaAlimento>();
+            Itens = new HashSet<Item>();
         }
 
-        public int DietaId { get; set; }
+        public Guid Dietaid { get; set; }
         public int Quantidade { get; set; }
-        public string? Observacoes { get; set; }
-        public int PetId { get; set; }
+        public decimal Preco { get; set; }
+        public Guid Hospedagemid { get; set; }
+        public bool Ativo {get;set;}
+        public virtual Hospedagem Hospedagem { get; set; } = null!;
 
-        public virtual Pet Pet { get; set; } = null!;
-        public virtual ICollection<DietaAlimento> DietaAlimentos { get; set; }
+        public virtual ICollection<Item> Itens { get; set; }
     }
 }

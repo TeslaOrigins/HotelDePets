@@ -1,0 +1,36 @@
+<div class="card">
+  <div>Listagem de alimentos</div>
+  <div class="tabela">
+    <mat-card class="cabecalho">
+      <div class="cell">Nome</div>
+      <div class="cell">Quantidade no Estoque</div>
+      <div class="cell">Ver Detalhes</div>
+      <div class="cell">Alterar</div>
+      <div class="cell">Excluir</div>
+    </mat-card>
+    <mat-card class="linha" *ngFor="let alimento of alimentos">
+      <div class="cell">
+        {{ alimento.nome }}
+      </div>
+      <div class="cell">
+        {{ alimento.quantidadeEstoque }}
+      </div>
+      <div
+        (click)="openDialogDetalhes(alimento)"
+        style="cursor: pointer"
+        class="cell"
+      >
+        <a><fa-icon [icon]="faMagnfyingGlass"></fa-icon></a>
+      </div>
+      <div (click)="openDialogEdit(alimento)" style="cursor: pointer" class="cell">
+        <a> <fa-icon [icon]="faEdit"></fa-icon></a>
+      </div>
+      <div (click)="apagarAlimento(alimento)" style="cursor: pointer" class="cell">
+        <a> <fa-icon [icon]="faTrash"></fa-icon></a>
+      </div>
+    </mat-card>
+  </div>
+  <a (click)="openDialog()" class="float">
+    <fa-icon [icon]="faPlus"></fa-icon>
+  </a>
+</div>

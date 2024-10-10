@@ -1,20 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace HDP.Persistence
+namespace HDP.Domain.Models
 {
     public partial class Servico
     {
-        public Servico()
-        {
-            ServicoHospedagems = new HashSet<ServicoHospedagem>();
-        }
-
-        public int ServicoId { get; set; }
+        public Guid Servicoid { get; set; }
         public string? Nome { get; set; }
-        public DateOnly? DataServico { get; set; }
-        public float? Preco { get; set; }
-
-        public virtual ICollection<ServicoHospedagem> ServicoHospedagems { get; set; }
+        public decimal? Preco { get; set; }
+        public Guid Hospedagemid { get; set; }
+        public bool Ativo {get;set;}
+        public virtual Hospedagem Hospedagem { get; set; } = null!;
     }
 }

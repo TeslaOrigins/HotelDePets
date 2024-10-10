@@ -1,10 +1,10 @@
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using DAFA.Domain.Usuario;
 using HDP.Application.Services.Contracts;
 using HDP.Application.Services.Implementations;
 using HDP.Persistence;
+using HDP.Persistence.Contexts;
 using HDP.Persistence.Repository.Contracts;
 using HDP.Persistence.Repository.Implementations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -33,16 +33,24 @@ namespace HDP.API
             services.AddScoped<ITutorService, TutorService>();
             services.AddScoped<ITutorRepository, TutorRepository>();
 
-            services.AddScoped<IEnderecoService, EnderecoService>();
-            services.AddScoped<IEnderecoRepository, EnderecoRepository>();
+            services.AddScoped<IPetRepository,PetRepository>();
+            services.AddScoped<IPetService,PetService>();
 
-            // services.AddScoped<IMaterialService,MaterialService>();
+            services.AddScoped<IUsuarioRepository,UsuarioRepository>();
+            services.AddScoped<IUsuarioService,UsuarioService>();
+
+            services.AddScoped<IHospedagemRepository,HospedagemRepository>();
+            services.AddScoped<IHospedagemService,HospedagemService>();
+
+            services.AddScoped<IDietaRepository,DietaRepository>();
+
+             // services.AddScoped<IMaterialService,MaterialService>();
             // services.AddScoped<IMaterialRepository, MaterialRepository>();
 
 
-            services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<HDPContext>()
-                .AddDefaultTokenProviders();
+            //services.AddIdentity<User, IdentityRole>()
+            //    .AddEntityFrameworkStores<HDPContext>()
+            //    .AddDefaultTokenProviders();
 
 
             var key = Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value);
@@ -64,8 +72,6 @@ namespace HDP.API
                 {
                     options.JsonSerializerOptions.IgnoreNullValues = true;
                     options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
-                    options.JsonSerializerOptions.ReferenceHandler =
-                        System.Text.Json.Serialization.ReferenceHandler.Preserve;
                     options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                     options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
                 })

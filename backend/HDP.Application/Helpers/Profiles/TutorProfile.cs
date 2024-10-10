@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using HDP.Application.ViewModels;
 using HDP.Application.ViewModels.Tutor;
 using HDP.Domain.Models;
 using HDP.Persistence;
@@ -10,10 +9,14 @@ public class TutorProfile : Profile
 {
     public TutorProfile()
     {
-        CreateMap<Tutor, TutorViewModel>();
+        CreateMap<Tutor, TutorViewModel>()
+            .ForMember(o => o.DataNascimento,
+                        map => map.MapFrom(o => o.Datanascimento.Value.ToDateTime(TimeOnly.Parse("00:00 AM"))));
 
         CreateMap<Tutor, CadastroTutorViewModel>();
 
-        CreateMap<CadastroTutorViewModel, Tutor>();
+        CreateMap<CadastroTutorViewModel, Tutor>()
+            .ForMember(o => o.Datanascimento,
+                        map => map.MapFrom(o => DateOnly.FromDateTime(o.Datanascimento.Value)));
     }
 }

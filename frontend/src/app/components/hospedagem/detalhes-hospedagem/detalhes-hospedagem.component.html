@@ -1,0 +1,20 @@
+<div>
+    <div>
+      Data de Entrada: {{ data.dataEntrada | date: 'dd/MM/yyyy' }}
+    </div>
+    <div>
+      Data de Saída: {{ data.dataSaida | date: 'dd/MM/yyyy' }}
+    </div>
+    <div>
+      Observações: {{ data.observacoes }}
+    </div>
+    <div>
+      Check-In: {{ data.checkIn ? 'Sim' : 'Não' }}
+    </div>
+    <div>
+      Pet ID: {{ data.petId }}
+    </div>
+    <div>
+      Preço da Hospedagem: {{ data.precoHospedagem | currency: 'BRL' }}
+    </div>
+  </div>

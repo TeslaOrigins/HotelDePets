@@ -1,0 +1,52 @@
+<div style="width: 50vw">
+  <h1 mat-dialog-title style="text-align: center">Cadastrar Medicamento</h1>
+  <form [formGroup]="reservaForm" (ngSubmit)="onSubmit()">
+    <div style="display: flex; flex-direction: column; padding: 12px">
+      <mat-form-field>
+        <mat-label>Data Checkin</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker1"
+          formControlName="dataCheckin"
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker1"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Data Checkout</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker2"
+          formControlName="dataCheckout"
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker2"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Serviços</mat-label>
+        <mat-select formControlName="servicos" multiple>
+          <mat-option *ngFor="let servico of mockServicos" [value]="servico">{{
+            servico.nome
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 16px;
+      "
+    >
+      <button mat-button (click)="close()" type="button">Cancelar</button>
+      <button mat-button type="submit">Confirmar</button>
+    </div>
+  </form>
+</div>

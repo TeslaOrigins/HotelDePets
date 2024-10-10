@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using HDP.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace HDP.Persistence
+namespace HDP.Persistence.Contexts
 {
     public partial class HDPContext : DbContext
     {
@@ -16,250 +17,174 @@ namespace HDP.Persistence
         {
         }
 
-        public virtual DbSet<Alimento> Alimento { get; set; } = null!;
-        public virtual DbSet<CuidadoEspecial> CuidadoEspecial { get; set; } = null!;
-        public virtual DbSet<CuidadoEspecialMedicamento> CuidadoEspecialMedicamento { get; set; } = null!;
-        public virtual DbSet<DietaAlimento> DietaAlimento { get; set; } = null!;
+        public virtual DbSet<CuidadosEspeciais> CuidadosEspeciais { get; set; } = null!;
         public virtual DbSet<Dieta> Dieta { get; set; } = null!;
-        public virtual DbSet<Endereco> Endereco { get; set; } = null!;
-        public virtual DbSet<Hospedagem> Hospedagem { get; set; } = null!;
-        public virtual DbSet<Medicamento> Medicamento { get; set; } = null!;
-        public virtual DbSet<Pet> Pet { get; set; } = null!;
-        public virtual DbSet<Reserva> Reserva { get; set; } = null!;
-        public virtual DbSet<Servico> Servico { get; set; } = null!;
-        public virtual DbSet<ServicoHospedagem> ServicoHospedagem { get; set; } = null!;
-        public virtual DbSet<Tutor> Tutor { get; set; } = null!;
-        public virtual DbSet<Veterinario> Veterinario { get; set; } = null!;
+        public virtual DbSet<Hospedagem> Hospedagens { get; set; } = null!;
+        public virtual DbSet<Item> Items { get; set; } = null!;
+        public virtual DbSet<Pet> Pets { get; set; } = null!;
+        public virtual DbSet<Servico> Servicos { get; set; } = null!;
+        public virtual DbSet<Tutor> Tutores { get; set; } = null!;
+        public virtual DbSet<Usuario> Usuarios { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                // #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseNpgsql("Host=localhost:5432;Database=HotelPet;Username=postgres");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseNpgsql("Host=localhost;Database=hdp;Username=postgres;Password=frustrafamepeste");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Alimento>(entity =>
+            modelBuilder.HasPostgresExtension("uuid-ossp");
+
+            modelBuilder.Entity<CuidadosEspeciais>(entity =>
             {
-                entity.ToTable("Alimento");
+                entity.HasKey(e => e.Cuidadosespeciaisid)
+                    .HasName("CuidadosEspeciais_pkey");
 
-                entity.Property(e => e.AlimentoId)
-                    .HasColumnName("alimentoid")
-                    .UseIdentityAlwaysColumn();
+                entity.Property(e => e.Cuidadosespeciaisid)
+                    .HasColumnName("cuidadosespeciaisid")
+                    .HasDefaultValueSql("uuid_generate_v4()");
 
-                entity.Property(e => e.DataEntrada).HasColumnName("dataentrada");
+                entity.Property(e => e.Descricaousomedicamento).HasColumnName("descricaousomedicamento");
 
-                entity.Property(e => e.Nome)
-                    .HasMaxLength(255)
-                    .HasColumnName("nome");
+                entity.Property(e => e.Porcoespordia).HasColumnName("porcoespordia");
 
-                entity.Property(e => e.PrecoReabastecimento).HasColumnName("precoreabastecimento");
+                entity.Property(e => e.Valorporcao).HasColumnName("valorporcao");
 
-                entity.Property(e => e.QuantidadeEstoque).HasColumnName("quantidadeestoque");
-            });
+                entity.HasMany(d => d.Itens)
+                    .WithMany(p => p.Cuidadosespeciais)
+                    .UsingEntity<Dictionary<string, object>>(
+                        "CuidadosEspeciaisItem",
+                        l => l.HasOne<Item>().WithMany().HasForeignKey("Itemid").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("CuidadosEspeciaisItem_itemid_fkey"),
+                        r => r.HasOne<CuidadosEspeciais>().WithMany().HasForeignKey("Cuidadosespeciaisid").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("CuidadosEspeciaisItem_cuidadosespeciaisid_fkey"),
+                        j =>
+                        {
+                            j.HasKey("Cuidadosespeciaisid", "Itemid").HasName("pk_cuidadosespeciaisitem");
 
-            modelBuilder.Entity<CuidadoEspecial>(entity =>
-            {
-                entity.ToTable("CuidadoEspecial");
+                            j.ToTable("CuidadosEspeciaisItem");
 
-                entity.Property(e => e.CuidadoEspecialId)
-                    .HasColumnName("cuidadoespecialid")
-                    .UseIdentityAlwaysColumn();
+                            j.IndexerProperty<Guid>("Cuidadosespeciaisid").HasColumnName("cuidadosespeciaisid");
 
-                entity.Property(e => e.Alergias)
-                    .HasMaxLength(255)
-                    .HasColumnName("alergias");
-
-                entity.Property(e => e.CondicoesSaude)
-                    .HasMaxLength(255)
-                    .HasColumnName("condicoessaude");
-
-                entity.Property(e => e.HospedagemId).HasColumnName("hospedagemid");
-
-                entity.Property(e => e.InstrucoesEspeciais)
-                    .HasMaxLength(255)
-                    .HasColumnName("instrucoesespeciais");
-
-                entity.HasOne(d => d.Hospedagem)
-                    .WithMany(p => p.CuidadoEspecials)
-                    .HasForeignKey(d => d.HospedagemId)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("fk_hospedagem");
-            });
-
-            modelBuilder.Entity<CuidadoEspecialMedicamento>(entity =>
-            {
-                entity.HasKey(e => e.CemId)
-                    .HasName("CuidadoEspecialMedicamento_pkey");
-
-                entity.ToTable("CuidadoEspecialMedicamento");
-
-                entity.Property(e => e.CemId)
-                    .HasColumnName("cemid")
-                    .UseIdentityAlwaysColumn();
-
-                entity.Property(e => e.CuidadoespecialId).HasColumnName("cuidadoespecialid");
-
-                entity.Property(e => e.MedicamentoId).HasColumnName("medicamentoid");
-
-                entity.HasOne(d => d.Cuidadoespecial)
-                    .WithMany(p => p.CuidadoEspecialMedicamentos)
-                    .HasForeignKey(d => d.CuidadoespecialId)
-                    .HasConstraintName("CuidadoEspecialMedicamento_cuidadoespecialid_fkey");
-
-                entity.HasOne(d => d.Medicamento)
-                    .WithMany(p => p.CuidadoEspecialMedicamentos)
-                    .HasForeignKey(d => d.MedicamentoId)
-                    .HasConstraintName("CuidadoEspecialMedicamento_MedicamentoId_fkey");
-            });
-
-            modelBuilder.Entity<DietaAlimento>(entity =>
-            {
-                entity.HasKey(e => new { e.DietaId, e.AlimentoId })
-                    .HasName("pk_dietaalimento");
-
-                entity.ToTable("DietaAlimento");
-
-                entity.Property(e => e.DietaId).HasColumnName("dietaid");
-
-                entity.Property(e => e.AlimentoId).HasColumnName("alimentoid");
-
-                entity.Property(e => e.DietaAlimentoId)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("dietaalimentoid")
-                    .UseIdentityAlwaysColumn();
-
-                entity.HasOne(d => d.Alimento)
-                    .WithMany(p => p.DietaAlimentos)
-                    .HasForeignKey(d => d.AlimentoId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("DietaAlimento_AlimentoId_fkey");
-
-                entity.HasOne(d => d.Dieta)
-                    .WithMany(p => p.DietaAlimentos)
-                    .HasForeignKey(d => d.DietaId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("DietaAlimento_DietaId_fkey");
+                            j.IndexerProperty<Guid>("Itemid").HasColumnName("itemid");
+                        });
             });
 
             modelBuilder.Entity<Dieta>(entity =>
             {
-                entity.HasKey(e => e.DietaId)
+                entity.HasKey(e => e.Dietaid)
                     .HasName("Dieta_pkey");
 
-                entity.Property(e => e.DietaId)
+                entity.Property(e => e.Dietaid)
                     .HasColumnName("dietaid")
-                    .UseIdentityAlwaysColumn();
+                    .HasDefaultValueSql("uuid_generate_v4()");
 
-                entity.Property(e => e.Observacoes)
-                    .HasMaxLength(255)
-                    .HasColumnName("observacoes");
+                entity.Property(e => e.Hospedagemid).HasColumnName("hospedagemid");
 
-                entity.Property(e => e.PetId).HasColumnName("petid");
+                entity.Property(e => e.Preco)
+                    .HasPrecision(12, 2)
+                    .HasColumnName("preco");
 
                 entity.Property(e => e.Quantidade).HasColumnName("quantidade");
 
-                entity.HasOne(d => d.Pet)
+                entity.HasOne(d => d.Hospedagem)
+                    .WithMany(p => p.Dietas)
+                    .HasForeignKey(d => d.Hospedagemid)
+                    .HasConstraintName("fk_hospedagem");
+
+                entity.HasMany(d => d.Itens)
                     .WithMany(p => p.Dieta)
-                    .HasForeignKey(d => d.PetId)
-                    .HasConstraintName("fk_pet");
-            });
+                    .UsingEntity<Dictionary<string, object>>(
+                        "DietaItem",
+                        l => l.HasOne<Item>().WithMany().HasForeignKey("Itemid").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("DietaItem_itemid_fkey"),
+                        r => r.HasOne<Dieta>().WithMany().HasForeignKey("Dietaid").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("DietaItem_dietaid_fkey"),
+                        j =>
+                        {
+                            j.HasKey("Dietaid", "Itemid").HasName("pk_dietaitem");
 
-            modelBuilder.Entity<Endereco>(entity =>
-            {
-                entity.ToTable("Endereco");
+                            j.ToTable("DietaItem");
 
-                entity.Property(e => e.EnderecoId)
-                    .HasColumnName("enderecoid")
-                    .UseIdentityAlwaysColumn();
+                            j.IndexerProperty<Guid>("Dietaid").HasColumnName("dietaid");
 
-                entity.Property(e => e.Cidade)
-                    .HasMaxLength(255)
-                    .HasColumnName("cidade");
-
-                entity.Property(e => e.Estado)
-                    .HasMaxLength(255)
-                    .HasColumnName("estado");
-
-                entity.Property(e => e.Logradouro)
-                    .HasMaxLength(255)
-                    .HasColumnName("logradouro");
-
-                entity.Property(e => e.Numero).HasColumnName("numero");
-
-                entity.Property(e => e.TutorId).HasColumnName("tutorid");
-
-                entity.HasOne(d => d.Tutor)
-                    .WithMany(p => p.Enderecos)
-                    .HasForeignKey(d => d.TutorId)
-                    .HasConstraintName("fk_tutor");
+                            j.IndexerProperty<Guid>("Itemid").HasColumnName("itemid");
+                        });
             });
 
             modelBuilder.Entity<Hospedagem>(entity =>
             {
                 entity.ToTable("Hospedagem");
 
-                entity.Property(e => e.HospedagemId)
+                entity.Property(e => e.Hospedagemid)
                     .HasColumnName("hospedagemid")
-                    .UseIdentityAlwaysColumn();
+                    .HasDefaultValueSql("uuid_generate_v4()");
 
-                entity.Property(e => e.CheckIn).HasColumnName("checkin");
+                entity.Property(e => e.Datacheckin).HasColumnName("datacheckin");
 
-                entity.Property(e => e.DataEntrada).HasColumnName("dataentrada");
+                entity.Property(e => e.Datacheckout).HasColumnName("datacheckout");
 
-                entity.Property(e => e.DataSaida).HasColumnName("datasaida");
+                entity.Property(e => e.Datafim).HasColumnName("datafim");
 
-                entity.Property(e => e.Observacoes)
+                entity.Property(e => e.Datainicio).HasColumnName("datainicio");
+
+                entity.Property(e => e.Paga).HasColumnName("paga");
+
+                entity.Property(e => e.Petid).HasColumnName("petid");
+
+                entity.Property(e => e.Status)
                     .HasMaxLength(255)
-                    .HasColumnName("observacoes");
+                    .HasColumnName("status");
 
-                entity.Property(e => e.PetId).HasColumnName("petid");
-
-                entity.Property(e => e.PrecoHospedagem).HasColumnName("precohospedagem");
+                entity.Property(e => e.Usuarioid).HasColumnName("usuarioid");
 
                 entity.HasOne(d => d.Pet)
-                    .WithMany(p => p.Hospedagems)
-                    .HasForeignKey(d => d.PetId)
+                    .WithMany(p => p.Hospedagens)
+                    .HasForeignKey(d => d.Petid)
                     .HasConstraintName("fk_pet");
+
+                entity.HasOne(d => d.Usuario)
+                    .WithMany(p => p.Hospedagens)
+                    .HasForeignKey(d => d.Usuarioid)
+                    .HasConstraintName("fk_usuario");
             });
 
-            modelBuilder.Entity<Medicamento>(entity =>
+            modelBuilder.Entity<Item>(entity =>
             {
-                entity.ToTable("Medicamento");
+                entity.ToTable("Item");
 
-                entity.Property(e => e.MedicamentoId)
-                    .HasColumnName("medicamentoid")
-                    .UseIdentityAlwaysColumn();
-
-                entity.Property(e => e.DataEntrada).HasColumnName("dataentrada");
+                entity.Property(e => e.Itemid)
+                    .HasColumnName("itemid")
+                    .HasDefaultValueSql("uuid_generate_v4()");
 
                 entity.Property(e => e.Nome)
                     .HasMaxLength(255)
                     .HasColumnName("nome");
 
-                entity.Property(e => e.Preco).HasColumnName("preco");
+                entity.Property(e => e.Preco)
+                    .HasPrecision(12, 2)
+                    .HasColumnName("preco");
+
+                entity.Property(e => e.Quantidade).HasColumnName("quantidade");
+
+                entity.Property(e => e.Tipo)
+                    .HasMaxLength(255)
+                    .HasColumnName("tipo");
             });
 
             modelBuilder.Entity<Pet>(entity =>
             {
                 entity.ToTable("Pet");
 
-                entity.Property(e => e.PetId)
+                entity.Property(e => e.Petid)
                     .HasColumnName("petid")
-                    .UseIdentityAlwaysColumn();
+                    .HasDefaultValueSql("uuid_generate_v4()");
 
-                entity.Property(e => e.Especie)
+                entity.Property(e => e.Datanascimento).HasColumnName("datanascimento");
+
+                entity.Property(e => e.Motivobloqueio)
                     .HasMaxLength(255)
-                    .HasColumnName("especie");
-
-                entity.Property(e => e.FotoUrl)
-                    .HasMaxLength(255)
-                    .HasColumnName("fotourl");
-
-                entity.Property(e => e.Idade).HasColumnName("idade");
+                    .HasColumnName("motivobloqueio");
 
                 entity.Property(e => e.Nome)
                     .HasMaxLength(255)
@@ -267,92 +192,67 @@ namespace HDP.Persistence
 
                 entity.Property(e => e.Peso).HasColumnName("peso");
 
-                entity.Property(e => e.Raca)
-                    .HasMaxLength(255)
-                    .HasColumnName("raca");
-
                 entity.Property(e => e.Sexo)
                     .HasMaxLength(255)
                     .HasColumnName("sexo");
 
-                entity.Property(e => e.TutorId).HasColumnName("tutorid");
+                entity.Property(e => e.Tipo)
+                    .HasMaxLength(255)
+                    .HasColumnName("tipo");
+
+                entity.Property(e => e.Tutorid).HasColumnName("tutorid");
 
                 entity.HasOne(d => d.Tutor)
                     .WithMany(p => p.Pets)
-                    .HasForeignKey(d => d.TutorId)
-                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasForeignKey(d => d.Tutorid)
                     .HasConstraintName("fk_tutor");
-            });
-
-            modelBuilder.Entity<Reserva>(entity =>
-            {
-                entity.ToTable("Reserva");
-
-                entity.Property(e => e.ReservaId)
-                    .HasColumnName("reservaid")
-                    .UseIdentityAlwaysColumn();
-
-                entity.Property(e => e.DataReserva).HasColumnName("datareserva");
-
-                entity.Property(e => e.HospedagemId).HasColumnName("hospedagemid");
-
-                entity.HasOne(d => d.Hospedagem)
-                    .WithMany(p => p.Reservas)
-                    .HasForeignKey(d => d.HospedagemId)
-                    .HasConstraintName("Reserva_HospedagemId_fkey");
             });
 
             modelBuilder.Entity<Servico>(entity =>
             {
                 entity.ToTable("Servico");
 
-                entity.Property(e => e.ServicoId)
+                entity.Property(e => e.Servicoid)
                     .HasColumnName("servicoid")
-                    .UseIdentityAlwaysColumn();
+                    .HasDefaultValueSql("uuid_generate_v4()");
 
-                entity.Property(e => e.DataServico).HasColumnName("dataservico");
+                entity.Property(e => e.Hospedagemid).HasColumnName("hospedagemid");
 
                 entity.Property(e => e.Nome)
                     .HasMaxLength(255)
                     .HasColumnName("nome");
 
-                entity.Property(e => e.Preco).HasColumnName("preco");
-            });
-
-            modelBuilder.Entity<ServicoHospedagem>(entity =>
-            {
-                entity.ToTable("ServicoHospedagem");
-
-                entity.Property(e => e.ServicoHospedagemId)
-                    .HasColumnName("servicohospedagemid")
-                    .UseIdentityAlwaysColumn();
-
-                entity.Property(e => e.HospedagemId).HasColumnName("hospedagemid");
-
-                entity.Property(e => e.ServicoId).HasColumnName("servicoid");
+                entity.Property(e => e.Preco)
+                    .HasPrecision(12, 2)
+                    .HasColumnName("preco");
 
                 entity.HasOne(d => d.Hospedagem)
-                    .WithMany(p => p.ServicoHospedagems)
-                    .HasForeignKey(d => d.HospedagemId)
-                    .HasConstraintName("ServicoHospedagem_HospedagemId_fkey");
-
-                entity.HasOne(d => d.Servico)
-                    .WithMany(p => p.ServicoHospedagems)
-                    .HasForeignKey(d => d.ServicoId)
-                    .HasConstraintName("ServicoHospedagem_ServicoId_fkey");
+                    .WithMany(p => p.Servicos)
+                    .HasForeignKey(d => d.Hospedagemid)
+                    .HasConstraintName("fk_hospedagem");
             });
 
             modelBuilder.Entity<Tutor>(entity =>
             {
                 entity.ToTable("Tutor");
 
-                entity.Property(e => e.TutorId)
+                entity.Property(e => e.Tutorid)
                     .HasColumnName("tutorid")
-                    .UseIdentityAlwaysColumn();
+                    .HasDefaultValueSql("uuid_generate_v4()");
+
+                entity.Property(e => e.Bairro)
+                    .HasMaxLength(255)
+                    .HasColumnName("bairro");
+
+                entity.Property(e => e.Cep)
+                    .HasMaxLength(255)
+                    .HasColumnName("cep");
 
                 entity.Property(e => e.Cpf)
                     .HasMaxLength(255)
                     .HasColumnName("cpf");
+
+                entity.Property(e => e.Datanascimento).HasColumnName("datanascimento");
 
                 entity.Property(e => e.Email)
                     .HasMaxLength(255)
@@ -362,38 +262,36 @@ namespace HDP.Persistence
                     .HasMaxLength(255)
                     .HasColumnName("nome");
 
-                entity.Property(e => e.NomeNormalizado)
+                entity.Property(e => e.Numero).HasColumnName("numero");
+
+                entity.Property(e => e.Rua)
                     .HasMaxLength(255)
-                    .HasColumnName("nomenormalizado");
+                    .HasColumnName("rua");
 
                 entity.Property(e => e.Telefone)
                     .HasMaxLength(255)
                     .HasColumnName("telefone");
             });
 
-            modelBuilder.Entity<Veterinario>(entity =>
+            modelBuilder.Entity<Usuario>(entity =>
             {
-                entity.ToTable("Veterinario");
+                entity.ToTable("Usuario");
 
-                entity.Property(e => e.VeterinarioId)
-                    .HasColumnName("veterinarioid")
-                    .UseIdentityAlwaysColumn();
+                entity.Property(e => e.Usuarioid)
+                    .HasColumnName("usuarioid")
+                    .HasDefaultValueSql("uuid_generate_v4()");
+
+                entity.Property(e => e.Admin).HasColumnName("admin");
+
+                entity.Property(e => e.Cpf)
+                    .HasMaxLength(11)
+                    .HasColumnName("cpf");
+
+                entity.Property(e => e.Datanascimento).HasColumnName("datanascimento");
 
                 entity.Property(e => e.Nome)
                     .HasMaxLength(255)
                     .HasColumnName("nome");
-
-                entity.Property(e => e.PetId).HasColumnName("petid");
-
-                entity.Property(e => e.Telefone)
-                    .HasMaxLength(255)
-                    .HasColumnName("telefone");
-
-                entity.HasOne(d => d.Pet)
-                    .WithMany(p => p.Veterinarios)
-                    .HasForeignKey(d => d.PetId)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("fk_pet");
             });
 
             OnModelCreatingPartial(modelBuilder);
