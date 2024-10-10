@@ -25,5 +25,6 @@ namespace HDP.Domain.Models
         public virtual Usuario Usuario { get; set; } = null!;
         public virtual ICollection<Dieta> Dietas { get; set; }
         public virtual ICollection<Servico> Servicos { get; set; }
+        public virtual ICollection<CuidadosEspeciais> CuidadosEspeciais { get; set; }
     }
 }

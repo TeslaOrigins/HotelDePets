@@ -14,7 +14,8 @@ namespace HDP.Domain.Models
         public int Porcoespordia { get; set; }
         public int Valorporcao { get; set; }
         public string Descricaousomedicamento { get; set; } = null!;
-
+        public Guid Hospedagemid {get;set;}
+        public virtual Hospedagem Hospedagem {get;set;}
         public virtual ICollection<Item> Itens { get; set; }
     }
 }
