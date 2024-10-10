@@ -98,6 +98,7 @@ public class TutorService : ITutorService
         {
             var tutorDomain = await _tutorRepository.GetTutorPorId(Tutorid);
 
+            
             tutorDomain.Cpf = dados.Cpf;
             tutorDomain.Nome = dados.Nome.ToUpper().Trim();
             tutorDomain.Datanascimento =  DateOnly.FromDateTime(dados.Datanascimento.Value);
@@ -132,7 +133,7 @@ public class TutorService : ITutorService
     {
         try
         {
-            var tutorDomain = await _tutorRepository.GetTutorPorId(idTutor);
+            var tutorDomain = await _tutorRepository.GetTutorPorId(idTutor,true,true);
 
             if (tutorDomain == null)
             {
@@ -183,7 +184,7 @@ public class TutorService : ITutorService
     {
         try
         {
-            var tutorDomain = await _tutorRepository.GetTutorPorId(Tutorid);
+            var tutorDomain = await _tutorRepository.GetTutorPorId(Tutorid,true,true);
 
             if (tutorDomain == null)
             {

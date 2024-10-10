@@ -14,9 +14,10 @@ namespace HDP.Domain.Models
         public string Nome { get; set; } = null!;
         public string Cpf { get; set; } = null!;
         public string Senha {get;set;} = null!;
+        public string NomeUsuario {get;set;} = null!;
         public DateOnly Datanascimento { get; set; }
         public bool Admin { get; set; }
-
+        public bool Ativo {get;set;}
         public virtual ICollection<Hospedagem> Hospedagens { get; set; }
     }
 }
