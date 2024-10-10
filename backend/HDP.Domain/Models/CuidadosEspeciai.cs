@@ -3,18 +3,12 @@ using System.Collections.Generic;
 
 namespace HDP.Domain.Models
 {
-    public partial class CuidadosEspeciais
+    public class CuidadosEspeciais
     {
-        public CuidadosEspeciais()
-        {
-            Itens = new HashSet<Item>();
-        }
-
-        public Guid Cuidadosespeciaisid { get; set; }
-        public int Porcoespordia { get; set; }
-        public int Valorporcao { get; set; }
-        public string Descricaousomedicamento { get; set; } = null!;
-
-        public virtual ICollection<Item> Itens { get; set; }
+        public Guid CuidadosEspeciaisId { get; set; }
+        public string Nome { get; set; }
+        public string DescricaoUsoMedicamento { get; set; }
+        public int PorcaoPorDia { get; set; }
+        public DateTime Validade { get; set; }
     }
 }

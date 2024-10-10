@@ -41,35 +41,16 @@ namespace HDP.Persistence.Contexts
 
             modelBuilder.Entity<CuidadosEspeciais>(entity =>
             {
-                entity.HasKey(e => e.Cuidadosespeciaisid)
+                entity.HasKey(e => e.CuidadosEspeciaisId)
                     .HasName("CuidadosEspeciais_pkey");
 
-                entity.Property(e => e.Cuidadosespeciaisid)
+                entity.Property(e => e.CuidadosEspeciaisId)
                     .HasColumnName("cuidadosespeciaisid")
                     .HasDefaultValueSql("uuid_generate_v4()");
 
-                entity.Property(e => e.Descricaousomedicamento).HasColumnName("descricaousomedicamento");
+                entity.Property(e => e.DescricaoUsoMedicamento).HasColumnName("descricaousomedicamento");
 
-                entity.Property(e => e.Porcoespordia).HasColumnName("porcoespordia");
-
-                entity.Property(e => e.Valorporcao).HasColumnName("valorporcao");
-
-                entity.HasMany(d => d.Itens)
-                    .WithMany(p => p.Cuidadosespeciais)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "CuidadosEspeciaisItem",
-                        l => l.HasOne<Item>().WithMany().HasForeignKey("Itemid").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("CuidadosEspeciaisItem_itemid_fkey"),
-                        r => r.HasOne<CuidadosEspeciais>().WithMany().HasForeignKey("Cuidadosespeciaisid").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("CuidadosEspeciaisItem_cuidadosespeciaisid_fkey"),
-                        j =>
-                        {
-                            j.HasKey("Cuidadosespeciaisid", "Itemid").HasName("pk_cuidadosespeciaisitem");
-
-                            j.ToTable("CuidadosEspeciaisItem");
-
-                            j.IndexerProperty<Guid>("Cuidadosespeciaisid").HasColumnName("cuidadosespeciaisid");
-
-                            j.IndexerProperty<Guid>("Itemid").HasColumnName("itemid");
-                        });
+                entity.Property(e => e.PorcaoPorDia).HasColumnName("porcoespordia");
             });
 
             modelBuilder.Entity<Dieta>(entity =>
