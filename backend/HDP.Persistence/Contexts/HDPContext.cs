@@ -51,6 +51,20 @@ namespace HDP.Persistence.Contexts
                 entity.Property(e => e.DescricaoUsoMedicamento).HasColumnName("descricaousomedicamento");
 
                 entity.Property(e => e.PorcaoPorDia).HasColumnName("porcoespordia");
+                
+                entity.HasMany(d => d.Itens)
+                    .WithMany(p => p.Cuidadosespeciais)
+                    .UsingEntity<Dictionary<string, object>>(
+                        "CuidadosEspeciaisItem",
+                        l => l.HasOne<Item>().WithMany().HasForeignKey("Itemid").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("CuidadosEspeciaisItem_itemid_fkey"),
+                        r => r.HasOne<CuidadosEspeciais>().WithMany().HasForeignKey("Cuidadosespeciaisid").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("CuidadosEspeciaisItem_cuidadosespeciaisid_fkey"),
+                        j =>
+                        {
+                            j.HasKey("Cuidadosespeciaisid", "Itemid").HasName("pk_cuidadosespeciaisitem");
+                            j.ToTable("CuidadosEspeciaisItem");
+                            j.IndexerProperty<Guid>("Cuidadosespeciaisid").HasColumnName("cuidadosespeciaisid");
+                            j.IndexerProperty<Guid>("Itemid").HasColumnName("itemid");
+                        });
             });
 
             modelBuilder.Entity<Dieta>(entity =>
