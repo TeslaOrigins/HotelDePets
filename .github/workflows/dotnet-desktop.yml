@@ -20,6 +20,9 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
+      - name: Verify Working Directory
+        run: pwd
+
       # Restauração dos pacotes
       - name: Restore NuGet Packages
         run: dotnet restore ./backend/HDP.API/HDP.API.csproj
