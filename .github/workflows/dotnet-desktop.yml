@@ -22,7 +22,7 @@ jobs:
 
       # Restauração dos pacotes
       - name: Restore NuGet Packages
-        run: dotnet restore
+        run: dotnet restore ./backend/HDP.API/HDP.API.csproj
 
       # Execução do Build
       - name: Build Project
