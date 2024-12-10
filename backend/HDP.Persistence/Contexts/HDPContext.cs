@@ -41,19 +41,17 @@ namespace HDP.Persistence.Contexts
 
             modelBuilder.Entity<CuidadosEspeciais>(entity =>
             {
-                entity.HasKey(e => e.Cuidadosespeciaisid)
+                entity.HasKey(e => e.CuidadosEspeciaisId)
                     .HasName("CuidadosEspeciais_pkey");
 
-                entity.Property(e => e.Cuidadosespeciaisid)
+                entity.Property(e => e.CuidadosEspeciaisId)
                     .HasColumnName("cuidadosespeciaisid")
                     .HasDefaultValueSql("uuid_generate_v4()");
 
-                entity.Property(e => e.Descricaousomedicamento).HasColumnName("descricaousomedicamento");
+                entity.Property(e => e.DescricaoUsoMedicamento).HasColumnName("descricaousomedicamento");
 
-                entity.Property(e => e.Porcoespordia).HasColumnName("porcoespordia");
-
-                entity.Property(e => e.Valorporcao).HasColumnName("valorporcao");
-
+                entity.Property(e => e.PorcaoPorDia).HasColumnName("porcoespordia");
+                
                 entity.HasMany(d => d.Itens)
                     .WithMany(p => p.Cuidadosespeciais)
                     .UsingEntity<Dictionary<string, object>>(
@@ -63,11 +61,8 @@ namespace HDP.Persistence.Contexts
                         j =>
                         {
                             j.HasKey("Cuidadosespeciaisid", "Itemid").HasName("pk_cuidadosespeciaisitem");
-
                             j.ToTable("CuidadosEspeciaisItem");
-
                             j.IndexerProperty<Guid>("Cuidadosespeciaisid").HasColumnName("cuidadosespeciaisid");
-
                             j.IndexerProperty<Guid>("Itemid").HasColumnName("itemid");
                         });
             });
