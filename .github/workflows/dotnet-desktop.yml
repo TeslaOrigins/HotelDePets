@@ -1,28 +1,75 @@
 name: dotnet package
 
-on: 
+on:
   push:
+    branches:
+      - main
+      - development
     paths:
       - 'backend/**'
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dotnet-version: [ '6.0.x' ]
-
+  BuildAndTest:
+    name: Build and Test Stage
+    runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+      # Configuração do .NET 8.0
+      - name: Use .NET Core 8.0
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: ${{ matrix.dotnet-version }}
+          dotnet-version: '8.0.x'
 
-      - name: Install dependencies
-        run: dotnet restore ./backend/HDP.API/HDP.API.csproj
+      # Restauração dos pacotes
+      - name: Restore NuGet Packages
+        run: dotnet restore
 
-      - name: Build
-        run: dotnet build --configuration Release --no-restore ./backend/HDP.API/HDP.API.csproj
+      # Execução do Build
+      - name: Build Project
+        run: dotnet build --configuration Release --no-restore
+
+      # Execução dos Testes
+      - name: Run Unit Tests
+        run: dotnet test --configuration Release --no-build --logger:trx
+
+      # Publicação dos Resultados dos Testes
+      - name: Publish Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: '**/*.trx'
+
+  DeployToProduction:
+    name: Production Stage
+    runs-on: windows-latest
+    needs: BuildAndTest
+    if: success()
+    steps:
+      # Baixar os artefatos gerados no estágio de build
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: test-results
+
+      # Validação antes do deploy
+      - name: Validate Environment
+        run: |
+          echo "Validating deployment environment..."
+          # Adicione aqui scripts para validação
+
+      # Etapa de Deploy
+      - name: Deploy Application
+        run: |
+          echo "Starting deployment to production..."
+          # Substitua pelo comando ou script de deploy
+
+      # Verificação pós-deploy
+      - name: Post-deployment Validation
+        run: |
+          echo "Running post-deployment checks..."
+          # Adicione scripts para validar se a aplicação está funcionando corretamente
+
+      # Ações de pós-deploy (e.g., notificações, limpeza)
+      - name: Post-deployment Tasks
+        run: |
+          echo "Performing post-deployment tasks..."
+          # Adicione notificações ou tarefas de limpeza aqui
