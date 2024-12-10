@@ -7,6 +7,7 @@ on:
       - development
     paths:
       - 'backend/**'
+  workflow_dispatch: # Permite execução manual
 
 jobs:
   BuildAndTest:
