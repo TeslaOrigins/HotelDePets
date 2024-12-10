@@ -23,9 +23,12 @@ jobs:
       - name: Verify Working Directory
         run: pwd
 
+      - name: Change Directory
+        run: cd ./backend/HDP.API
+
       # Restauração dos pacotes
       - name: Restore NuGet Packages
-        run: dotnet restore ./backend/HDP.API/HDP.API.csproj
+        run: run: dotnet restore HDP.API.csproj
 
       # Execução do Build
       - name: Build Project
